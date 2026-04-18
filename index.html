@@ -1,82 +1,156 @@
+html_full_page_content = '''
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Message for You</title>
+    <title>Dynamic Professional Page</title>
+    <!-- Bootstrap CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- AOS CSS for Animate On Scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         body {
-            background-color: #fff0f3; /* Soft pink background */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            overflow-x: hidden; /* Hide horizontal scrollbar caused by AOS animations */
+        }
+        .hero-section {
+            background: linear-gradient(to right, #007bff, #0056b3); /* Blue gradient background */
+            color: white;
+            min-height: 100vh; /* Full viewport height */
             display: flex;
-            justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            overflow: hidden; /* Prevents scrollbars when button jumps */
+            justify-content: center;
+            text-align: center;
+            padding: 50px 20px;
         }
-        .card {
-            max-width: 500px;
-            width: 90%;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-            border: none;
-            overflow: visible; /* Allows button to jump outside card if needed */
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
         }
-        .card-img-top {
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-            height: 300px;
-            object-fit: cover;
+        .hero-section p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            line-height: 1.6;
         }
-        #noBtn {
-            position: absolute;
-            transition: 0.1s;
-            z-index: 999;
+        .section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .section:nth-of-type(even) {
+            background-color: #e9ecef; /* Light gray for alternating sections */
+        }
+        .feature-icon {
+            font-size: 3rem;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .call-to-action {
+            background-color: #28a745; /* Green CTA background */
+            color: white;
+            padding: 100px 20px;
+        }
+        .call-to-action h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+        .btn-lg {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border-radius: 30px;
+        }
+        img.section-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
         }
     </style>
 </head>
 <body>
 
-    <div class="card p-4">
-        <img src="PASTE_YOUR_POSTIMAGES_DIRECT_LINK_HERE" class="card-img-top" alt="Us">
-        
-        <div class="card-body text-center">
-            <h2 class="card-title">Will you pardon me?</h2>
-            <p class="card-text text-muted">
-                I know I messed up, but I'm committed to making it up to you. 
-                I built this just to show you I'm not giving up.
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="container">
+            <h1 data-aos="fade-up" data-aos-duration="1000">Welcome to Our Professional Service</h1>
+            <p data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+                Delivering excellence and innovation for your business needs. Explore how we can help you achieve your goals.
             </p>
-            
-            <div class="d-flex justify-content-center gap-3 mt-4">
-                <button id="yesBtn" class="btn btn-danger btn-lg" onclick="handleYes()">Yes, I do</button>
-                <button id="noBtn" class="btn btn-outline-secondary btn-lg" onmouseover="moveNo()">No</button>
-            </div>
+            <a href="#features" class="btn btn-light btn-lg" data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">Learn More</a>
+        </div>
+    </header>
 
-            <div id="successMsg" class="alert alert-success mt-4" style="display:none;">
-                ❤️ I knew you'd say yes! I love you.
+    <!-- Features Section -->
+    <section id="features" class="section">
+        <div class="container">
+            <h2 class="mb-5" data-aos="fade-right">Key Features & Benefits</h2>
+            <div class="row">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">💡</div>
+                    <h3>Innovative Solutions</h3>
+                    <p>We provide cutting-edge solutions tailored to your unique challenges, driving efficiency and growth.</p>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">📈</div>
+                    <h3>Proven Results</h3>
+                    <p>Our strategies are data-driven, ensuring measurable outcomes and a strong return on investment.</p>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Client Partnership</h3>
+                    <p>We work closely with you, building strong relationships to foster mutual success and understanding.</p>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
+    <!-- About Section with Image -->
+    <section class="section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 order-md-2" data-aos="fade-left">
+                    <img src="https://via.placeholder.com/600x400?text=Professional+Team" class="img-fluid section-img" alt="Professional Team">
+                </div>
+                <div class="col-md-6 order-md-1 text-md-start" data-aos="fade-right">
+                    <h2 class="mb-4">Who We Are</h2>
+                    <p class="lead">We are a dedicated team of professionals committed to delivering high-quality services and innovative solutions. Our expertise spans various industries, allowing us to offer comprehensive support.</p>
+                    <p>Our mission is to empower our clients through strategic insights and robust implementation, ensuring they stay ahead in a competitive landscape.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="call-to-action">
+        <div class="container" data-aos="zoom-in">
+            <h2>Ready to Transform Your Business?</h2>
+            <p class="mb-5">Contact us today to discuss your project and discover how we can help you achieve your aspirations.</p>
+            <a href="#" class="btn btn-light btn-lg">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        function moveNo() {
-            const noBtn = document.getElementById('noBtn');
-            // Move button to a random spot on the screen
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-            
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
-        }
-
-        function handleYes() {
-            document.getElementById('successMsg').style.display = 'block';
-            document.getElementById('noBtn').style.display = 'none';
-            document.getElementById('yesBtn').disabled = true;
-            alert("Best decision ever! Let's talk? ❤️");
-        }
+        AOS.init({ 
+            once: true, // Only animate elements once
+            duration: 800 // Animation duration
+        }); 
     </script>
+
 </body>
 </html>
+'''
+
+# To view this in an iframe within Colab (requires IPython.display):
+# from IPython.display import HTML
+# HTML(html_full_page_content)
+
+print("New full-page interactive HTML content generated. Copy and save this to an HTML file to see it in action!")
