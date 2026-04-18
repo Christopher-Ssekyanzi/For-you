@@ -1,156 +1,133 @@
-html_full_page_content = '''
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Professional Page</title>
-    <!-- Bootstrap CSS CDN -->
+    <title>A Message For You</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- AOS CSS for Animate On Scroll -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f8f9fa;
-            overflow-x: hidden; /* Hide horizontal scrollbar caused by AOS animations */
+            overflow-x: hidden;
         }
         .hero-section {
-            background: linear-gradient(to right, #007bff, #0056b3); /* Blue gradient background */
+            background: linear-gradient(45deg, #ff4d6d, #ff85a1); /* Soft Red/Pink Gradient */
             color: white;
-            min-height: 100vh; /* Full viewport height */
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             padding: 50px 20px;
         }
-        .hero-section h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-        .hero-section p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto 30px auto;
-            line-height: 1.6;
-        }
-        .section {
-            padding: 80px 20px;
-            text-align: center;
-        }
-        .section:nth-of-type(even) {
-            background-color: #e9ecef; /* Light gray for alternating sections */
-        }
-        .feature-icon {
-            font-size: 3rem;
-            color: #007bff;
-            margin-bottom: 20px;
-        }
+        .section { padding: 80px 20px; text-align: center; }
+        .section:nth-of-type(even) { background-color: #fff0f3; }
+        .feature-icon { font-size: 3rem; margin-bottom: 20px; }
         .call-to-action {
-            background-color: #28a745; /* Green CTA background */
-            color: white;
+            background-color: #ffffff;
+            color: #333;
             padding: 100px 20px;
+            min-height: 400px;
+            position: relative;
         }
-        .call-to-action h2 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            margin-bottom: 30px;
-        }
-        .btn-lg {
-            padding: 15px 40px;
-            font-size: 1.3rem;
-            border-radius: 30px;
-        }
+        #noBtn { transition: 0.1s; z-index: 1000; }
         img.section-img {
             max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
 
-    <!-- Hero Section -->
     <header class="hero-section">
         <div class="container">
-            <h1 data-aos="fade-up" data-aos-duration="1000">Welcome to Our Professional Service</h1>
-            <p data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
-                Delivering excellence and innovation for your business needs. Explore how we can help you achieve your goals.
+            <h1 data-aos="zoom-in" data-aos-duration="1200">I Have Something to Say</h1>
+            <p data-aos="fade-up" data-aos-delay="400">
+                I spent some time building this because a simple text wasn't enough. <br>
+                Scroll down to see why you mean so much to me.
             </p>
-            <a href="#features" class="btn btn-light btn-lg" data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">Learn More</a>
+            <div data-aos="fade-up" data-aos-delay="800">↓</div>
         </div>
     </header>
 
-    <!-- Features Section -->
     <section id="features" class="section">
         <div class="container">
-            <h2 class="mb-5" data-aos="fade-right">Key Features & Benefits</h2>
+            <h2 class="mb-5" data-aos="fade-right">3 Reasons I'm Doing This</h2>
             <div class="row">
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                     <div class="feature-icon">💡</div>
-                    <h3>Innovative Solutions</h3>
-                    <p>We provide cutting-edge solutions tailored to your unique challenges, driving efficiency and growth.</p>
+                    <h3>I Realized My Mistake</h3>
+                    <p>I’ve had time to think, and I realize where I went wrong. I value your feelings above everything else.</p>
                 </div>
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-icon">📈</div>
-                    <h3>Proven Results</h3>
-                    <p>Our strategies are data-driven, ensuring measurable outcomes and a strong return on investment.</p>
+                    <div class="feature-icon">🤝</div>
+                    <h3>You Are My Partner</h3>
+                    <p>We are a team, and I hate it when we aren't on the same page. I want to get back to "us."</p>
                 </div>
                 <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-                    <div class="feature-icon">🤝</div>
-                    <h3>Client Partnership</h3>
-                    <p>We work closely with you, building strong relationships to foster mutual success and understanding.</p>
+                    <div class="feature-icon">📈</div>
+                    <h3>I Want to Grow</h3>
+                    <p>I'm committed to learning from this so I can be the person you deserve.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section with Image -->
     <section class="section">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6 order-md-2" data-aos="fade-left">
-                    <img src="https://via.placeholder.com/600x400?text=Professional+Team" class="img-fluid section-img" alt="Professional Team">
+                    <img src="PASTE_YOUR_LINK_HERE" class="img-fluid section-img" alt="Us">
                 </div>
                 <div class="col-md-6 order-md-1 text-md-start" data-aos="fade-right">
-                    <h2 class="mb-4">Who We Are</h2>
-                    <p class="lead">We are a dedicated team of professionals committed to delivering high-quality services and innovative solutions. Our expertise spans various industries, allowing us to offer comprehensive support.</p>
-                    <p>Our mission is to empower our clients through strategic insights and robust implementation, ensuring they stay ahead in a competitive landscape.</p>
+                    <h2 class="mb-4">My Promise to You</h2>
+                    <p class="lead">Every moment we spend together is a gift, and I don't want to waste another second being at odds.</p>
+                    <p>I'm sorry for my actions. I promise to listen more, react less, and always keep your heart safe.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Call to Action Section -->
-    <section class="call-to-action">
+    <section class="call-to-action text-center">
         <div class="container" data-aos="zoom-in">
-            <h2>Ready to Transform Your Business?</h2>
-            <p class="mb-5">Contact us today to discuss your project and discover how we can help you achieve your aspirations.</p>
-            <a href="#" class="btn btn-light btn-lg">Get in Touch</a>
+            <h2>Will you pardon me?</h2>
+            <p class="mb-5">I’m waiting for your answer... (Choose wisely!)</p>
+            
+            <div class="d-flex justify-content-center gap-3">
+                <button id="yesBtn" class="btn btn-danger btn-lg" onclick="handleYes()">Yes, I Pardon You</button>
+                <button id="noBtn" class="btn btn-outline-secondary btn-lg" onmouseover="moveNo()">No</button>
+            </div>
+
+            <div id="successMsg" class="alert alert-success mt-5" style="display:none;">
+                <h3>❤️ Victory! ❤️</h3>
+                <p>I knew you were the best. Dinner is on me tonight!</p>
+            </div>
         </div>
     </section>
 
-    <!-- Bootstrap JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ 
-            once: true, // Only animate elements once
-            duration: 800 // Animation duration
-        }); 
-    </script>
+        AOS.init({ once: true, duration: 800 });
 
+        function moveNo() {
+            const noBtn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        function handleYes() {
+            document.getElementById('successMsg').style.display = 'block';
+            document.getElementById('noBtn').style.display = 'none';
+            document.getElementById('yesBtn').disabled = true;
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html>
-'''
-
-# To view this in an iframe within Colab (requires IPython.display):
-# from IPython.display import HTML
-# HTML(html_full_page_content)
-
-print("New full-page interactive HTML content generated. Copy and save this to an HTML file to see it in action!")
