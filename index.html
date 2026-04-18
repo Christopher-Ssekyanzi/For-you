@@ -3,47 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For You</title>
+    <title>A Message for You</title>
     <style>
         body { 
-            background: #fffafa; /* Very light rose white */
+            background: #fff0f3; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             min-height: 100vh; 
             margin: 0; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Keeps the "No" button from making the page scroll */
         }
         .card { 
             text-align: center; 
-            padding: 50px 30px; 
-            border-radius: 30px; 
+            padding: 30px; 
+            border-radius: 20px; 
             background: white;
-            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             max-width: 400px;
-            width: 90%;
-            border: 1px solid #ffe5ec;
+            width: 85%;
+            position: relative;
         }
-        .heart { font-size: 60px; color: #ff4d6d; margin-bottom: 10px; }
-        h1 { color: #333; font-weight: 400; letter-spacing: 1px; }
-        p { color: #666; font-size: 18px; line-height: 1.8; margin-bottom: 25px; }
-        .signature { font-style: italic; color: #ff4d6d; font-weight: bold; }
-        .footer { font-size: 12px; color: #ccc; margin-top: 30px; text-transform: uppercase; }
+        img { 
+            width: 100%; 
+            border-radius: 15px; 
+            margin-bottom: 20px; 
+            border: 2px solid #ff4d6d;
+        }
+        h2 { color: #333; margin-bottom: 20px; }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        #yesBtn { background: #ff4d6d; color: white; }
+        #noBtn { 
+            background: #f0f0f0; 
+            color: #333; 
+            position: absolute; /* Needed for the jumping effect */
+        }
+        #success-msg { display: none; color: #ff4d6d; font-weight: bold; margin-top: 20px; }
     </style>
 </head>
 <body>
+
     <div class="card">
-        <div class="heart">❤</div>
-        <h1>I'm Sorry</h1>
+        <img src="https://via.placeholder.com/400x300?text=Insert+Our+Photo+Here" alt="Us">
         
-        <p>
-            I built this little space just to say I'm sorry. <br>
-            I value us more than anything, and I want <br>
-            to make things right between us.
-        </p>
+        <h2>Will you pardon my actions?</h2>
         
-        <p class="signature">With love, Chris </p>
-        <div class="footer">Made specifically for you</div>
+        <div class="btn-container">
+            <button id="yesBtn" onclick="pardon()">Yes</button>
+            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+        </div>
+
+        <div id="success-msg">
+            <p>Yay! I knew you couldn't say no. ❤️<br>I'll make it up to you, I promise.</p>
+        </div>
     </div>
+
+    <script>
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            // Calculate random position
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        function pardon() {
+            document.getElementById('success-msg').style.display = 'block';
+            document.getElementById('noBtn').style.display = 'none';
+            document.getElementById('yesBtn').style.display = 'none';
+            // Optional: Celebrate with an alert
+            alert("Best decision ever! I love you.");
+        }
+    </script>
+
 </body>
 </html>
