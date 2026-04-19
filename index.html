@@ -9,55 +9,66 @@
     <style>
         html { scroll-behavior: smooth; }
 
+        /* --- DARK MODE THEME --- */
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: #fff9f6;
-            background-image: url("https://www.transparenttextures.com/patterns/linen.png");
+            background-color: #0f0f0f; /* Deep Midnight */
+            background-image: radial-gradient(circle at top right, #1a1a1a, #0f0f0f);
             overflow-x: hidden; 
-            color: #1a1a1a; 
+            color: #e0e0e0; 
         }
 
-        .section-title { color: #9e0031; font-weight: 700; margin-bottom: 40px; position: relative; display: inline-block; }
-        .section-title::after { content: ""; position: absolute; bottom: -8px; left: 25%; width: 50%; height: 2px; background-color: #ffb3c1; }
+        .section-title { 
+            color: #ff8fa3; /* Soft Pink for Dark Mode */
+            font-weight: 700; 
+            margin-bottom: 40px; 
+            position: relative; 
+            display: inline-block; 
+            letter-spacing: 1px;
+        }
+        .section-title::after { 
+            content: ""; 
+            position: absolute; 
+            bottom: -8px; 
+            left: 25%; 
+            width: 50%; 
+            height: 2px; 
+            background-color: rgba(255, 143, 163, 0.3); 
+        }
 
-        /* --- THE FIXED SIDE TAB (Replacing the "shitty" button) --- */
+        /* --- GLASS-MORPHISM SIDE TAB --- */
         .side-tab-trigger {
             position: fixed;
             right: 0;
             top: 50%;
             transform: translateY(-50%);
             z-index: 1500;
-            background: rgba(255, 111, 145, 0.9);
-            backdrop-filter: blur(10px);
-            color: white;
-            padding: 20px 12px;
+            background: rgba(255, 143, 163, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: #ff8fa3;
+            padding: 25px 12px;
             border-radius: 20px 0 0 20px;
             cursor: pointer;
             writing-mode: vertical-rl;
             text-orientation: mixed;
-            font-weight: 600;
-            letter-spacing: 1px;
+            font-weight: 700;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            font-size: 0.8rem;
-            box-shadow: -4px 0 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.3);
+            font-size: 0.75rem;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.4);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-right: none;
         }
 
         .side-tab-trigger:hover {
             padding-right: 25px;
-            background: #ff4d6d;
+            background: rgba(255, 143, 163, 0.3);
+            color: #fff;
         }
 
-        .side-tab-trigger span {
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-            transform: rotate(90deg);
-            display: inline-block;
-        }
-
-        /* --- SIDEBAR DRAWER --- */
+        /* --- SIDEBAR DRAWER (Dark Glass) --- */
         #memorySidebar {
             height: 100%;
             width: 0;
@@ -65,76 +76,104 @@
             z-index: 2000;
             top: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            background: rgba(15, 15, 15, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: -15px 0 40px rgba(0,0,0,0.7);
             overflow-x: hidden;
-            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            transition: 0.6s cubic-bezier(0.77, 0, 0.175, 1);
             padding-top: 80px;
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .sidebar-content { width: 350px; padding: 0 30px; text-align: center; }
         
         .sidebar-header {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 800;
-            color: #9e0031;
+            color: #ff8fa3;
             margin-bottom: 30px;
-            letter-spacing: -0.5px;
         }
 
         .sidebar-img-container {
             width: 100%;
             aspect-ratio: 4/5;
-            border-radius: 25px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             margin-bottom: 30px;
-            background: #eee;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         #sidebarImg { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s; }
         
         .closebtn { 
-            position: absolute; 
-            top: 20px; 
-            right: 25px; 
-            font-size: 30px; 
-            text-decoration: none; 
-            color: #ff4d6d;
-            transition: 0.3s;
+            position: absolute; top: 20px; right: 25px; font-size: 35px; 
+            text-decoration: none; color: #ff8fa3; transition: 0.3s;
         }
 
         .next-btn {
-            background: #9e0031;
-            color: white;
+            background: #ff8fa3;
+            color: #000;
             border: none;
-            padding: 12px 30px;
+            padding: 14px 35px;
             border-radius: 50px;
-            font-weight: 600;
+            font-weight: 700;
             transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.8rem;
         }
 
-        .next-btn:hover { background: #ff4d6d; transform: scale(1.05); }
+        .next-btn:hover { background: #fff; transform: translateY(-2px); }
 
         /* --- CORE PAGE STYLES --- */
         .hero-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
-        .video-wrapper { max-width: 850px; margin: 40px auto; border-radius: 25px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.1); border: 8px solid white; }
-        .timeline-img { width: 100%; border-radius: 20px; border: 8px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .reason-card { background: white; border-radius: 20px; padding: 30px; border: 1px solid #ffe5ec; height: 100%; transition: 0.3s; }
-        .btn-romantic { background: #ff4d6d; color: white !important; border-radius: 50px; padding: 15px 45px; font-weight: bold; border: none; box-shadow: 0 8px 15px rgba(255, 77, 109, 0.3); }
-        .heart-particle { position: fixed; color: #ff4d6d; pointer-events: none; z-index: 9999; transition: transform 0.5s, opacity 0.5s; }
+        .hero-section h1 { text-shadow: 0 0 20px rgba(255, 143, 163, 0.4); }
+
+        .video-wrapper { 
+            max-width: 850px; margin: 40px auto; border-radius: 25px; overflow: hidden; 
+            box-shadow: 0 0 40px rgba(0,0,0,0.6); border: 4px solid #1a1a1a; 
+        }
+
+        .timeline-img { 
+            width: 100%; border-radius: 15px; border: 4px solid #1a1a1a; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4); filter: brightness(0.9);
+            transition: 0.4s;
+        }
+        .timeline-img:hover { filter: brightness(1.1); transform: scale(1.02); }
+
+        .reason-card { 
+            background: #161616; border-radius: 20px; padding: 35px; 
+            border: 1px solid rgba(255, 255, 255, 0.05); height: 100%; transition: 0.4s; 
+        }
+        .reason-card:hover { 
+            background: #1f1f1f; transform: translateY(-10px); 
+            border-color: #ff8fa3; 
+        }
+
+        .btn-romantic { 
+            background: #ff8fa3; color: #000 !important; border-radius: 50px; 
+            padding: 18px 50px; font-weight: 800; border: none; 
+            box-shadow: 0 10px 20px rgba(255, 143, 163, 0.2); 
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn-romantic:hover { background: #fff; transform: scale(1.05); }
+
+        .heart-particle { position: fixed; color: #ff8fa3; pointer-events: none; z-index: 9999; transition: transform 0.5s, opacity 0.5s; }
 
         .timeline { position: relative; max-width: 800px; margin: 0 auto; padding: 40px 0; }
-        .timeline::after { content: ''; position: absolute; width: 2px; background: #ff4d6d; top: 0; bottom: 0; left: 50%; opacity: 0.2; }
-        .timeline-item { padding: 10px 40px; position: relative; width: 50%; }
+        .timeline::after { content: ''; position: absolute; width: 1px; background: rgba(255, 143, 163, 0.2); top: 0; bottom: 0; left: 50%; }
+        .timeline-item { padding: 20px 40px; position: relative; width: 50%; }
         .timeline-item.left { left: 0; text-align: right; }
         .timeline-item.right { left: 50%; text-align: left; }
 
+        #successMsg { background: rgba(255, 143, 163, 0.1); border: 1px solid #ff8fa3; color: #ff8fa3; }
+
         @media (max-width: 768px) { 
-            .side-tab-trigger { padding: 15px 8px; font-size: 0.7rem; }
+            .side-tab-trigger { padding: 18px 8px; font-size: 0.65rem; }
             .timeline::after { left: 31px; }
             .timeline-item { width: 100%; padding-left: 70px; text-align: left !important; left: 0 !important; }
+            .sidebar-content { width: 100vw; }
         }
     </style>
 </head>
@@ -143,7 +182,7 @@
     <div id="memorySidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <div class="sidebar-content">
-            <div class="sidebar-header">Gallery for You</div>
+            <div class="sidebar-header">Our Gallery</div>
             <div class="sidebar-img-container">
                 <img id="sidebarImg" src="Together_1.jpeg" alt="Memory">
             </div>
@@ -152,19 +191,19 @@
     </div>
 
     <div class="side-tab-trigger" onclick="openNav()">
-        <span>✨</span> OUR GALLERY
+        <span>✨</span> OPEN GALLERY
     </div>
 
     <header class="hero-section">
         <div class="container" data-aos="zoom-in">
-            <h1 class="display-3 fw-bold">Hello Gloria, Welcome💐</h1>
-            <p class="fs-5">A little something to remind you how much you're cherished.</p>
+            <h1 class="display-2 fw-bold" style="color: #fff;">Hello Gloria, Welcome💐</h1>
+            <p class="fs-5" style="color: #aaa;">A little something to remind you how much you're cherished.</p>
         </div>
     </header>
 
     <section class="py-5 text-center">
         <div class="container">
-            <h2 class="section-title" data-aos="fade-up">A special song for a special person😮‍💨</h2>
+            <h2 class="section-title" data-aos="fade-up">A special song for you😮‍💨</h2>
             <div class="video-wrapper" data-aos="zoom-in">
                 <div class="ratio ratio-16x9">
                     <iframe src="https://www.youtube.com/embed/yKNxeF4KMsY?rel=0" allowfullscreen></iframe>
@@ -175,18 +214,18 @@
 
     <section class="py-5">
         <div class="container text-center">
-            <h2 class="section-title" data-aos="fade-up">Our Journey Together</h2>
+            <h2 class="section-title" data-aos="fade-up">Our Journey</h2>
             <div class="timeline">
                 <div class="timeline-item left" data-aos="fade-right">
-                    <h3>The Beginning</h3>
+                    <h3 style="color: #fff;">The Beginning</h3>
                     <img src="Together_1.jpeg" class="timeline-img">
                 </div>
                 <div class="timeline-item right" data-aos="fade-left">
-                    <h3>Special Moments</h3>
+                    <h3 style="color: #fff;">Special Moments</h3>
                     <img src="Together_2.jpeg" class="timeline-img">
                 </div>
                 <div class="timeline-item left" data-aos="fade-right">
-                    <h3>Forever & Always</h3>
+                    <h3 style="color: #fff;">Forever & Always</h3>
                     <img src="Gloria_2.jpeg" class="timeline-img">
                 </div>
             </div>
@@ -195,27 +234,27 @@
 
     <section class="py-5">
         <div class="container text-center">
-            <h2 class="section-title" data-aos="fade-up">What I Adore About You</h2>
+            <h2 class="section-title" data-aos="fade-up">Why You're Special</h2>
             <div class="row g-4 mt-2">
                 <div class="col-md-4" data-aos="flip-left">
                     <div class="reason-card">
                         <div class="display-4 mb-3">💖</div>
-                        <h3>Your Heart</h3>
-                        <p>Your kindness is what made me fall for you.</p>
+                        <h3 style="color: #fff;">Your Heart</h3>
+                        <p style="color: #aaa;">Your kindness is what made me fall for you.</p>
                     </div>
                 </div>
                 <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
                     <div class="reason-card">
                         <div class="display-4 mb-3">👑</div>
-                        <h3>A Princess</h3>
-                        <p>I promise to cherish you always.</p>
+                        <h3 style="color: #fff;">A Princess</h3>
+                        <p style="color: #aaa;">I promise to cherish you always.</p>
                     </div>
                 </div>
                 <div class="col-md-4" data-aos="flip-left" data-aos-delay="400">
                     <div class="reason-card">
                         <div class="display-4 mb-3">🥂</div>
-                        <h3>Our Future</h3>
-                        <p>I hope we have happy days ahead.</p>
+                        <h3 style="color: #fff;">Our Future</h3>
+                        <p style="color: #aaa;">I hope we have happy days ahead.</p>
                     </div>
                 </div>
             </div>
@@ -227,11 +266,11 @@
             <h2 class="section-title display-4">Will you say Yes?</h2>
             <div class="d-flex justify-content-center gap-4 mt-5">
                 <button id="yesBtn" class="btn-romantic btn-lg" onclick="handleYes()">Yes, let's do it</button>
-                <button id="noBtn" class="btn btn-outline-secondary btn-lg rounded-pill px-5" onmouseover="moveNo()">No</button>
+                <button id="noBtn" class="btn btn-outline-light btn-lg rounded-pill px-5" onmouseover="moveNo()">No</button>
             </div>
-            <div id="successMsg" class="alert alert-success mt-5 p-5 shadow-lg" style="display:none; border-radius: 30px;">
-                <h1 class="display-4">Victory! ❤️</h1>
-                <p class="fs-3">See you soon, princess.</p>
+            <div id="successMsg" class="alert mt-5 p-5 shadow-lg" style="display:none; border-radius: 30px;">
+                <h1 class="display-4 fw-bold">Victory! ❤️</h1>
+                <p class="fs-3">Can't wait to see you, princess.</p>
             </div>
         </div>
     </section>
