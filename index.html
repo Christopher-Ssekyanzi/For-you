@@ -44,10 +44,8 @@
         .hero-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 50px 20px; }
         .hero-section h1 { font-size: clamp(2.5rem, 8vw, 3.8rem); font-weight: 800; }
 
-        /* Video Wrapper */
         .video-wrapper { max-width: 850px; margin: 40px auto; border-radius: 25px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15); border: 8px solid white; }
 
-        /* Spotify Card */
         .spotify-link-card {
             background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(5px); border-radius: 24px; border: 2px solid #ffb3c1;
             transition: 0.4s; max-width: 500px; margin: 30px auto; text-decoration: none; overflow: hidden;
@@ -63,7 +61,6 @@
         .bar:nth-child(5) { height: 18px; animation-delay: 0.4s; }
         @keyframes bounce { from { height: 5px; } to { height: 30px; } }
 
-        /* Timeline */
         .timeline { position: relative; max-width: 800px; margin: 0 auto; padding: 40px 0; }
         .timeline::after { content: ''; position: absolute; width: 2px; background: #ff4d6d; top: 0; bottom: 0; left: 50%; opacity: 0.3; }
         .timeline-item { padding: 10px 40px; position: relative; width: 50%; }
@@ -71,9 +68,15 @@
         .timeline-item.right { left: 50%; text-align: left; }
         .timeline-img { width: 100%; border-radius: 20px; margin-top: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 8px solid white; }
 
-        /* Reason Cards */
-        .reason-card { background: white; border-radius: 20px; padding: 30px; transition: 0.3s; border: 1px solid #ffe5ec; height: 100%; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
-        .reason-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15); }
+        /* PLAYFUL BUBBLES STYLE */
+        .playful-bubble { perspective: 1000px; height: 220px; width: 100%; cursor: pointer; margin-bottom: 20px; }
+        .bubble-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s; transform-style: preserve-3d; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .playful-bubble:hover .bubble-inner { transform: rotateY(180deg) scale(1.05); animation-play-state: paused; }
+        .bubble-front, .bubble-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 50%; padding: 25px; box-shadow: 0 10px 30px rgba(255, 179, 193, 0.3); border: 2px solid #ffb3c1; }
+        .bubble-front { background: white; }
+        .bubble-back { background: #ffe5ec; color: #ff4d6d; transform: rotateY(180deg); border-color: #ff4d6d; }
+        .bubble-back h3 { font-size: 1.2rem; font-weight: 700; }
 
         .section-title { color: #ff1a4a; font-weight: 700; margin-bottom: 40px; position: relative; display: inline-block; }
         .btn-romantic { background: #ff4d6d; color: white !important; border-radius: 50px; padding: 15px 45px; font-weight: bold; border: none; transition: 0.3s; cursor: pointer; box-shadow: 0 8px 15px rgba(255, 77, 109, 0.3); }
@@ -104,7 +107,7 @@
                 </div>
             </div>
             
-            <a href="http://googleusercontent.com/spotify.com/3" target="_blank" class="spotify-link-card d-block" data-aos="fade-up">
+            <a href="https://open.spotify.com/track/7CH99b2tLsqSsgS3mkyS3M" target="_blank" class="spotify-link-card d-block" data-aos="fade-up">
                 <div class="d-flex align-items-center p-4">
                     <div class="visualizer me-4">
                         <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
@@ -127,7 +130,6 @@
                     <h3>The Beginning</h3>
                     <p>Where it all started. I remember every detail.</p>
                     <img src="Together_1.jpeg" class="timeline-img">
-                    <img scr="Trial_1.png" class="timeline-img">
                 </div>
                 <div class="timeline-item right" data-aos="fade-left">
                     <h3>Special Moments</h3>
@@ -135,9 +137,9 @@
                     <img src="Together_2.jpeg" class="timeline-img">
                 </div>
                 <div class="timeline-item left" data-aos="fade-right">
-                    <h3>My Promise</h3>
-                    <p>To always cherish you, no matter what.</p>
-                    <img src="Trial_3.png" class="timeline-img">
+                    <h3>So let me assure you</h3>
+                    <p>I'll always cherish you, no matter what.</p>
+                    <img src="Gloria_2.jpeg" class="timeline-img">
                 </div>
             </div>
         </div>
@@ -146,28 +148,44 @@
     <section class="py-5">
         <div class="container text-center">
             <h2 class="section-title" data-aos="fade-up">What i love about you</h2>
-            <div class="row g-4 mt-2">
-                <div class="col-md-4" data-aos="flip-left">
-                    <div class="reason-card">
-                        <div class="fs-1 mb-2">💖</div>
-                        <h3>Your Heart</h3>
-                        <p>Your kindness is what made me fall for you.</p>
+            <div class="row g-4 mt-2 justify-content-center">
+                
+                <div class="col-6 col-md-4" data-aos="zoom-in">
+                    <div class="playful-bubble">
+                        <div class="bubble-inner">
+                            <div class="bubble-front"><span class="display-4">💖</span></div>
+                            <div class="bubble-back">
+                                <h3>Your Heart</h3>
+                                <p>Your kindness is what made me fall for you.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
-                    <div class="reason-card">
-                        <div class="fs-1 mb-2">👑</div>
-                        <h3>You are a princess</h3>
-                        <p>I promise to cherish you.</p>
+
+                <div class="col-6 col-md-4" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="playful-bubble">
+                        <div class="bubble-inner">
+                            <div class="bubble-front"><span class="display-4">👑</span></div>
+                            <div class="bubble-back">
+                                <h3>Princess</h3>
+                                <p>I promise to cherish you forever.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4" data-aos="flip-left" data-aos-delay="400">
-                    <div class="reason-card">
-                        <div class="fs-1 mb-2">🥂</div>
-                        <h3>Do we have a future</h3>
-                        <p>I hope we have happy days ahead.</p>
+
+                <div class="col-6 col-md-4" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="playful-bubble">
+                        <div class="bubble-inner">
+                            <div class="bubble-front"><span class="display-4">🥂</span></div>
+                            <div class="bubble-back">
+                                <h3>Our Future</h3>
+                                <p>I hope we have many happy days ahead.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -191,23 +209,17 @@
         AOS.init({ duration: 1000, once: true });
 
         function handleYes() {
-    // 1. Show the success message on the site
-    document.getElementById('successMsg').style.display = 'block';
-    document.getElementById('noBtn').style.display = 'none';
-    document.getElementById('yesBtn').style.display = 'none';
+            document.getElementById('successMsg').style.display = 'block';
+            document.getElementById('noBtn').style.display = 'none';
+            document.getElementById('yesBtn').style.display = 'none';
 
-    // 2. Prepare WhatsApp details
-    // IMPORTANT: Use your full phone number with country code, NO plus sign or spaces.
-    // Example: 15551234567 (for a US number)
-    const myPhoneNumber = "256761417053"; 
-    const message = "what time will you pick me up ❤️";
-    
-    // 3. Trigger WhatsApp (wa.me link)
-    setTimeout(() => {
-        const whatsappUrl = `https://wa.me/${myPhoneNumber}?text=${encodeURIComponent(message)}`;
-        window.location.href = whatsappUrl;
-    }, 1000);
-}
+            const myPhoneNumber = "256761417053"; 
+            const message = "what time will you pick me up ❤️";
+            
+            setTimeout(() => {
+                window.location.href = `https://wa.me/${myPhoneNumber}?text=${encodeURIComponent(message)}`;
+            }, 1000);
+        }
 
         function moveNo() {
             const noBtn = document.getElementById('noBtn');
