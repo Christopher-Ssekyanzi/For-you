@@ -3,96 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Princess Gloria</title>
+    <title>For Gloria</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         html { scroll-behavior: smooth; }
 
-        /* --- 1. GLOBAL THEME (Reducing Brightness) --- */
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            /* Soft cream background instead of stark white */
             background-color: #fff9f6;
-            background-image: 
-                linear-gradient(135deg, rgba(255, 252, 249, 0) 0%, rgba(255, 252, 249, 1) 100%),
-                url("https://www.transparenttextures.com/patterns/linen.png");
+            background-image: url("https://www.transparenttextures.com/patterns/linen.png");
             overflow-x: hidden; 
             color: #1a1a1a; 
-            position: relative;
         }
 
-        /* Rich Burgundy for titles to reduce visual vibration */
-        .section-title { 
-            color: #9e0031; 
-            font-weight: 700; 
-            margin-bottom: 40px; 
-            position: relative; 
-            display: inline-block; 
-        }
+        .section-title { color: #9e0031; font-weight: 700; margin-bottom: 40px; position: relative; display: inline-block; }
+        .section-title::after { content: ""; position: absolute; bottom: -8px; left: 25%; width: 50%; height: 2px; background-color: #ffb3c1; }
 
-        .section-title::after {
-            content: "";
-            position: absolute;
-            bottom: -8px;
-            left: 25%;
-            width: 50%;
-            height: 2px;
-            background-color: #ffb3c1;
-        }
-
-        /* --- 2. REDESIGNED SIDEBAR BUTTON --- */
-        .open-sidebar-btn {
+        /* --- THE FIXED SIDE TAB (Replacing the "shitty" button) --- */
+        .side-tab-trigger {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
             z-index: 1500;
-            background-color: #ff6f91; 
+            background: rgba(255, 111, 145, 0.9);
+            backdrop-filter: blur(10px);
             color: white;
-            border: none;
-            border-radius: 50px; 
-            width: 60px; 
-            height: 60px;
-            font-size: 24px;
-            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+            padding: 20px 12px;
+            border-radius: 20px 0 0 20px;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            white-space: nowrap;
-            animation: soft-pulse 2s infinite;
-        }
-
-        .open-sidebar-btn .btn-text-reveal {
-            opacity: 0;
-            font-size: 0.9rem;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
             font-weight: 600;
-            margin-left: 0;
-            transition: all 0.3s;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            box-shadow: -4px 0 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-right: none;
         }
 
-        .open-sidebar-btn:hover {
-            width: 170px;
-            background-color: #ff4d6d;
-            padding: 0 20px;
-            justify-content: flex-start;
-            animation-play-state: paused;
+        .side-tab-trigger:hover {
+            padding-right: 25px;
+            background: #ff4d6d;
         }
 
-        .open-sidebar-btn:hover .btn-text-reveal {
-            opacity: 1;
-            margin-left: 10px;
+        .side-tab-trigger span {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            transform: rotate(90deg);
+            display: inline-block;
         }
 
-        @keyframes soft-pulse {
-            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4); }
-            50% { transform: scale(1.05); box-shadow: 0 4px 25px rgba(255, 77, 109, 0.6); }
-            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4); }
-        }
-
-        /* --- 3. SIDEBAR DRAWER --- */
+        /* --- SIDEBAR DRAWER --- */
         #memorySidebar {
             height: 100%;
             width: 0;
@@ -100,44 +65,66 @@
             z-index: 2000;
             top: 0;
             right: 0;
-            background-color: white;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
             overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-            text-align: center;
+            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            padding-top: 80px;
         }
 
-        .sidebar-content { padding: 20px; width: 300px; }
+        .sidebar-content { width: 350px; padding: 0 30px; text-align: center; }
+        
+        .sidebar-header {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #9e0031;
+            margin-bottom: 30px;
+            letter-spacing: -0.5px;
+        }
+
         .sidebar-img-container {
             width: 100%;
-            height: 350px;
-            border-radius: 15px;
+            aspect-ratio: 4/5;
+            border-radius: 25px;
             overflow: hidden;
-            border: 5px solid #ffe5ec;
-            margin-bottom: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            background: #eee;
         }
 
         #sidebarImg { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s; }
-        .closebtn { position: absolute; top: 10px; left: 20px; font-size: 36px; text-decoration: none; color: #ff4d6d; }
-
-        /* --- 4. CORE COMPONENTS --- */
-        .hero-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
-        .video-wrapper { max-width: 850px; margin: 40px auto; border-radius: 25px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15); border: 8px solid white; }
         
-        .spotify-link-card {
-            background: rgba(255, 255, 255, 0.8); border-radius: 24px; border: 2px solid #ffb3c1;
-            transition: 0.4s; max-width: 500px; margin: 30px auto; text-decoration: none;
+        .closebtn { 
+            position: absolute; 
+            top: 20px; 
+            right: 25px; 
+            font-size: 30px; 
+            text-decoration: none; 
+            color: #ff4d6d;
+            transition: 0.3s;
         }
 
+        .next-btn {
+            background: #9e0031;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .next-btn:hover { background: #ff4d6d; transform: scale(1.05); }
+
+        /* --- CORE PAGE STYLES --- */
+        .hero-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+        .video-wrapper { max-width: 850px; margin: 40px auto; border-radius: 25px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.1); border: 8px solid white; }
         .timeline-img { width: 100%; border-radius: 20px; border: 8px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .reason-card { background: white; border-radius: 20px; padding: 30px; border: 1px solid #ffe5ec; height: 100%; transition: 0.3s; }
-        .reason-card:hover { transform: translateY(-10px); border-color: #ff4d6d; }
-
         .btn-romantic { background: #ff4d6d; color: white !important; border-radius: 50px; padding: 15px 45px; font-weight: bold; border: none; box-shadow: 0 8px 15px rgba(255, 77, 109, 0.3); }
         .heart-particle { position: fixed; color: #ff4d6d; pointer-events: none; z-index: 9999; transition: transform 0.5s, opacity 0.5s; }
 
-        /* Timeline Layout */
         .timeline { position: relative; max-width: 800px; margin: 0 auto; padding: 40px 0; }
         .timeline::after { content: ''; position: absolute; width: 2px; background: #ff4d6d; top: 0; bottom: 0; left: 50%; opacity: 0.2; }
         .timeline-item { padding: 10px 40px; position: relative; width: 50%; }
@@ -145,60 +132,50 @@
         .timeline-item.right { left: 50%; text-align: left; }
 
         @media (max-width: 768px) { 
+            .side-tab-trigger { padding: 15px 8px; font-size: 0.7rem; }
             .timeline::after { left: 31px; }
             .timeline-item { width: 100%; padding-left: 70px; text-align: left !important; left: 0 !important; }
-            #memorySidebar { width: 0; }
         }
     </style>
 </head>
 <body onmousemove="spawnHeart(event)" ontouchmove="spawnHeart(event)">
 
     <div id="memorySidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <div class="sidebar-content">
-            <h3 style="color: #9e0031;">Our Gallery</h3>
+            <div class="sidebar-header">Gallery for You</div>
             <div class="sidebar-img-container">
                 <img id="sidebarImg" src="Together_1.jpeg" alt="Memory">
             </div>
-            <button class="btn btn-outline-danger rounded-pill" onclick="nextImage()">Next Photo ➔</button>
+            <button class="next-btn" onclick="nextImage()">Next Memory &rarr;</button>
         </div>
     </div>
 
-    <button class="open-sidebar-btn" onclick="openNav()">
-        <span class="btn-icon">🖼️</span>
-        <span class="btn-text-reveal">Our Gallery</span>
-    </button>
+    <div class="side-tab-trigger" onclick="openNav()">
+        <span>✨</span> OUR GALLERY
+    </div>
 
     <header class="hero-section">
         <div class="container" data-aos="zoom-in">
             <h1 class="display-3 fw-bold">Hello Gloria, Welcome💐</h1>
-            <p class="fs-5">This page was made for you, to show you how special you are.</p>
+            <p class="fs-5">A little something to remind you how much you're cherished.</p>
         </div>
     </header>
 
     <section class="py-5 text-center">
         <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Listen along as you enjoy the experience😮‍💨</h2>
+            <h2 class="section-title" data-aos="fade-up">A special song for a special person😮‍💨</h2>
             <div class="video-wrapper" data-aos="zoom-in">
                 <div class="ratio ratio-16x9">
                     <iframe src="https://www.youtube.com/embed/yKNxeF4KMsY?rel=0" allowfullscreen></iframe>
                 </div>
             </div>
-            <a href="https://open.spotify.com/track/3zkpsv8_not_real_link" target="_blank" class="spotify-link-card d-block mx-auto">
-                <div class="d-flex align-items-center p-4">
-                    <div class="flex-grow-1 text-start">
-                        <h4 class="mb-0 fw-bold">Yellow - Coldplay</h4>
-                        <p class="mb-0 text-muted">Tap to play on Spotify</p>
-                    </div>
-                    <div class="fs-2">🫶</div>
-                </div>
-            </a>
         </div>
     </section>
 
     <section class="py-5">
         <div class="container text-center">
-            <h2 class="section-title" data-aos="fade-up">Our Beautiful Journey</h2>
+            <h2 class="section-title" data-aos="fade-up">Our Journey Together</h2>
             <div class="timeline">
                 <div class="timeline-item left" data-aos="fade-right">
                     <h3>The Beginning</h3>
@@ -209,7 +186,7 @@
                     <img src="Together_2.jpeg" class="timeline-img">
                 </div>
                 <div class="timeline-item left" data-aos="fade-right">
-                    <h3>So let me assure you</h3>
+                    <h3>Forever & Always</h3>
                     <img src="Gloria_2.jpeg" class="timeline-img">
                 </div>
             </div>
@@ -218,7 +195,7 @@
 
     <section class="py-5">
         <div class="container text-center">
-            <h2 class="section-title" data-aos="fade-up">What i love about you</h2>
+            <h2 class="section-title" data-aos="fade-up">What I Adore About You</h2>
             <div class="row g-4 mt-2">
                 <div class="col-md-4" data-aos="flip-left">
                     <div class="reason-card">
@@ -247,14 +224,14 @@
 
     <section class="py-5 text-center" style="min-height: 450px;">
         <div class="container" data-aos="zoom-in">
-            <h2 class="section-title display-4">Will you say Yes</h2>
+            <h2 class="section-title display-4">Will you say Yes?</h2>
             <div class="d-flex justify-content-center gap-4 mt-5">
                 <button id="yesBtn" class="btn-romantic btn-lg" onclick="handleYes()">Yes, let's do it</button>
                 <button id="noBtn" class="btn btn-outline-secondary btn-lg rounded-pill px-5" onmouseover="moveNo()">No</button>
             </div>
             <div id="successMsg" class="alert alert-success mt-5 p-5 shadow-lg" style="display:none; border-radius: 30px;">
                 <h1 class="display-4">Victory! ❤️</h1>
-                <p class="fs-3">Can't wait to see you.</p>
+                <p class="fs-3">See you soon, princess.</p>
             </div>
         </div>
     </section>
@@ -263,11 +240,14 @@
     <script>
         AOS.init({ duration: 1000, once: true });
 
-        // Sidebar Logic
+        // Gallery Data
         const galleryImages = ["Together_1.jpeg", "Together_2.jpeg", "Gloria_2.jpeg"];
         let imgIdx = 0;
 
-        function openNav() { document.getElementById("memorySidebar").style.width = "350px"; }
+        function openNav() { 
+            const width = window.innerWidth > 768 ? "400px" : "100%";
+            document.getElementById("memorySidebar").style.width = width; 
+        }
         function closeNav() { document.getElementById("memorySidebar").style.width = "0"; }
 
         function nextImage() {
@@ -280,7 +260,6 @@
             }, 400);
         }
 
-        // Interaction Logic
         function handleYes() {
             document.getElementById('successMsg').style.display = 'block';
             document.getElementById('noBtn').style.display = 'none';
