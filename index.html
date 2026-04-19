@@ -32,6 +32,7 @@
             color: var(--text-color); 
             transition: background 0.5s ease, color 0.5s ease;
             margin: 0;
+            overflow-x: hidden;
         }
 
         /* --- THEME TOGGLE --- */
@@ -48,7 +49,7 @@
             background: var(--bg-color); backdrop-filter: blur(20px);
             box-shadow: 15px 0 40px rgba(0,0,0,0.5); overflow-x: hidden;
             transition: 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid var(--accent-color);
         }
         #sidebarOverlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%;
@@ -60,7 +61,7 @@
             color: var(--accent-color); padding: 25px 12px; border-radius: 0 20px 20px 0;
             cursor: pointer; writing-mode: vertical-rl; text-orientation: mixed;
             font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-            font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); border-left: none;
+            font-size: 0.75rem; border: 1px solid var(--accent-color); border-left: none;
         }
 
         /* --- SPOTIFY ANIMATED BARS --- */
@@ -100,25 +101,33 @@
         .timeline-img-wrapper:hover { transform: scale(1.03); border-color: var(--accent-color); }
         .timeline-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- FLIP CARDS --- */
-        .flip-card { background-color: transparent; width: 100%; height: 320px; perspective: 1000px; cursor: pointer; }
+        /* --- UPDATED FLIP CARDS (Smooth continuous flipping) --- */
+        .flip-card { 
+            background-color: transparent; width: 100%; height: 320px; 
+            perspective: 1500px; /* Improved perspective for 3D smoothness */
+            cursor: pointer; 
+        }
         .flip-card-inner {
             position: relative; width: 100%; height: 100%; text-align: center;
-            transition: transform 0.6s; transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Snappier, bouncy flip */
+            transform-style: preserve-3d;
         }
+        /* The logic relies on adding/removing this class via JS */
         .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        
         .flip-card-front, .flip-card-back {
-            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden;
             border-radius: 25px; padding: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .flip-card-front { background: var(--card-bg); color: var(--text-color); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .flip-card-front { background: var(--card-bg); color: var(--text-color); }
         .flip-card-back { background: var(--accent-color); color: #000; transform: rotateY(180deg); }
 
         /* --- UTILS --- */
         .section-title { color: var(--accent-color); font-weight: 800; margin-bottom: 50px; position: relative; display: inline-block; }
         .video-wrapper { max-width: 850px; margin: 40px auto; border-radius: 25px; overflow: hidden; border: 4px solid var(--card-bg); }
         .btn-romantic { background: var(--accent-color); color: #000 !important; border-radius: 50px; padding: 18px 50px; font-weight: 800; border: none; text-transform: uppercase; }
-        .heart-particle { position: fixed; pointer-events: none; z-index: 9999; animation: fly-up 1.5s linear forwards; }
+        .heart-particle { position: fixed; pointer-events: none; z-index: 9999; animation: fly-up 1.5s linear forwards; font-size: 1.2rem; }
         
         @keyframes fly-up {
             0% { transform: translate(0, 0) scale(1); opacity: 1; }
@@ -128,10 +137,11 @@
         @media (max-width: 768px) {
             .timeline::after { left: 31px; }
             .timeline-item { width: 100%; padding-left: 70px; text-align: left !important; left: 0 !important; }
+            .sidebar-content { width: 100vw; }
         }
     </style>
 </head>
-<body>
+<body onmousemove="handleMouseMove(event)" ontouchmove="handleMouseMove(event)">
 
     <button class="theme-switch" onclick="toggleTheme()" id="themeBtn">🌙</button>
     <div id="sidebarOverlay" onclick="closeNav()"></div>
@@ -139,7 +149,7 @@
     <div id="memorySidebar">
         <a href="javascript:void(0)" style="position: absolute; top: 20px; right: 25px; font-size: 35px; text-decoration: none; color: var(--accent-color);" onclick="closeNav()">×</a>
         <div class="sidebar-content" style="width: 380px; padding: 80px 30px; text-align: center;">
-            <h2 style="color: var(--accent-color); font-weight: 800;">Our Gallery</h2>
+            <h2 style="color: var(--accent-color); font-weight: 800; letter-spacing: -1px;">Captured Memories</h2>
             <div style="width: 100%; aspect-ratio: 4/5; border-radius: 20px; overflow: hidden; margin: 30px 0; background: #000; position: relative;">
                 <img id="sidebarImg" src="Together_1.jpeg" style="width:100%; height:100%; object-fit:cover; transition:0.7s;">
             </div>
@@ -152,7 +162,7 @@
     <header class="container text-center d-flex align-items-center justify-content-center" style="min-height: 100vh;">
         <div data-aos="zoom-in">
             <h1 class="display-1 fw-bold">Hello Gloria💐</h1>
-            <p class="fs-4 opacity-75">You're the melody in my favorite song.</p>
+            <p class="fs-4 opacity-75">Welcome to our corner of the internet.</p>
         </div>
     </header>
 
@@ -165,7 +175,7 @@
                 </div>
             </div>
             
-            <a href="https://open.spotify.com/track/3Pf6S7X98S0qYv6Rk29ZfB" target="_blank" class="spotify-link-card" data-aos="fade-up">
+            <a href="https://open.spotify.com/track/7m9OqQk4RVRkw9JJ76pcYv" target="_blank" class="spotify-link-card" data-aos="fade-up">
                 <div class="d-flex align-items-center p-4">
                     <div class="visualizer me-4">
                         <div class="bar" style="animation-delay: 0.1s;"></div>
@@ -176,7 +186,7 @@
                     </div>
                     <div class="flex-grow-1 text-start">
                         <h4 class="mb-0 fw-bold">Yellow - Coldplay</h4>
-                        <p class="mb-0 opacity-75">Click to play on Spotify</p>
+                        <p class="mb-0 opacity-75">Listen along as you enjoy the experience</p>
                     </div>
                 </div>
             </a>
@@ -185,7 +195,7 @@
 
     <section class="py-5">
         <div class="container text-center">
-            <h2 class="section-title" data-aos="fade-up">Our Journey</h2>
+            <h2 class="section-title" data-aos="fade-up">Our Beautiful Journey</h2>
             <div class="timeline">
                 <div class="timeline-item left" data-aos="fade-right"><div class="timeline-img-wrapper"><img src="Together_1.jpeg"></div></div>
                 <div class="timeline-item right" data-aos="fade-left"><div class="timeline-img-wrapper"><img src="Together_2.jpeg"></div></div>
@@ -199,29 +209,29 @@
 
     <section class="py-5">
         <div class="container text-center">
-            <h2 class="section-title" data-aos="fade-up">Why You're Special</h2>
+            <h2 class="section-title" data-aos="fade-up">What I Adore About You</h2>
             <div class="row g-4 mt-2">
                 <div class="col-md-4" data-aos="flip-left">
-                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card" onclick="toggleFlip(this)">
                         <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="display-4">💖</div><h3>Your Heart</h3><p>Tap to see why</p></div>
-                            <div class="flip-card-back"><h3>Pure Kindness</h3><p>Your empathy makes the world a better place every single day.</p></div>
+                            <div class="flip-card-front"><div class="display-4">💖</div><h3>Your Heart</h3><p class="small opacity-75">Tap to see why</p></div>
+                            <div class="flip-card-back"><h3>Pure Kindness</h3><p>Your empathy and kindness make the world a warmer place every single day.</p></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
-                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card" onclick="toggleFlip(this)">
                         <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="display-4">👑</div><h3>A Princess</h3><p>Tap to see why</p></div>
-                            <div class="flip-card-back"><h3>Natural Grace</h3><p>You deserve to be treated with nothing but respect and admiration.</p></div>
+                            <div class="flip-card-front"><div class="display-4">👑</div><h3>A Princess</h3><p class="small opacity-75">Tap to see why</p></div>
+                            <div class="flip-card-back"><h3>Natural Grace</h3><p>You deserve to be treated with nothing but respect and endless admiration.</p></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4" data-aos="flip-left" data-aos-delay="400">
-                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card" onclick="toggleFlip(this)">
                         <div class="flip-card-inner">
-                            <div class="flip-card-front"><div class="display-4">🥂</div><h3>Our Future</h3><p>Tap to see why</p></div>
-                            <div class="flip-card-back"><h3>Endless Joy</h3><p>I can't wait to see what beautiful memories we create next.</p></div>
+                            <div class="flip-card-front"><div class="display-4">🥂</div><h3>Our Future</h3><p class="small opacity-75">Tap to see why</p></div>
+                            <div class="flip-card-back"><h3>Infinity</h3><p>This is only the beginning. I can't wait for the memories we'll create.</p></div>
                         </div>
                     </div>
                 </div>
@@ -237,7 +247,7 @@
             </div>
             <div id="successMsg" class="alert mt-5 p-5 shadow-lg" style="display:none; border-radius: 30px; background: var(--glass-bg); color: var(--accent-color); border: 1px solid var(--accent-color);">
                 <h1 class="display-4 fw-bold">Victory! ❤️</h1>
-                <p class="fs-3">See you soon, princess.</p>
+                <p class="fs-3">Can't wait to see you, princess.</p>
             </div>
         </div>
     </section>
@@ -245,6 +255,13 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 1000, once: true });
+
+        // NEW: FLIP TOGGLE LOGIC
+        // This function adds the 'flipped' class if it's not there, 
+        // and removes it if it is, allowing infinite flipping.
+        function toggleFlip(cardElement) {
+            cardElement.classList.toggle('flipped');
+        }
 
         function openNav() {
             document.getElementById("memorySidebar").style.width = window.innerWidth > 768 ? "400px" : "100%";
@@ -279,11 +296,13 @@
             }, 700);
         }
 
+        // Heart Cursor
         window.addEventListener('mousemove', (e) => {
             if (Math.random() > 0.12) return;
             const heart = document.createElement("div");
             heart.innerHTML = "❤️"; heart.className = "heart-particle";
             heart.style.left = e.clientX + "px"; heart.style.top = e.clientY + "px";
+            heart.style.color = "var(--accent-color)";
             heart.style.setProperty('--tw-x', `${(Math.random()-0.5)*200}px`);
             heart.style.setProperty('--tw-y', `${(Math.random()-0.5)*200-150}px`);
             heart.style.setProperty('--tw-r', `${Math.random()*360}deg`);
