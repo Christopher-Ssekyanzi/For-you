@@ -3,24 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trial</title>
+    <title>For My Princess Gloria</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         html { scroll-behavior: smooth; }
 
+        /* --- 1. GLOBAL THEME (Reducing Brightness) --- */
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: #fffcf9;
+            /* Soft cream background instead of stark white */
+            background-color: #fff9f6;
             background-image: 
                 linear-gradient(135deg, rgba(255, 252, 249, 0) 0%, rgba(255, 252, 249, 1) 100%),
                 url("https://www.transparenttextures.com/patterns/linen.png");
             overflow-x: hidden; 
-            color: #000; 
+            color: #1a1a1a; 
             position: relative;
         }
 
-        /* --- SIDEBAR STYLE --- */
+        /* Rich Burgundy for titles to reduce visual vibration */
+        .section-title { 
+            color: #9e0031; 
+            font-weight: 700; 
+            margin-bottom: 40px; 
+            position: relative; 
+            display: inline-block; 
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background-color: #ffb3c1;
+        }
+
+        /* --- 2. REDESIGNED SIDEBAR BUTTON --- */
+        .open-sidebar-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1500;
+            background-color: #ff6f91; 
+            color: white;
+            border: none;
+            border-radius: 50px; 
+            width: 60px; 
+            height: 60px;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            white-space: nowrap;
+            animation: soft-pulse 2s infinite;
+        }
+
+        .open-sidebar-btn .btn-text-reveal {
+            opacity: 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-left: 0;
+            transition: all 0.3s;
+        }
+
+        .open-sidebar-btn:hover {
+            width: 170px;
+            background-color: #ff4d6d;
+            padding: 0 20px;
+            justify-content: flex-start;
+            animation-play-state: paused;
+        }
+
+        .open-sidebar-btn:hover .btn-text-reveal {
+            opacity: 1;
+            margin-left: 10px;
+        }
+
+        @keyframes soft-pulse {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 4px 25px rgba(255, 77, 109, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4); }
+        }
+
+        /* --- 3. SIDEBAR DRAWER --- */
         #memorySidebar {
             height: 100%;
             width: 0;
@@ -36,110 +108,71 @@
             text-align: center;
         }
 
-        .sidebar-content {
-            padding: 20px;
-            width: 300px; /* Fixed width when open */
-        }
-
+        .sidebar-content { padding: 20px; width: 300px; }
         .sidebar-img-container {
             width: 100%;
-            height: 400px;
+            height: 350px;
             border-radius: 15px;
             overflow: hidden;
             border: 5px solid #ffe5ec;
             margin-bottom: 20px;
         }
 
-        #sidebarImg {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: opacity 0.5s ease-in-out;
-        }
+        #sidebarImg { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s; }
+        .closebtn { position: absolute; top: 10px; left: 20px; font-size: 36px; text-decoration: none; color: #ff4d6d; }
 
-        .closebtn {
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            font-size: 36px;
-            text-decoration: none;
-            color: #ff4d6d;
-        }
-
-        /* Floating Button to open Sidebar */
-        .open-sidebar-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1500;
-            background: #ff4d6d;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 24px;
-            box-shadow: 0 4px 10px rgba(255, 77, 109, 0.4);
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .open-sidebar-btn:hover { transform: scale(1.1); background: #ff1a4a; }
-
-        /* Existing Styles (Timeline, Hearts, etc) */
-        body::before, body::after { content: ""; position: fixed; z-index: -1; opacity: 0.5; pointer-events: none; }
-        body::before { top: -60px; left: -60px; width: 400px; height: 400px; background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g><circle cx="50" cy="50" r="10" fill="%23fff1b3"/><path d="M50 10 Q65 40 90 50 Q65 60 50 90 Q35 60 10 50 Q35 40 50 10" fill="%23ffe5ec" opacity="0.8"/></g></svg>'); background-size: contain; background-repeat: no-repeat; }
-        body::after { bottom: -60px; right: -60px; width: 350px; height: 350px; background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g><path d="M50 0 C70 40 100 40 100 50 C100 60 70 60 50 100 C30 60 0 60 0 50 C0 40 30 40 50 0Z" fill="%23ffe5ec" opacity="0.7"/><circle cx="50" cy="50" r="15" fill="%23fff1b3"/></g></svg>'); background-size: contain; background-repeat: no-repeat; transform: rotate(15deg); }
-        .heart-particle { position: fixed; color: #ff4d6d; pointer-events: none; z-index: 9999; transition: transform 0.5s ease-out, opacity 0.5s ease-out; }
-        .hero-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 50px 20px; }
-        .hero-section h1 { font-size: clamp(2.5rem, 8vw, 3.8rem); font-weight: 800; }
+        /* --- 4. CORE COMPONENTS --- */
+        .hero-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
         .video-wrapper { max-width: 850px; margin: 40px auto; border-radius: 25px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15); border: 8px solid white; }
-        .spotify-link-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(5px); border-radius: 24px; border: 2px solid #ffb3c1; transition: 0.4s; max-width: 500px; margin: 30px auto; text-decoration: none; overflow: hidden; }
-        .visualizer { display: flex; align-items: flex-end; height: 30px; gap: 3px; }
-        .bar { width: 4px; background: #1DB954; border-radius: 2px; animation: bounce 1s ease-in-out infinite alternate; }
-        @keyframes bounce { from { height: 5px; } to { height: 30px; } }
+        
+        .spotify-link-card {
+            background: rgba(255, 255, 255, 0.8); border-radius: 24px; border: 2px solid #ffb3c1;
+            transition: 0.4s; max-width: 500px; margin: 30px auto; text-decoration: none;
+        }
+
+        .timeline-img { width: 100%; border-radius: 20px; border: 8px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .reason-card { background: white; border-radius: 20px; padding: 30px; border: 1px solid #ffe5ec; height: 100%; transition: 0.3s; }
+        .reason-card:hover { transform: translateY(-10px); border-color: #ff4d6d; }
+
+        .btn-romantic { background: #ff4d6d; color: white !important; border-radius: 50px; padding: 15px 45px; font-weight: bold; border: none; box-shadow: 0 8px 15px rgba(255, 77, 109, 0.3); }
+        .heart-particle { position: fixed; color: #ff4d6d; pointer-events: none; z-index: 9999; transition: transform 0.5s, opacity 0.5s; }
+
+        /* Timeline Layout */
         .timeline { position: relative; max-width: 800px; margin: 0 auto; padding: 40px 0; }
-        .timeline::after { content: ''; position: absolute; width: 2px; background: #ff4d6d; top: 0; bottom: 0; left: 50%; opacity: 0.3; }
+        .timeline::after { content: ''; position: absolute; width: 2px; background: #ff4d6d; top: 0; bottom: 0; left: 50%; opacity: 0.2; }
         .timeline-item { padding: 10px 40px; position: relative; width: 50%; }
         .timeline-item.left { left: 0; text-align: right; }
         .timeline-item.right { left: 50%; text-align: left; }
-        .timeline-img { width: 100%; border-radius: 20px; margin-top: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 8px solid white; }
-        .reason-card { background: white; border-radius: 30px; padding: 40px 25px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 2px solid #ffe5ec; height: 100%; position: relative; overflow: hidden; }
-        .reason-card:hover { transform: translateY(-15px) scale(1.03); box-shadow: 0 20px 40px rgba(255, 77, 109, 0.2); border-color: #ff4d6d; background: #fffafa; }
-        .reason-card .icon-box { font-size: 3.5rem; margin-bottom: 15px; transition: transform 0.3s ease; }
-        .reason-card:hover .icon-box { transform: scale(1.2) rotate(10deg); }
-        .section-title { color: #ff1a4a; font-weight: 700; margin-bottom: 40px; position: relative; display: inline-block; }
-        .btn-romantic { background: #ff4d6d; color: white !important; border-radius: 50px; padding: 15px 45px; font-weight: bold; border: none; transition: 0.3s; cursor: pointer; box-shadow: 0 8px 15px rgba(255, 77, 109, 0.3); }
-        #noBtn { position: relative; transition: 0.15s ease; z-index: 1000; }
 
         @media (max-width: 768px) { 
             .timeline::after { left: 31px; }
-            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; text-align: left !important; }
-            .timeline-item.right { left: 0%; }
+            .timeline-item { width: 100%; padding-left: 70px; text-align: left !important; left: 0 !important; }
+            #memorySidebar { width: 0; }
         }
     </style>
 </head>
 <body onmousemove="spawnHeart(event)" ontouchmove="spawnHeart(event)">
 
     <div id="memorySidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
         <div class="sidebar-content">
-            <h3 style="color: #ff4d6d; font-weight: 800;">Our Gallery</h3>
-            <p class="text-muted">Just some extra photos of you ✨</p>
-            
+            <h3 style="color: #9e0031;">Our Gallery</h3>
             <div class="sidebar-img-container">
-                <img id="sidebarImg" src="Together_1.jpeg" alt="Memories">
+                <img id="sidebarImg" src="Together_1.jpeg" alt="Memory">
             </div>
-            
             <button class="btn btn-outline-danger rounded-pill" onclick="nextImage()">Next Photo ➔</button>
         </div>
     </div>
 
-    <button class="open-sidebar-btn" onclick="openNav()">🖼️</button>
+    <button class="open-sidebar-btn" onclick="openNav()">
+        <span class="btn-icon">🖼️</span>
+        <span class="btn-text-reveal">Our Gallery</span>
+    </button>
 
     <header class="hero-section">
         <div class="container" data-aos="zoom-in">
-            <h1>Hello Gloria, Welcome💐</h1>
-            <p>This page was made for you, to show you how special you are.</p>
+            <h1 class="display-3 fw-bold">Hello Gloria, Welcome💐</h1>
+            <p class="fs-5">This page was made for you, to show you how special you are.</p>
         </div>
     </header>
 
@@ -151,20 +184,13 @@
                     <iframe src="https://www.youtube.com/embed/yKNxeF4KMsY?rel=0" allowfullscreen></iframe>
                 </div>
             </div>
-            <a href="https://open.spotify.com/track/7pQduQc526Y4V1zY87p8T2" target="_blank" class="spotify-link-card d-block" data-aos="fade-up">
+            <a href="https://open.spotify.com/track/3zkpsv8_not_real_link" target="_blank" class="spotify-link-card d-block mx-auto">
                 <div class="d-flex align-items-center p-4">
-                    <div class="visualizer me-4">
-                        <div class="bar" style="height:10px; animation-delay: 0.1s;"></div>
-                        <div class="bar" style="height:25px; animation-delay: 0.3s;"></div>
-                        <div class="bar" style="height:15px; animation-delay: 0.2s;"></div>
-                        <div class="bar" style="height:28px; animation-delay: 0.5s;"></div>
-                        <div class="bar" style="height:18px; animation-delay: 0.4s;"></div>
-                    </div>
                     <div class="flex-grow-1 text-start">
-                        <h4 class="mb-0" style="color:#000; font-weight: 700;">Yellow-Coldplay</h4>
-                        <p class="mb-0 text-muted">Tap to open in Spotify</p>
+                        <h4 class="mb-0 fw-bold">Yellow - Coldplay</h4>
+                        <p class="mb-0 text-muted">Tap to play on Spotify</p>
                     </div>
-                    <div class="ms-auto text-success fs-3">🫶</div>
+                    <div class="fs-2">🫶</div>
                 </div>
             </a>
         </div>
@@ -176,17 +202,14 @@
             <div class="timeline">
                 <div class="timeline-item left" data-aos="fade-right">
                     <h3>The Beginning</h3>
-                    <p>Where it all started. I remember every detail.</p>
                     <img src="Together_1.jpeg" class="timeline-img">
                 </div>
                 <div class="timeline-item right" data-aos="fade-left">
                     <h3>Special Moments</h3>
-                    <p>Every laugh we share is a treasure.</p>
                     <img src="Together_2.jpeg" class="timeline-img">
                 </div>
                 <div class="timeline-item left" data-aos="fade-right">
                     <h3>So let me assure you</h3>
-                    <p>I'll always cherish you, no matter what.</p>
                     <img src="Gloria_2.jpeg" class="timeline-img">
                 </div>
             </div>
@@ -199,22 +222,22 @@
             <div class="row g-4 mt-2">
                 <div class="col-md-4" data-aos="flip-left">
                     <div class="reason-card">
-                        <div class="icon-box">💖</div>
+                        <div class="display-4 mb-3">💖</div>
                         <h3>Your Heart</h3>
                         <p>Your kindness is what made me fall for you.</p>
                     </div>
                 </div>
                 <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
                     <div class="reason-card">
-                        <div class="icon-box">👑</div>
-                        <h3>You are a princess</h3>
-                        <p>I promise to cherish you.</p>
+                        <div class="display-4 mb-3">👑</div>
+                        <h3>A Princess</h3>
+                        <p>I promise to cherish you always.</p>
                     </div>
                 </div>
                 <div class="col-md-4" data-aos="flip-left" data-aos-delay="400">
                     <div class="reason-card">
-                        <div class="icon-box">🥂</div>
-                        <h3>Do we have a future</h3>
+                        <div class="display-4 mb-3">🥂</div>
+                        <h3>Our Future</h3>
                         <p>I hope we have happy days ahead.</p>
                     </div>
                 </div>
@@ -222,16 +245,16 @@
         </div>
     </section>
 
-    <section class="py-5 text-center" style="min-height: 500px;">
+    <section class="py-5 text-center" style="min-height: 450px;">
         <div class="container" data-aos="zoom-in">
-            <h2 class="section-title" style="font-size: clamp(2rem, 10vw, 3.5rem);">Will you say Yes</h2>
+            <h2 class="section-title display-4">Will you say Yes</h2>
             <div class="d-flex justify-content-center gap-4 mt-5">
-                <button id="yesBtn" class="btn-romantic" onclick="handleYes()">Yes, lets do it</button>
+                <button id="yesBtn" class="btn-romantic btn-lg" onclick="handleYes()">Yes, let's do it</button>
                 <button id="noBtn" class="btn btn-outline-secondary btn-lg rounded-pill px-5" onmouseover="moveNo()">No</button>
             </div>
-            <div id="successMsg" class="alert alert-success mt-5 p-5" style="display:none; border-radius: 30px;">
+            <div id="successMsg" class="alert alert-success mt-5 p-5 shadow-lg" style="display:none; border-radius: 30px;">
                 <h1 class="display-4">Victory! ❤️</h1>
-                <p class="fs-3">I hope you enjoy it</p>
+                <p class="fs-3">Can't wait to see you.</p>
             </div>
         </div>
     </section>
@@ -240,57 +263,56 @@
     <script>
         AOS.init({ duration: 1000, once: true });
 
-        /* --- SIDEBAR LOGIC --- */
-        const images = ["Together_1.jpeg", "Together_2.jpeg", "Gloria_2.jpeg"]; // Add more filenames here!
-        let currentImgIndex = 0;
+        // Sidebar Logic
+        const galleryImages = ["Together_1.jpeg", "Together_2.jpeg", "Gloria_2.jpeg"];
+        let imgIdx = 0;
 
-        function openNav() {
-            document.getElementById("memorySidebar").style.width = "350px";
-        }
-
-        function closeNav() {
-            document.getElementById("memorySidebar").style.width = "0";
-        }
+        function openNav() { document.getElementById("memorySidebar").style.width = "350px"; }
+        function closeNav() { document.getElementById("memorySidebar").style.width = "0"; }
 
         function nextImage() {
-            const imgElement = document.getElementById("sidebarImg");
-            imgElement.style.opacity = 0; // Fade out
-            
+            const img = document.getElementById("sidebarImg");
+            img.style.opacity = 0;
             setTimeout(() => {
-                currentImgIndex = (currentImgIndex + 1) % images.length;
-                imgElement.src = images[currentImgIndex];
-                imgElement.style.opacity = 1; // Fade in
-            }, 500);
+                imgIdx = (imgIdx + 1) % galleryImages.length;
+                img.src = galleryImages[imgIdx];
+                img.style.opacity = 1;
+            }, 400);
         }
 
-        /* --- WHATSAPP & HEARTS --- */
+        // Interaction Logic
         function handleYes() {
             document.getElementById('successMsg').style.display = 'block';
             document.getElementById('noBtn').style.display = 'none';
             document.getElementById('yesBtn').style.display = 'none';
-            const myPhoneNumber = "256761417053"; 
-            const message = "what time will you pick me up ❤️";
+            const phone = "256761417053"; 
+            const msg = "what time will you pick me up ❤️";
             setTimeout(() => {
-                window.location.href = `https://wa.me/${myPhoneNumber}?text=${encodeURIComponent(message)}`;
-            }, 1000);
+                window.location.href = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+            }, 1500);
         }
 
         function moveNo() {
-            const noBtn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-            noBtn.style.position = 'fixed'; noBtn.style.left = x + 'px'; noBtn.style.top = y + 'px';
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
         }
 
         function spawnHeart(e) {
-            if (Math.random() > 0.15) return;
+            if (Math.random() > 0.1) return;
             const heart = document.createElement("div");
             heart.innerHTML = "❤️"; heart.className = "heart-particle";
             const x = e.pageX || (e.touches ? e.touches[0].pageX : 0);
             const y = e.pageY || (e.touches ? e.touches[0].pageY : 0);
             heart.style.left = x + "px"; heart.style.top = y + "px";
             document.body.appendChild(heart);
-            setTimeout(() => { heart.style.transform = `translateY(-100px) rotate(${Math.random() * 360}deg)`; heart.style.opacity = "0"; }, 50);
+            setTimeout(() => { 
+                heart.style.transform = `translateY(-100px) rotate(${Math.random() * 360}deg)`; 
+                heart.style.opacity = "0"; 
+            }, 50);
             setTimeout(() => heart.remove(), 1000);
         }
     </script>
