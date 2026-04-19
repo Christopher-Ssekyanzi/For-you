@@ -7,226 +7,240 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        html { scroll-behavior: smooth; }
+        :root {
+            --bg-color: #0f0f0f;
+            --text-color: #e0e0e0;
+            --accent-color: #ff8fa3;
+            --card-bg: #161616;
+            --glass-bg: rgba(255, 143, 163, 0.15);
+            --line-color: rgba(255, 143, 163, 0.2);
+        }
 
-        /* --- DARK MODE THEME --- */
+        [data-theme="light"] {
+            --bg-color: #fff9f6;
+            --text-color: #1a1a1a;
+            --accent-color: #9e0031;
+            --card-bg: #ffffff;
+            --glass-bg: rgba(158, 0, 49, 0.1);
+            --line-color: rgba(158, 0, 49, 0.2);
+        }
+
+        html { scroll-behavior: smooth; }
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: #0f0f0f; 
-            background-image: radial-gradient(circle at top left, #1a1a1a, #0f0f0f);
-            overflow-x: hidden; 
-            color: #e0e0e0; 
+            font-family: 'Segoe UI', sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            transition: background 0.5s ease, color 0.5s ease;
             margin: 0;
         }
 
-        .section-title { 
-            color: #ff8fa3; 
-            font-weight: 700; 
-            margin-bottom: 40px; 
-            position: relative; 
-            display: inline-block; 
-            letter-spacing: 1px;
-        }
-        .section-title::after { 
-            content: ""; 
-            position: absolute; 
-            bottom: -8px; 
-            left: 25%; 
-            width: 50%; 
-            height: 2px; 
-            background-color: rgba(255, 143, 163, 0.3); 
+        /* --- THEME TOGGLE --- */
+        .theme-switch {
+            position: fixed; top: 20px; right: 20px; z-index: 3000;
+            background: var(--glass-bg); backdrop-filter: blur(10px);
+            border: 1px solid var(--accent-color); padding: 10px;
+            border-radius: 50%; cursor: pointer; transition: 0.3s;
         }
 
-        /* --- SPOTIFY ANIMATED BARS --- */
-        .visualizer { display: flex; align-items: flex-end; height: 30px; gap: 4px; }
-        .bar { width: 4px; background: #ff8fa3; border-radius: 2px; animation: bounce 1s ease-in-out infinite alternate; }
-        @keyframes bounce { from { height: 5px; } to { height: 30px; } }
-
-        .spotify-link-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 143, 163, 0.2);
-            transition: 0.4s;
-            max-width: 500px;
-            margin: 30px auto;
-            text-decoration: none;
-            display: block;
-            color: white;
-        }
-        .spotify-link-card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.1); border-color: #ff8fa3; }
-
-        /* --- LEFT SIDE TAB --- */
-        .side-tab-trigger {
-            position: fixed;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1500;
-            background: rgba(255, 143, 163, 0.15);
-            backdrop-filter: blur(12px);
-            color: #ff8fa3;
-            padding: 25px 12px;
-            border-radius: 0 20px 20px 0;
-            cursor: pointer;
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            box-shadow: 5px 0 20px rgba(0,0,0,0.4);
-            transition: all 0.4s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-left: none;
-        }
-
-        /* --- SIDEBAR LEFT DRAWER --- */
+        /* --- SIDEBAR & OVERLAY --- */
         #memorySidebar {
             height: 100%; width: 0; position: fixed; z-index: 2000; top: 0; left: 0;
-            background: rgba(15, 15, 15, 0.98); backdrop-filter: blur(20px);
-            box-shadow: 15px 0 40px rgba(0,0,0,0.8); overflow-x: hidden;
+            background: var(--bg-color); backdrop-filter: blur(20px);
+            box-shadow: 15px 0 40px rgba(0,0,0,0.5); overflow-x: hidden;
             transition: 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .sidebar-content { width: 400px; padding: 80px 30px; text-align: center; }
-
-        /* --- IMPROVED IMAGE TRANSITION CSS --- */
-        .sidebar-img-container { 
-            width: 100%; 
-            aspect-ratio: 4/5; 
-            border-radius: 20px; 
-            overflow: hidden; 
-            margin-bottom: 30px; 
-            background: #000;
-            position: relative;
-            box-shadow: 0 0 30px rgba(255, 143, 163, 0.1);
+        #sidebarOverlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%;
+            height: 100%; background: transparent; z-index: 1999;
         }
-
-        #sidebarImg { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 1;
-            transform: scale(1);
+        .side-tab-trigger {
+            position: fixed; left: 0; top: 50%; transform: translateY(-50%);
+            z-index: 1500; background: var(--glass-bg); backdrop-filter: blur(12px);
+            color: var(--accent-color); padding: 25px 12px; border-radius: 0 20px 20px 0;
+            cursor: pointer; writing-mode: vertical-rl; text-orientation: mixed;
+            font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+            font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1); border-left: none;
         }
 
-        .img-fade {
-            opacity: 0 !important;
-            transform: scale(1.08) !important;
+        /* --- TIMELINE ORDERLY GRID --- */
+        .timeline { position: relative; max-width: 900px; margin: 40px auto; padding: 20px 0; }
+        .timeline::after { 
+            content: ''; position: absolute; width: 2px; background: var(--line-color); 
+            top: 0; bottom: 0; left: 50%; margin-left: -1px; 
         }
-
-        /* --- CURSOR HEARTS --- */
-        .heart-particle {
-            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; font-size: 1.5rem;
-            animation: fly-up 1.5s linear forwards;
-        }
-        @keyframes fly-up {
-            0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
-            100% { transform: translate(var(--tw-x), var(--tw-y)) scale(0) rotate(var(--tw-r)); opacity: 0; }
-        }
-
-        /* --- CORE PAGE STYLES --- */
-        .hero-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
-        .video-wrapper { max-width: 850px; margin: 40px auto; border-radius: 25px; overflow: hidden; border: 4px solid #1a1a1a; }
-        .timeline-img { width: 100%; border-radius: 15px; border: 4px solid #1a1a1a; transition: 0.4s; filter: brightness(0.9); }
-        .reason-card { background: #161616; border-radius: 20px; padding: 35px; border: 1px solid rgba(255, 255, 255, 0.05); height: 100%; transition: 0.4s; }
-        .btn-romantic { background: #ff8fa3; color: #000 !important; border-radius: 50px; padding: 18px 50px; font-weight: 800; border: none; text-transform: uppercase; }
-        
-        .timeline { position: relative; max-width: 800px; margin: 0 auto; padding: 40px 0; }
-        .timeline::after { content: ''; position: absolute; width: 1px; background: rgba(255, 143, 163, 0.2); top: 0; bottom: 0; left: 50%; }
-        .timeline-item { padding: 20px 40px; position: relative; width: 50%; }
+        .timeline-item { padding: 10px 40px; position: relative; width: 50%; }
         .timeline-item.left { left: 0; text-align: right; }
         .timeline-item.right { left: 50%; text-align: left; }
+        
+        .timeline-img-wrapper {
+            width: 100%; border-radius: 20px; overflow: hidden;
+            border: 4px solid var(--card-bg); box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: 0.4s ease; background: var(--card-bg); aspect-ratio: 4/3;
+        }
+        .timeline-img-wrapper:hover { transform: scale(1.03); border-color: var(--accent-color); }
+        .timeline-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
-        @media (max-width: 768px) { 
-            .sidebar-content { width: 100vw; }
+        /* --- FLIP CARDS --- */
+        .flip-card { background-color: transparent; width: 100%; height: 320px; perspective: 1000px; cursor: pointer; }
+        .flip-card-inner {
+            position: relative; width: 100%; height: 100%; text-align: center;
+            transition: transform 0.6s; transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back {
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            border-radius: 25px; padding: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .flip-card-front { background: var(--card-bg); color: var(--text-color); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .flip-card-back { background: var(--accent-color); color: #000; transform: rotateY(180deg); }
+
+        /* --- UTILS --- */
+        .section-title { color: var(--accent-color); font-weight: 800; margin-bottom: 50px; position: relative; }
+        .btn-romantic { background: var(--accent-color); color: #000 !important; border-radius: 50px; padding: 18px 50px; font-weight: 800; border: none; text-transform: uppercase; }
+        .heart-particle { position: fixed; pointer-events: none; z-index: 9999; animation: fly-up 1.5s linear forwards; }
+        
+        @keyframes fly-up {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--tw-x), var(--tw-y)) scale(0); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
             .timeline::after { left: 31px; }
             .timeline-item { width: 100%; padding-left: 70px; text-align: left !important; left: 0 !important; }
+            .sidebar-content { width: 100vw; }
         }
     </style>
 </head>
-<body onmousemove="handleMouseMove(event)" ontouchmove="handleMouseMove(event)">
+<body>
+
+    <button class="theme-switch" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    <div id="sidebarOverlay" onclick="closeNav()"></div>
 
     <div id="memorySidebar">
-        <a href="javascript:void(0)" style="position: absolute; top: 20px; right: 25px; font-size: 35px; text-decoration: none; color: #ff8fa3; z-index: 10;" onclick="closeNav()">×</a>
-        <div class="sidebar-content">
-            <div class="sidebar-header" style="font-size: 1.8rem; font-weight: 800; color: #ff8fa3; margin-bottom: 30px; letter-spacing: -1px;">Captured Moments</div>
-            <div class="sidebar-img-container">
-                <img id="sidebarImg" src="Together_1.jpeg" alt="Memory">
+        <a href="javascript:void(0)" style="position: absolute; top: 20px; right: 25px; font-size: 35px; text-decoration: none; color: var(--accent-color);" onclick="closeNav()">×</a>
+        <div class="sidebar-content" style="width: 380px; padding: 80px 30px; text-align: center;">
+            <h2 style="color: var(--accent-color); font-weight: 800; letter-spacing: -1px;">Our Gallery</h2>
+            <div style="width: 100%; aspect-ratio: 4/5; border-radius: 20px; overflow: hidden; margin: 30px 0; background: #000; position: relative;">
+                <img id="sidebarImg" src="Together_1.jpeg" style="width:100%; height:100%; object-fit:cover; transition:0.7s;">
             </div>
             <button class="btn btn-romantic w-100" onclick="nextImage()">View Next Memory →</button>
-            <p style="margin-top: 20px; color: #666; font-size: 0.9rem;">Every picture tells a story of us.</p>
         </div>
     </div>
 
-    <div class="side-tab-trigger" onclick="openNav()">
-        <span>✨</span> OPEN GALLERY
-    </div>
+    <div class="side-tab-trigger" onclick="openNav()">✨ OPEN GALLERY</div>
 
-    <header class="hero-section">
-        <div class="container" data-aos="zoom-in">
-            <h1 class="display-2 fw-bold" style="color: #fff;">Hello Gloria, Welcome💐</h1>
-            <p class="fs-5" style="color: #aaa;">A little something to remind you how much you're cherished.</p>
+    <header class="container text-center d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+        <div data-aos="zoom-in">
+            <h1 class="display-1 fw-bold">Hello Gloria💐</h1>
+            <p class="fs-4 opacity-75">Welcome to our little corner of the internet.</p>
         </div>
     </header>
-
-    <section class="py-5 text-center">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">A special song for you😮‍💨</h2>
-            <div class="video-wrapper" data-aos="zoom-in">
-                <div class="ratio ratio-16x9">
-                    <iframe src="https://www.youtube.com/embed/yKNxeF4KMsY?rel=0" allowfullscreen></iframe>
-                </div>
-            </div>
-            
-            <a href="https://open.spotify.com/track/7m9OqQk4RVRkw9JJ76pcYv" target="_blank" class="spotify-link-card" data-aos="fade-up">
-                <div class="d-flex align-items-center p-4">
-                    <div class="visualizer me-4">
-                        <div class="bar" style="animation-delay: 0.1s;"></div>
-                        <div class="bar" style="animation-delay: 0.3s; height: 25px;"></div>
-                        <div class="bar" style="animation-delay: 0.2s; height: 15px;"></div>
-                        <div class="bar" style="animation-delay: 0.5s; height: 28px;"></div>
-                        <div class="bar" style="animation-delay: 0.4s; height: 18px;"></div>
-                    </div>
-                    <div class="flex-grow-1 text-start">
-                        <h4 class="mb-0 fw-bold">Yellow - Coldplay</h4>
-                        <p class="mb-0 text-muted">Tap to open in Spotify</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </section>
 
     <section class="py-5">
         <div class="container text-center">
             <h2 class="section-title" data-aos="fade-up">Our Journey</h2>
             <div class="timeline">
                 <div class="timeline-item left" data-aos="fade-right">
-                    <h3 style="color: #fff;">The Beginning</h3>
-                    <img src="Together_1.jpeg" class="timeline-img">
+                    <div class="timeline-img-wrapper">
+                        <img src="Together_1.jpeg" alt="Memory 1">
+                    </div>
+                    <h5 class="mt-3">Where it started</h5>
                 </div>
                 <div class="timeline-item right" data-aos="fade-left">
-                    <h3 style="color: #fff;">Special Moments</h3>
-                    <img src="Together_2.jpeg" class="timeline-img">
+                    <div class="timeline-img-wrapper">
+                        <img src="Together_2.jpeg" alt="Memory 2">
+                    </div>
+                    <h5 class="mt-3">The first laugh</h5>
                 </div>
                 <div class="timeline-item left" data-aos="fade-right">
-                    <h3 style="color: #fff;">Forever & Always</h3>
-                    <img src="Gloria_2.jpeg" class="timeline-img">
+                    <div class="timeline-img-wrapper">
+                        <img src="Gloria_2.jpeg" alt="Memory 3">
+                    </div>
+                    <h5 class="mt-3">A special day</h5>
+                </div>
+                <div class="timeline-item right" data-aos="fade-left">
+                    <div class="timeline-img-wrapper">
+                        <img src="Together_3.jpeg" alt="Memory 4">
+                    </div>
+                    <h5 class="mt-3">Moments in time</h5>
+                </div>
+                <div class="timeline-item left" data-aos="fade-right">
+                    <div class="timeline-img-wrapper">
+                        <img src="Together_4.jpeg" alt="Memory 5">
+                    </div>
+                    <h5 class="mt-3">Adventures</h5>
+                </div>
+                <div class="timeline-item right" data-aos="fade-left">
+                    <div class="timeline-img-wrapper">
+                        <img src="Together_5.jpeg" alt="Memory 6">
+                    </div>
+                    <h5 class="mt-3">To be continued...</h5>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-5 text-center" style="min-height: 450px;">
+    <section class="py-5">
+        <div class="container text-center">
+            <h2 class="section-title" data-aos="fade-up">Why You're Special</h2>
+            <div class="row g-4 mt-2">
+                <div class="col-md-4" data-aos="flip-left">
+                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="display-4 mb-3">💖</div>
+                                <h3>Your Heart</h3>
+                                <p class="small opacity-50">Tap to see why</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>The Purest Heart</h3>
+                                <p>The way you care for people and the kindness you show every single day makes me so proud to know you.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
+                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="display-4 mb-3">👑</div>
+                                <h3>A Princess</h3>
+                                <p class="small opacity-50">Tap to see why</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>Pure Grace</h3>
+                                <p>You carry yourself with a grace that is rare. You deserve to be cherished and protected always.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="flip-left" data-aos-delay="400">
+                    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <div class="display-4 mb-3">🥂</div>
+                                <h3>Our Future</h3>
+                                <p class="small opacity-50">Tap to see why</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>Infinity</h3>
+                                <p>This is only the beginning. I'm looking forward to every sunrise and sunset we get to share together.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 text-center" style="margin-bottom: 100px;">
         <div class="container" data-aos="zoom-in">
             <h2 class="section-title display-4">Will you say Yes?</h2>
-            <div class="d-flex justify-content-center gap-4 mt-5">
-                <button id="yesBtn" class="btn-romantic btn-lg" onclick="handleYes()">Yes, let's do it</button>
-                <button id="noBtn" class="btn btn-outline-light btn-lg rounded-pill px-5" onmouseover="moveNo()">No</button>
+            <div class="mt-5">
+                <button id="yesBtn" class="btn-romantic btn-lg" onclick="handleYes()">Yes, let's do it ❤️</button>
             </div>
-            <div id="successMsg" class="alert mt-5 p-5 shadow-lg" style="display:none; border-radius: 30px; background: rgba(255, 143, 163, 0.1); color: #ff8fa3; border: 1px solid #ff8fa3;">
+            <div id="successMsg" class="alert mt-5 p-5 shadow-lg" style="display:none; border-radius: 30px; background: var(--glass-bg); color: var(--accent-color); border: 1px solid var(--accent-color);">
                 <h1 class="display-4 fw-bold">Victory! ❤️</h1>
                 <p class="fs-3">Can't wait to see you, princess.</p>
             </div>
@@ -237,71 +251,72 @@
     <script>
         AOS.init({ duration: 1000, once: true });
 
-        // Sidebar Control
-        const galleryImages = ["Together_1.jpeg", "Together_2.jpeg", "Gloria_2.jpeg"];
+        // Sidebar logic
+        function openNav() {
+            document.getElementById("memorySidebar").style.width = window.innerWidth > 768 ? "400px" : "100%";
+            document.getElementById("sidebarOverlay").style.display = "block";
+        }
+        function closeNav() {
+            document.getElementById("memorySidebar").style.width = "0";
+            document.getElementById("sidebarOverlay").style.display = "none";
+        }
+
+        // Mode Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById("themeBtn");
+            if (body.getAttribute("data-theme") === "light") {
+                body.removeAttribute("data-theme");
+                btn.innerHTML = "🌙";
+            } else {
+                body.setAttribute("data-theme", "light");
+                btn.innerHTML = "☀️";
+            }
+        }
+
+        // Gallery Switcher
+        const galleryImages = ["Together_1.jpeg", "Together_2.jpeg", "Gloria_2.jpeg", "Together_3.jpeg", "Together_4.jpeg", "Together_5.jpeg"];
         let imgIdx = 0;
         let isTransitioning = false;
 
-        function openNav() { document.getElementById("memorySidebar").style.width = window.innerWidth > 768 ? "400px" : "100%"; }
-        function closeNav() { document.getElementById("memorySidebar").style.width = "0"; }
-
-        // --- IMPROVED IMAGE TRANSITION LOGIC ---
         function nextImage() {
             if (isTransitioning) return;
             isTransitioning = true;
-
             const img = document.getElementById("sidebarImg");
+            img.style.opacity = "0";
+            img.style.transform = "scale(1.1)";
             
-            // Start Fade out + Scale up
-            img.classList.add("img-fade");
-
             setTimeout(() => {
-                // Change source while invisible
                 imgIdx = (imgIdx + 1) % galleryImages.length;
                 img.src = galleryImages[imgIdx];
-                
-                // Once source is loaded, fade back in
                 img.onload = () => {
-                    img.classList.remove("img-fade");
+                    img.style.opacity = "1";
+                    img.style.transform = "scale(1)";
                     isTransitioning = false;
                 };
-            }, 700); // Matches the CSS transition duration
+            }, 700);
         }
 
-        // Heart Cursor Effect
-        function handleMouseMove(e) {
-            if (Math.random() > 0.15) return; 
+        // Floating Hearts
+        window.addEventListener('mousemove', (e) => {
+            if (Math.random() > 0.12) return;
             const heart = document.createElement("div");
-            heart.innerHTML = "❤️";
-            heart.className = "heart-particle";
-            const x = e.clientX;
-            const y = e.clientY;
-            heart.style.left = x + "px";
-            heart.style.top = y + "px";
-            const tx = (Math.random() - 0.5) * 200;
-            const ty = (Math.random() - 0.5) * 200 - 150;
-            const tr = Math.random() * 360;
-            heart.style.setProperty('--tw-x', `${tx}px`);
-            heart.style.setProperty('--tw-y', `${ty}px`);
-            heart.style.setProperty('--tw-r', `${tr}deg`);
+            heart.innerHTML = "❤️"; heart.className = "heart-particle";
+            heart.style.left = e.clientX + "px"; heart.style.top = e.clientY + "px";
+            heart.style.color = "var(--accent-color)";
+            heart.style.setProperty('--tw-x', `${(Math.random()-0.5)*200}px`);
+            heart.style.setProperty('--tw-y', `${(Math.random()-0.5)*200-150}px`);
+            heart.style.setProperty('--tw-r', `${Math.random()*360}deg`);
             document.body.appendChild(heart);
             setTimeout(() => heart.remove(), 1500);
-        }
+        });
 
         function handleYes() {
             document.getElementById('successMsg').style.display = 'block';
-            document.getElementById('noBtn').style.display = 'none';
             document.getElementById('yesBtn').style.display = 'none';
             const phone = "256761417053"; 
             const msg = "what time will you pick me up ❤️";
-            setTimeout(() => { window.location.href = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`; }, 1500);
-        }
-
-        function moveNo() {
-            const btn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
-            btn.style.position = 'fixed'; btn.style.left = x + 'px'; btn.style.top = y + 'px';
+            setTimeout(() => { window.location.href = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`; }, 2000);
         }
     </script>
 </body>
