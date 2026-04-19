@@ -27,6 +27,14 @@
         .timeline-item.right { left: 50%; text-align: left; }
         .timeline-img { width: 100%; border-radius: 15px; margin-top: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
+        /* Floating Audio Button */
+        #music-control {
+            position: fixed; bottom: 20px; left: 20px; z-index: 1000;
+            background: #ff4d6d; color: white; border: none; border-radius: 50%;
+            width: 50px; height: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex; align-items: center; justify-content: center; font-size: 20px;
+        }
+
         /* Interactive Cards */
         .reason-card { 
             background: white; border-radius: 20px; padding: 30px; 
@@ -34,15 +42,17 @@
         }
         .reason-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2); }
 
-        .btn-romantic { 
-            background: #ff4d6d; color: white !important; border-radius: 50px; 
-            padding: 15px 40px; text-decoration: none; font-weight: bold;
-        }
-
         #noBtn { position: relative; transition: 0.1s; z-index: 1000; }
     </style>
 </head>
 <body onmousemove="spawnHeart(event)">
+
+    <audio id="mySong" loop>
+        <source src="PASTE_DIRECT_MP3_LINK_HERE" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <button id="music-control" onclick="toggleMusic()">🎵</button>
 
     <header class="hero-section">
         <div class="container">
@@ -110,7 +120,6 @@
     <section class="section py-5 text-center" style="min-height: 500px;">
         <div class="container" data-aos="zoom-in">
             <h2 style="color: #ff4d6d; font-size: 3rem;">Will you pardon me?</h2>
-            <p class="mb-5 text-muted">I'm waiting for your answer... ❤️</p>
             <div class="d-flex justify-content-center gap-3">
                 <button id="yesBtn" class="btn btn-danger btn-lg rounded-pill px-5" onclick="handleYes()">Yes, I pardon you</button>
                 <button id="noBtn" class="btn btn-outline-secondary btn-lg rounded-pill px-5" onmouseover="moveNo()">No</button>
@@ -126,9 +135,21 @@
     <script>
         AOS.init({ duration: 1000, once: true });
 
+        // Audio Logic
+        const song = document.getElementById("mySong");
+        function toggleMusic() {
+            if (song.paused) {
+                song.play();
+                document.getElementById("music-control").innerHTML = "⏸";
+            } else {
+                song.pause();
+                document.getElementById("music-control").innerHTML = "🎵";
+            }
+        }
+
         // Floating Hearts Script
         function spawnHeart(e) {
-            if (Math.random() > 0.1) return; // Don't spawn too many
+            if (Math.random() > 0.1) return;
             const heart = document.createElement("div");
             heart.innerHTML = "❤️";
             heart.className = "heart-particle";
