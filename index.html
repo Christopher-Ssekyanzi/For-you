@@ -9,17 +9,14 @@
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #fdfafb; overflow-x: hidden; color: #000; }
         
-        /* Floating Hearts Effect */
         .heart-particle { position: fixed; color: #ff4d6d; pointer-events: none; z-index: 9999; transition: transform 0.2s ease-out; }
 
-        /* Hero - Solid Black Text */
         .hero-section {
             background: linear-gradient(135deg, #ff85a1, #ffe5ec, #fff5f8);
             min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 50px 20px;
         }
-        .hero-section h1, .hero-section p { color: #000 !important; font-weight: 700; text-shadow: none !important; }
+        .hero-section h1, .hero-section p { color: #000 !important; font-weight: 700; }
 
-        /* Timeline Styling */
         .timeline { position: relative; max-width: 800px; margin: 0 auto; padding: 40px 0; }
         .timeline::after { content: ''; position: absolute; width: 2px; background: #ff4d6d; top: 0; bottom: 0; left: 50%; }
         .timeline-item { padding: 10px 40px; position: relative; width: 50%; }
@@ -27,18 +24,15 @@
         .timeline-item.right { left: 50%; text-align: left; }
         .timeline-img { width: 100%; border-radius: 15px; margin-top: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
-        /* Floating Audio Button */
-        #music-control {
-            position: fixed; bottom: 20px; left: 20px; z-index: 1000;
-            background: #ff4d6d; color: white; border: none; border-radius: 50%;
-            width: 50px; height: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            display: flex; align-items: center; justify-content: center; font-size: 20px;
+        /* Spotify Section Styling */
+        .spotify-container {
+            background: white; border-radius: 20px; padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-top: 50px;
         }
 
-        /* Interactive Cards */
         .reason-card { 
             background: white; border-radius: 20px; padding: 30px; 
-            transition: 0.3s; border: 1px solid #ffe5ec; cursor: pointer;
+            transition: 0.3s; border: 1px solid #ffe5ec;
         }
         .reason-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2); }
 
@@ -46,13 +40,6 @@
     </style>
 </head>
 <body onmousemove="spawnHeart(event)">
-
-    <audio id="mySong" loop>
-        <source src="PASTE_DIRECT_MP3_LINK_HERE" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
-    <button id="music-control" onclick="toggleMusic()">🎵</button>
 
     <header class="hero-section">
         <div class="container">
@@ -67,28 +54,37 @@
 
     <section class="section py-5">
         <div class="container text-center">
-            <h2 class="mb-5" style="color: #ff4d6d;">Our Beautiful Journey</h2>
-            <div class="timeline">
-                <div class="timeline-item left" data-aos="fade-right">
-                    <h3>The Beginning</h3>
-                    <p>Where it all started. I remember every detail.</p>
-                    <img src="PASTE_PHOTO_LINK_1" class="timeline-img">
-                </div>
-                <div class="timeline-item right" data-aos="fade-left">
-                    <h3>Special Moments</h3>
-                    <p>Every laugh we've shared is a treasure.</p>
-                    <img src="PASTE_PHOTO_LINK_2" class="timeline-img">
-                </div>
-                <div class="timeline-item left" data-aos="fade-right">
-                    <h3>My Promise</h3>
-                    <p>To always be there, even when things get tough.</p>
-                    <img src="PASTE_PHOTO_LINK_3" class="timeline-img">
+            <h2 class="mb-4" style="color: #ff4d6d;">A Song for You 🎵</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8 spotify-container" data-aos="fade-up">
+                    <p class="text-muted mb-3">Press play while you scroll through our memories...</p>
+                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/YOUR_TRACK_ID_HERE?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="section py-5 bg-white">
+        <div class="container text-center">
+            <h2 class="mb-5" style="color: #ff4d6d;">Our Beautiful Journey</h2>
+            <div class="timeline">
+                <div class="timeline-item left" data-aos="fade-right">
+                    <h3>The Beginning</h3>
+                    <img src="PASTE_PHOTO_LINK_1" class="timeline-img">
+                </div>
+                <div class="timeline-item right" data-aos="fade-left">
+                    <h3>Special Moments</h3>
+                    <img src="PASTE_PHOTO_LINK_2" class="timeline-img">
+                </div>
+                <div class="timeline-item left" data-aos="fade-right">
+                    <h3>My Promise</h3>
+                    <img src="PASTE_PHOTO_LINK_3" class="timeline-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section py-5">
         <div class="container">
             <h2 class="text-center mb-5" style="color: #ff4d6d;">Why I Adore You</h2>
             <div class="row g-4 text-center">
@@ -120,7 +116,7 @@
     <section class="section py-5 text-center" style="min-height: 500px;">
         <div class="container" data-aos="zoom-in">
             <h2 style="color: #ff4d6d; font-size: 3rem;">Will you pardon me?</h2>
-            <div class="d-flex justify-content-center gap-3">
+            <div class="d-flex justify-content-center gap-3 mt-4">
                 <button id="yesBtn" class="btn btn-danger btn-lg rounded-pill px-5" onclick="handleYes()">Yes, I pardon you</button>
                 <button id="noBtn" class="btn btn-outline-secondary btn-lg rounded-pill px-5" onmouseover="moveNo()">No</button>
             </div>
@@ -135,19 +131,6 @@
     <script>
         AOS.init({ duration: 1000, once: true });
 
-        // Audio Logic
-        const song = document.getElementById("mySong");
-        function toggleMusic() {
-            if (song.paused) {
-                song.play();
-                document.getElementById("music-control").innerHTML = "⏸";
-            } else {
-                song.pause();
-                document.getElementById("music-control").innerHTML = "🎵";
-            }
-        }
-
-        // Floating Hearts Script
         function spawnHeart(e) {
             if (Math.random() > 0.1) return;
             const heart = document.createElement("div");
