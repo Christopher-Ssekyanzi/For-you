@@ -190,19 +190,23 @@
         AOS.init({ duration: 1000, once: true });
 
         function handleYes() {
-            document.getElementById('successMsg').style.display = 'block';
-            document.getElementById('noBtn').style.display = 'none';
-            document.getElementById('yesBtn').style.display = 'none';
+    // 1. Show the success message on the site
+    document.getElementById('successMsg').style.display = 'block';
+    document.getElementById('noBtn').style.display = 'none';
+    document.getElementById('yesBtn').style.display = 'none';
 
-            // REPLACE WITH YOUR ACTUAL EMAIL
-            const myEmail = "ssekyanzichristopher19@gmail.com"; 
-            const subject = "I Pardon You! ❤️";
-            const body = "I've seen the website and I officially pardon you. I love you! ❤️";
-            
-            setTimeout(() => {
-                window.location.href = `mailto:${myEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            }, 1000);
-        }
+    // 2. Prepare WhatsApp details
+    // IMPORTANT: Use your full phone number with country code, NO plus sign or spaces.
+    // Example: 15551234567 (for a US number)
+    const myPhoneNumber = "0761417053"; 
+    const message = "I've seen the website and I officially pardon you! ❤️";
+    
+    // 3. Trigger WhatsApp (wa.me link)
+    setTimeout(() => {
+        const whatsappUrl = `https://wa.me/${myPhoneNumber}?text=${encodeURIComponent(message)}`;
+        window.location.href = whatsappUrl;
+    }, 1000);
+}
 
         function moveNo() {
             const noBtn = document.getElementById('noBtn');
