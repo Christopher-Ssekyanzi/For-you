@@ -389,9 +389,9 @@
             }
         }
 
-        function stopAllVideos() {
+        function stopAllVideos(excludeVideoElement = null) {
             document.querySelectorAll('video').forEach(video => {
-                if (video !== event.target) {
+                if (video !== excludeVideoElement) {
                     video.pause();
                     video.currentTime = 0;
                 }
@@ -447,7 +447,7 @@
 
             // Add event listener to pause other videos when a slideshow video plays
             targetElement.querySelectorAll('video').forEach(video => {
-                video.addEventListener('play', stopAllVideos);
+                video.addEventListener('play', () => stopAllVideos(video));
             });
         }
 
@@ -554,16 +554,16 @@
 
             if (cardElement.classList.contains('flipped')) {
                 if (cardIndex === 0) {
-                    stopAllVideos();
+                    stopAllVideos(); // No video to exclude
                     const randomIndex = Math.floor(Math.random() * academicJokes.length);
                     backContentElement.textContent = academicJokes[randomIndex];
                 } else if (cardIndex === 1) {
-                    stopAllVideos();
+                    stopAllVideos(backContentElement); // Exclude this video from pausing
                     backContentElement.src = reelUrl;
                     backContentElement.load();
                     backContentElement.play();
                 } else if (cardIndex === 2) {
-                    stopAllVideos();
+                    stopAllVideos(); // No video to exclude
                     const randomIndex = Math.floor(Math.random() * compliments.length);
                     backContentElement.textContent = compliments[randomIndex];
                 }
