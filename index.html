@@ -140,10 +140,10 @@
         <h2 class='text-center mb-4'>Let this keep you</h2>
         <div class='row g-3'>
             <div class='col-12 col-md-4'>
-                <div class='flip-card' onclick='this.classList.toggle("flipped")'>
+                <div class='flip-card' onclick='handleAffirmationClick(this)'>
                     <div class='flip-card-inner'>
-                        <div class='flip-card-front'><h3>Strength</h3></div>
-                        <div class='flip-card-back'><p>You inspire me every day.</p></div>
+                        <div class='flip-card-front'><h3>Secret Message</h3><p class='small'>(Tap to reveal)</p></div>
+                        <div class='flip-card-back'><p id='affirmationText' style='font-weight:bold;'>You are my greatest adventure.</p></div>
                     </div>
                 </div>
             </div>
@@ -158,10 +158,10 @@
             <div class='col-12 col-md-4'>
                 <div class='flip-card' onclick='handlePraiseClick(this)'>
                     <div class='flip-card-inner'>
-                        <div class='flip-card-front'><h3>Praises for You</h3><p class='small'>(Click to see more)</p></div>
+                        <div class='flip-card-front'><h3>Praises for You</h3><p class='small'>(Tap to see more)</p></div>
                         <div class='flip-card-back'>
                             <p id='praiseText' style='font-size: 1.1rem; font-weight: bold;'>You are breathtakingly beautiful, inside and out.</p>
-                            <p class='small mt-2'>Click again for a new praise! ✨</p>
+                            <p class='small mt-2'>Tap again for a new praise! ✨</p>
                         </div>
                     </div>
                 </div>
@@ -189,6 +189,15 @@
 
         function toggleVideoFlip(card) { const v = document.getElementById('reelVideo'); card.classList.toggle('flipped'); card.classList.contains('flipped') ? v.play() : v.pause(); }
 
+        const affirmations = [
+            "You are my greatest adventure.",
+            "Every day with you is a gift.",
+            "You are capable of amazing things.",
+            "Your kindness is a superpower.",
+            "You make the world better just by being in it.",
+            "I am so proud of everything you are."
+        ];
+
         const praises = [
             "You are breathtakingly beautiful, inside and out.",
             "Your taste in clothes is impeccable—you always look stunning!",
@@ -202,21 +211,23 @@
             "Every time I see you, I'm reminded how lucky I am."
         ];
 
-        function handlePraiseClick(card) {
-            if (!card.classList.contains('flipped')) {
+        function handleAffirmationClick(card) {
+             if (card.classList.contains('flipped')) {
+                card.classList.remove('flipped');
+            } else {
+                const textElem = document.getElementById('affirmationText');
+                textElem.innerText = affirmations[Math.floor(Math.random() * affirmations.length)];
                 card.classList.add('flipped');
+            }
+        }
+
+        function handlePraiseClick(card) {
+            if (card.classList.contains('flipped')) {
+                card.classList.remove('flipped');
             } else {
                 const textElem = document.getElementById('praiseText');
-                const current = textElem.innerText;
-                let next = current;
-                while (next === current) {
-                    next = praises[Math.floor(Math.random() * praises.length)];
-                }
-                textElem.style.opacity = 0;
-                setTimeout(() => {
-                    textElem.innerText = next;
-                    textElem.style.opacity = 1;
-                }, 200);
+                textElem.innerText = praises[Math.floor(Math.random() * praises.length)];
+                card.classList.add('flipped');
             }
         }
 
