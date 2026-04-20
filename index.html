@@ -230,7 +230,7 @@
 
     <div class="side-tab-trigger" onclick="openNav()">✨ OPEN GALLERY</div>
 
-    <header class="container text-center d-flex flex-column align-items-center justify-content-start" style="min-height: 100vh; padding-top: 50px; background-image: url('Gloria_1.jpeg'); background-size: cover; background-position: center center;">
+    <header class="container text-center d-flex flex-column align-items-start justify-content-center" style="min-height: 100vh; padding-top: 50px; background-image: url('Gloria_1.jpeg'); background-size: cover; background-position: center center;">
         <div data-aos="zoom-in" class="hero-content">
             <div class="hero-aura"></div>
             <h1 class="display-1 fw-bold main-title">
@@ -317,11 +317,11 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card p-4 shadow-sm" style="background: var(--card-bg); border-radius: 20px; border: 1px solid var(--line-color);">
-                    <h3 class="mb-3">Guess My Lucky Number (1-10)!</h3>
-                    <input type="number" id="guessInput" class="form-control mb-3 text-center" min="1" max="10" placeholder="Enter your guess" style="background: var(--glass-bg); color: var(--text-color); border: 1px solid var(--accent-color);">
-                    <button class="btn btn-romantic" onclick="checkGuess()">Guess!</button>
+                    <h3 class="mb-3">How many karates do you deserve?</h3>
+                    <input type="number" id="guessInput" class="form-control mb-3 text-center" min="1" max="5" placeholder="Enter your number (1-5)" style="background: var(--glass-bg); color: var(--text-color); border: 1px solid var(--accent-color);">
+                    <button class="btn btn-romantic" onclick="checkGuess()">Submit!</button>
                     <p id="gameMessage" class="mt-3 fs-5"></p>
-                    <button class="btn btn-outline-secondary mt-3" onclick="resetGame()" style="display:none;" id="resetButton">Play Again</button>
+                    <button class="btn btn-outline-secondary mt-3" onclick="resetGame()" style="display:none;" id="resetButton">Try Again</button>
                 </div>
             </div>
         </div>
@@ -579,40 +579,32 @@
             }
         }
 
-        // Guess the Number Game Logic
-        let randomNumber = Math.floor(Math.random() * 10) + 1;
-        let attempts = 0;
+        // 'How many karates do you deserve?' Game Logic
+        const correctKarates = 3; // Let's say the correct answer is 3 karates
 
         function checkGuess() {
             const userGuess = parseInt(document.getElementById('guessInput').value);
             const gameMessage = document.getElementById('gameMessage');
             const resetButton = document.getElementById('resetButton');
 
-            if (isNaN(userGuess) || userGuess < 1 || userGuess > 10) {
-                gameMessage.textContent = 'Please enter a number between 1 and 10.';
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 5) {
+                gameMessage.textContent = 'Please enter a number between 1 and 5.';
                 gameMessage.style.color = 'orange';
                 return;
             }
 
-            attempts++;
-
-            if (userGuess === randomNumber) {
-                gameMessage.textContent = `🎉 You got it in ${attempts} attempts! My lucky number was ${randomNumber}!`;
+            if (userGuess === correctKarates) {
+                gameMessage.textContent = `That's what I thought! You deserve $\{userGuess} karates! 😉`;
                 gameMessage.style.color = 'var(--accent-color)';
                 document.getElementById('guessInput').disabled = true;
                 resetButton.style.display = 'block';
-            } else if (userGuess < randomNumber) {
-                gameMessage.textContent = 'Too low! Try again.';
-                gameMessage.style.color = 'red';
             } else {
-                gameMessage.textContent = 'Too high! Try again.';
+                gameMessage.textContent = 'Hmm, let's try that again. Maybe you deserve more... or less?';
                 gameMessage.style.color = 'red';
             }
         }
 
         function resetGame() {
-            randomNumber = Math.floor(Math.random() * 10) + 1;
-            attempts = 0;
             document.getElementById('guessInput').value = '';
             document.getElementById('guessInput').disabled = false;
             document.getElementById('gameMessage').textContent = '';
