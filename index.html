@@ -93,7 +93,7 @@
         .timeline-img-wrapper { width: 100%; border-radius: 20px; overflow: hidden; border: 4px solid var(--card-bg); aspect-ratio: 4/3; background: var(--card-bg); box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: all 0.3s ease; }
         .timeline-img-wrapper:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.3); }
         .timeline-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        
+
         /* New slideshow wrapper styling */
         .timeline-slideshow-wrapper {
             width: 100%; border-radius: 20px; overflow: hidden; border: 4px solid var(--card-bg); aspect-ratio: 4/3; background: var(--card-bg); box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: all 0.3s ease;
@@ -221,19 +221,25 @@
                 <p class="mt-3 fw-bold">Where it started</p>
                 <p class="mt-2">You cried about this climb for months😅.</p>
             </div>
+            <!-- Replaced slideshow-1 with a static image -->
             <div class="timeline-item right" data-aos="fade-left">
-                <div class="timeline-slideshow-wrapper">
-                    <div class="owl-carousel owl-theme" id="slideshow-1"></div>
-                </div>
+                <div class="timeline-img-wrapper"><img src="Gloria_2.jpeg"></div>
                 <p class="mt-3 fw-bold">Sweet Snapshots</p>
-                <p class="mt-2">A few random memories from our gallery.</p>
+                <p class="mt-2">A memory with a sweet smile.</p>
             </div>
+            <!-- Replaced slideshow-2 with a static image -->
             <div class="timeline-item left" data-aos="fade-right">
-                <div class="timeline-slideshow-wrapper">
-                    <div class="owl-carousel owl-theme" id="slideshow-2"></div>
-                </div>
+                <div class="timeline-img-wrapper"><img src="Gloria_3.jpeg"></div>
                 <p class="mt-3 fw-bold">More Adventures</p>
                 <p class="mt-2">Looking forward to many more.</p>
+            </div>
+            <!-- NEW: Slideshow with only JPG images -->
+            <div class="timeline-item right" data-aos="fade-left">
+                <div class="timeline-slideshow-wrapper">
+                    <div class="owl-carousel owl-theme" id="slideshow-3"></div>
+                </div>
+                <p class="mt-3 fw-bold">Special Moments</p>
+                <p class="mt-2">A collection of our best JPEG memories.</p>
             </div>
         </div>
     </section>
@@ -330,26 +336,39 @@
             }
         }
 
-        function getRandomImages(count) {
-            const imageFiles = gallery.filter(item => item.type === 'image');
-            if (imageFiles.length === 0) return [];
+        // Modified getRandomMedia to allow filtering by type and extension
+        function getRandomMedia(count, typeFilter = null, extensionFilter = null) {
+            let filteredMedia = gallery;
+            if (typeFilter) {
+                filteredMedia = filteredMedia.filter(item => item.type === typeFilter);
+            }
+            if (extensionFilter) {
+                filteredMedia = filteredMedia.filter(item => item.src.toLowerCase().endsWith('.' + extensionFilter));
+            }
+            if (filteredMedia.length === 0) return [];
 
-            const shuffled = [...imageFiles].sort(() => 0.5 - Math.random()); // Use spread to avoid modifying original array
+            const shuffled = [...filteredMedia].sort(() => 0.5 - Math.random());
             return shuffled.slice(0, count);
         }
 
-        function initSlideshow(id, count) {
+        // Modified initSlideshow to accept typeFilter and extensionFilter
+        function initSlideshow(id, count, typeFilter = null, extensionFilter = null) {
             const targetElement = document.getElementById(id);
             if (!targetElement) return;
 
-            const images = getRandomImages(count);
+            const mediaItems = getRandomMedia(count, typeFilter, extensionFilter);
             let carouselContent = '';
-            images.forEach(img => {
-                carouselContent += '<div class="item"><img src="' + img.src + '" alt="Memory" loading="lazy"></div>';
+            mediaItems.forEach(item => {
+                if (item.type === 'image') {
+                    carouselContent += '<div class="item"><img src="' + item.src + '" alt="Memory" loading="lazy"></div>';
+                } else if (item.type === 'video') {
+                    // For video, include a video tag
+                    carouselContent += '<div class="item"><video controls autoplay muted loop src="' + item.src + '" style="width:100%; height:100%; object-fit:cover; border-radius: 16px;"></video></div>';
+                }
             });
             targetElement.innerHTML = carouselContent;
 
-            $(`#$<built-in function id>`).owlCarousel({
+            $(`#${id}`).owlCarousel({
                 loop: true,
                 margin: 10,
                 nav: false,
@@ -375,10 +394,9 @@
             if (gallery.length > 0) {
                 showMedia(gIdx);
             }
-            
-            // Initialize slideshows after DOM is ready
-            initSlideshow('slideshow-1', 4);
-            initSlideshow('slideshow-2', 4);
+
+            // Initialize the new slideshow for JPEG images
+            initSlideshow('slideshow-3', 4, 'image', 'jpeg');
         };
 
         function openNav() {
@@ -392,7 +410,7 @@
             document.body.style.overflow = "auto";
         }
 
-        const gallery = [{"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"}, {"src": "Gloria_1.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.45.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.00.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.48.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.16.jpeg", "type": "image"}, {"src": "Gloria_3.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.03.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.15 (1).jpeg", "type": "image"}, {"src": "Together_1.jpeg", "type": "image"}, {"src": "Gloria_2.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.13.jpeg", "type": "image"}, {"src": "Together_2.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.08.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.47 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.01.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.59.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.44.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.14 (1).jpeg", "type": "image"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.18.mp4", "type": "video"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.18 (1).mp4", "type": "video"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.00 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.16 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.17.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.11.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.02.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.46.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.14.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.48 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.17 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.42.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.12 (1).jpeg", "type": "image"}, {"src": "SAMPLE IMAGE .jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.46 (1).jpeg", "type": "image"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.19.mp4", "type": "video"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.07.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.47.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.15.jpeg", "type": "image"}];
+        const gallery = [{"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"}, {"src": "Gloria_1.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.45.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.00.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.48.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.16.jpeg", "type": "image"}, {"src": "Gloria_3.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.03.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.15 (1).jpeg", "type": "image"}, {"src": "Together_1.jpeg", "type": "image"}, {"src": "Gloria_2.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.13.jpeg", "type": "image"}, {"src": "Together_2.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.08.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.47 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.01.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.59.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.44.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.14 (1).jpeg", "type": "image"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.18.mp4", "type": "video"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.18 (1).mp4", "type": "video"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.00 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.16 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.17.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.11.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.02.jpeg", "type": "image"}, {"src": "Trial_3.png", "type": "image"}, {"src": "Trial_1.png", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.46.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.14.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.48 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.17 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.42.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.12 (1).jpeg", "type": "image"}, {"src": "SAMPLE IMAGE .jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.46 (1).jpeg", "type": "image"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.19.mp4", "type": "video"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.07.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.47.jpeg", "type": "image"}, {"src": "Trial_2.png", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.15.jpeg", "type": "image"}];
         let gIdx = 0;
         const sidebarImage = document.getElementById("sidebarImage");
         const sidebarVideo = document.getElementById("sidebarVideo");
@@ -450,7 +468,7 @@
         function scrollToNextSection() {
             const firstSection = document.querySelector('section');
             if (firstSection) {
-                firstSection.scrollIntoView({
+                firstSection.scrollInView({
                     behavior: 'smooth'
                 });
             }
