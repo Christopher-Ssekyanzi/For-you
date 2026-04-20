@@ -45,14 +45,6 @@
         .cursor { color: var(--accent-color); animation: blink 0.7s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        .hero-aura {
-            pointer-events: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: clamp(250px, 70vw, 500px); height: clamp(250px, 70vw, 500px);
-            background: var(--accent-color); filter: blur(100px); opacity: 0.12; border-radius: 50%;
-            animation: pulse-aura 4s infinite alternate; z-index: -1;
-        }
-        @keyframes pulse-aura { from { transform: translate(-50%, -50%) scale(0.85); } to { transform: translate(-50%, -50%) scale(1.1); } }
-
         /* Custom animation for "Hi Gloria" */
         @keyframes glideIn {
             from { transform: translateX(-100%); opacity: 0; }
@@ -196,15 +188,15 @@
                 font-size: 0.8em;
             }
             .timeline-item {
-                padding-left: 40px; /* Reduce padding for timeline items */
+                padding-left: 40px;
             }
             .timeline::after {
-                left: 20px; /* Adjust timeline line position */
+                left: 20px;
             }
             .side-tab-trigger {
                 padding: 8px 5px;
                 font-size: 0.65em;
-                top: 55%; /* Further adjust position */
+                top: 55%;
             }
         }
     </style>
@@ -452,10 +444,7 @@
         }
 
         window.onload = function() {
-            AOS.init({
-                "duration": 1000,
-                "once": true
-            });
+            // Removed duplicate AOS.init() call
             setTimeout(startTypewriterEffect, 2000);
             // Initialize with the first media item if available
             if (gallery.length > 0) {
