@@ -7,66 +7,102 @@
     <title>For Gloria</title>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://unpkg.com/aos@2.3.1/dist/aos.css' rel='stylesheet'>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css'>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css'>
     <style>
         :root { --bg-color: #0f0f0f; --text-color: #e0e0e0; --accent-color: #ff8fa3; --card-bg: #161616; }
-        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', sans-serif; transition: 0.5s; overflow-x: hidden; margin: 0; }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
         .hero { height: 100vh; background: url('Gloria_1.jpeg') center/cover no-repeat; display: flex; align-items: center; justify-content: center; position: relative; }
-        .hero::before { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5); }
+        .hero::before { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.4); }
         .hero-content { position: relative; z-index: 10; text-align: center; }
-        #memorySidebar { height: 100%; width: 0; position: fixed; z-index: 2000; top: 0; left: 0; background: #111; overflow-x: hidden; transition: 0.5s; border-right: 2px solid var(--accent-color); }
-        .side-tab-trigger { position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 1500; background: var(--accent-color); color: #000; padding: 25px 12px; cursor: pointer; writing-mode: vertical-rl; border-radius: 0 10px 10px 0; font-weight: bold; border: none; }
-        .gallery-img { border-radius: 15px; width: 100%; height: auto; margin-bottom: 15px; border: 1px solid var(--accent-color); }
-        .main-carousel-item img { border-radius: 20px; width: 100%; height: 500px; object-fit: cover; border: 2px solid var(--accent-color); }
-        h1 { font-size: 5rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.7); }
+        .section-break { height: 100px; }
+        .flip-card { background-color: transparent; width: 300px; height: 300px; perspective: 1000px; margin: 20px auto; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .flip-card-front { background: var(--card-bg); border: 1px solid var(--accent-color); }
+        .flip-card-back { background: var(--accent-color); color: #000; transform: rotateY(180deg); }
+        .journey-frame { border: 2px solid var(--accent-color); border-radius: 15px; overflow: hidden; margin-bottom: 30px; background: var(--card-bg); }
+        .journey-frame img { width: 100%; height: 400px; object-fit: cover; }
+        .btn-custom { background: var(--accent-color); color: #000; font-weight: bold; border-radius: 30px; padding: 12px 30px; text-decoration: none; display: inline-block; transition: 0.3s; }
+        .btn-custom:hover { transform: scale(1.05); color: #000; opacity: 0.9; }
     </style>
 </head>
 <body>
-    <div id='memorySidebar'>
-        <div class='p-3 text-end'><a href='javascript:void(0)' onclick='closeNav()' style='color:white; font-size: 2.5rem; text-decoration: none;'>&times;</a></div>
-        <div class='container' id='sidebar-content' style='padding-bottom: 100px;'></div>
-    </div>
-    <button class='side-tab-trigger' onclick='openNav()'>✨ OPEN MEMORIES</button>
-
     <div class='hero'>
         <div class='hero-content'>
-            <h1 class='display-1 fw-bold'>Hi Gloria 33A</h1>
-            <p id='typewriter' style='font-size: 2rem; color: var(--accent-color); height: 1.5em;'></p>
+            <h1 class='display-1 fw-bold'>Hi Gloria ✨</h1>
+            <p style='font-size: 1.5rem;'>Specifically for you, because you're special.</p>
         </div>
+    </div>
+
+    <div class='section-break'></div>
+
+    <div class='container text-center py-5'>
+        <h2 class='mb-4'>A Little Something For You</h2>
+        <div class='ratio ratio-16x9 mb-4' style='max-width: 800px; margin: 0 auto;'>
+            <iframe src='https://www.youtube.com/embed/dQw4w9WgXcQ' title='YouTube video' allowfullscreen></iframe>
+        </div>
+        <a href='https://open.spotify.com' class='btn-custom'>🎵 Listen to Our Song on Spotify</a>
     </div>
 
     <div class='container py-5'>
         <h2 class='text-center mb-5' style='color: var(--accent-color);'>Our Journey</h2>
-        <div class='owl-carousel owl-theme' id='main-gallery'></div>
+        <div class='row' id='journey-content'>
+            <div class='col-md-6'>
+                <div class='journey-frame' data-aos='fade-up'>
+                    <img src='Gloria_2.jpeg' alt='First Memory'>
+                    <div class='p-3'>
+                        <h4>Where it began</h4>
+                        <p>Every moment with you is a treasure I hold dear.</p>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-6'>
+                <div class='journey-frame' data-aos='fade-up'>
+                    <img src='Gloria_3.jpeg' alt='Another Memory'>
+                    <div class='p-3'>
+                        <h4>Growing Together</h4>
+                        <p>Building a future filled with laughter and love.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js'></script>
-    <script>
-        const galleryData = [{"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"}, {"src": "Gloria_1.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.45.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.00.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.48.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.16.jpeg", "type": "image"}, {"src": "Gloria_3.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.03.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.15 (1).jpeg", "type": "image"}, {"src": "Together_1.jpeg", "type": "image"}, {"src": "Gloria_2.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.13.jpeg", "type": "image"}, {"src": "Together_2.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.08.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.47 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.01.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.59.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.44.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.14 (1).jpeg", "type": "image"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.18.mp4", "type": "video"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.18 (1).mp4", "type": "video"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.00 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.16 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.17.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.11.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.02.jpeg", "type": "image"}, {"src": "Trial_3.png", "type": "image"}, {"src": "Trial_1.png", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.46.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.14.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.48 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.17 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.42.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.12 (1).jpeg", "type": "image"}, {"src": "SAMPLE IMAGE .jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.46 (1).jpeg", "type": "image"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.19.mp4", "type": "video"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.07.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.47.jpeg", "type": "image"}, {"src": "Trial_2.png", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.15.jpeg", "type": "image"}, {"src": "The_reel.mp4", "type": "video"}];
-        function openNav() { document.getElementById('memorySidebar').style.width = '350px'; }
-        function closeNav() { document.getElementById('memorySidebar').style.width = '0'; }
+    <div class='container py-5'>
+        <h2 class='text-center mb-5'>Thoughts for You</h2>
+        <div class='row'>
+            <div class='col-md-4'>
+                <div class='flip-card'>
+                    <div class='flip-card-inner'>
+                        <div class='flip-card-front'><h3>Strength</h3></div>
+                        <div class='flip-card-back'><p>I admire your resilience and kindness every single day.</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-4'>
+                <div class='flip-card'>
+                    <div class='flip-card-inner'>
+                        <div class='flip-card-front'><h3>Joy</h3></div>
+                        <div class='flip-card-back'><p>Your smile is the brightest part of my world.</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-4'>
+                <div class='flip-card'>
+                    <div class='flip-card-inner'>
+                        <div class='flip-card-front'><h3>Love</h3></div>
+                        <div class='flip-card-back'><p>Always and forever, you have my heart.</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        $(document).ready(function() {
-            const owl = $('#main-gallery');
-            const sidebar = $('#sidebar-content');
-            galleryData.forEach(item => {
-                if(item.type === 'image') {
-                    owl.append(`<div class='item main-carousel-item'><img src='${item.src}'></div>`);
-                    sidebar.append(`<img src='${item.src}' class='gallery-img'>`);
-                }
-            });
-            owl.owlCarousel({ loop: true, margin: 20, items: 1, autoplay: true, autoplayTimeout: 3000 });
+    <div class='container text-center py-5'>
+        <a href='#' class='btn-custom px-5 py-3' style='font-size: 1.5rem;'>To My Forever 💖</a>
+    </div>
 
-            const phrases = ["You are amazing.", "Every moment is a gift.", "Specifically for you."];
-            let i = 0, j = 0; const el = document.getElementById('typewriter');
-            function type() {
-                if (j < phrases[i].length) { el.innerHTML += phrases[i][j++]; setTimeout(type, 100); }
-                else { setTimeout(() => { el.innerHTML = ''; j = 0; i = (i + 1) % phrases.length; type(); }, 2000); }
-            }
-            type();
-        });
-    </script>
+    <script src='https://unpkg.com/aos@2.3.1/dist/aos.js'></script>
+    <script>AOS.init();</script>
 </body>
 </html>
