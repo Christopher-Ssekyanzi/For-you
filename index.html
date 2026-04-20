@@ -155,7 +155,7 @@
             .flip-card-front, .flip-card-back { padding: 20px; }
             .btn-romantic { padding: 10px 20px; font-size: 0.9rem; }
             .section-title { font-size: 2rem; }
-            .side-tab-trigger { padding: 15px 8px; font-size: 0.8em; }
+            .side-tab-trigger { padding: 15px 8px; font-size: 0.8em; border-radius: 0 15px 15px 0; /* Slightly smaller radius */ }
         }
 
         @media (max-width: 480px) {
@@ -389,6 +389,15 @@
             }
         }
 
+        function stopAllVideos() {
+            document.querySelectorAll('video').forEach(video => {
+                if (video !== event.target) {
+                    video.pause();
+                    video.currentTime = 0;
+                }
+            });
+        }
+
         // Modified getRandomMedia to allow filtering by type and extension
         function getRandomMedia(count, typeFilter = null, extensionFilter = null) {
             let filteredMedia = gallery;
@@ -435,6 +444,11 @@
                     1000: { items: 1 }
                 }
             });
+
+            // Add event listener to pause other videos when a slideshow video plays
+            targetElement.querySelectorAll('video').forEach(video => {
+                video.addEventListener('play', stopAllVideos);
+            });
         }
 
         window.onload = function() {
@@ -461,6 +475,7 @@
             document.getElementById("memorySidebar").style.width = "0";
             document.getElementById("sidebarOverlay").style.display = "none";
             document.body.style.overflow = "auto";
+            stopAllVideos(); // Stop videos when sidebar is closed
         }
 
         const gallery = [{"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"}, {"src": "Gloria_1.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.45.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.00.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.48.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.16.jpeg", "type": "image"}, {"src": "Gloria_3.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.03.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.15 (1).jpeg", "type": "image"}, {"src": "Together_1.jpeg", "type": "image"}, {"src": "Gloria_2.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.13.jpeg", "type": "image"}, {"src": "Together_2.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.08.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.47 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.01.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.59.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.44.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.14 (1).jpeg", "type": "image"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.18.mp4", "type": "video"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.18 (1).mp4", "type": "video"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.00 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.16 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.17.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.11.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.02.jpeg", "type": "image"}, {"src": "Trial_3.png", "type": "image"}, {"src": "Trial_1.png", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.46.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.14.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.48 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.17 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.42.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.12 (1).jpeg", "type": "image"}, {"src": "SAMPLE IMAGE .jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.46 (1).jpeg", "type": "image"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.19.mp4", "type": "video"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.07.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.47.jpeg", "type": "image"}, {"src": "Trial_2.png", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.15.jpeg", "type": "image"}, {"src": "The_reel.mp4", "type": "video"}];
@@ -469,6 +484,7 @@
         const sidebarVideo = document.getElementById("sidebarVideo");
 
         function showMedia(index) {
+            stopAllVideos(); // Stop any other playing videos
             const item = gallery[index];
 
             // Hide all first and pause video
@@ -538,13 +554,16 @@
 
             if (cardElement.classList.contains('flipped')) {
                 if (cardIndex === 0) { // Academic Jokes
+                    stopAllVideos();
                     const randomIndex = Math.floor(Math.random() * academicJokes.length);
                     backContentElement.textContent = academicJokes[randomIndex];
                 } else if (cardIndex === 1) { // Reel
+                    stopAllVideos();
                     backContentElement.src = reelUrl;
                     backContentElement.load();
                     backContentElement.play();
                 } else if (cardIndex === 2) { // Compliment Generator
+                    stopAllVideos();
                     const randomIndex = Math.floor(Math.random() * compliments.length);
                     backContentElement.textContent = compliments[randomIndex];
                 }
