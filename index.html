@@ -39,6 +39,9 @@
         .spotify-btn { background-color: #1DB954; color: white; border: none; padding: 10px 25px; border-radius: 30px; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 15px; transition: 0.3s; }
         .spotify-btn:hover { background-color: #1ed760; color: white; transform: scale(1.05); }
 
+        .game-card { background: var(--card-bg); border: 2px solid var(--accent-color); border-radius: 15px; padding: 30px; margin: 40px auto; max-width: 500px; transition: var(--transition); }
+        .game-input { background: transparent; border: none; border-bottom: 2px solid var(--accent-color); color: var(--text-color); text-align: center; font-size: 1.5rem; width: 100px; margin: 20px 0; outline: none; }
+
         .journey-container { position: relative; max-width: 900px; margin: 30px auto; padding: 20px 10px; }
         .journey-container::after { content: ''; position: absolute; width: 2px; background-color: var(--accent-color); top: 0; bottom: 0; left: 50%; margin-left: -1px; opacity: 0.4; }
         .journey-item { padding: 10px 20px; position: relative; width: 50%; }
@@ -100,6 +103,17 @@
                     🎵 Open on Spotify
                 </a>
             </div>
+        </div>
+    </div>
+
+    <div class='container text-center'>
+        <div class='game-card'>
+            <h3>🥋 The Karate Challenge</h3>
+            <p>Gloria, how many karates do you want today?</p>
+            <input type='number' id='karateInput' class='game-input' placeholder='?'>
+            <br>
+            <button class='btn btn-outline-danger' onclick='playKarate()'>Check!</button>
+            <p id='gameFeedback' class='mt-3' style='min-height: 24px;'></p>
         </div>
     </div>
 
@@ -186,6 +200,21 @@
                 closeNav();
             }
         });
+
+        let karateAttempts = 0;
+        const targetAttempts = Math.floor(Math.random() * 3) + 2;
+        function playKarate() {
+            const input = document.getElementById('karateInput').value;
+            const feedback = document.getElementById('gameFeedback');
+            if(!input) return;
+            karateAttempts++;
+            if(karateAttempts < targetAttempts) {
+                feedback.innerText = "Hmm, " + input + "? Not quite enough karates for a queen! Try again. 😉";
+            } else {
+                feedback.innerHTML = "<b style='color:var(--accent-color)'>BINGO!</b> Whether it's " + input + " or a million, I'll always give you all the karates in the world because you're my everything. ❤️";
+                karateAttempts = 0;
+            }
+        }
 
         function toggleVideoFlip(card) { const v = document.getElementById('reelVideo'); card.classList.toggle('flipped'); card.classList.contains('flipped') ? v.play() : v.pause(); }
 
