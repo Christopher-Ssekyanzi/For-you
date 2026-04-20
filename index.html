@@ -32,9 +32,9 @@
         .closebtn { position: absolute; top: 10px; right: 25px; font-size: 36px; color: var(--text-color); text-decoration: none; cursor: pointer; }
         .gallery-container-inner { padding: 20px; text-align: center; }
 
-        .hero { height: 60vh; background: url('Gloria_1.jpeg') center/cover no-repeat; display: flex; align-items: center; justify-content: center; position: relative; }
-        .hero::before { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.4); }
-        .hero-content { position: relative; z-index: 10; text-align: center; color: white; padding: 0 20px; }
+        .hero { height: 80vh; background: url('Gloria_1.jpeg') center/contain no-repeat; background-color: #000; display: flex; align-items: center; justify-content: center; position: relative; }
+        .hero::before { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.2); }
+        .hero-content { position: relative; z-index: 10; text-align: center; color: white; padding: 0 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); }
 
         .spotify-btn { background-color: #1DB954; color: white; border: none; padding: 10px 25px; border-radius: 30px; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 15px; transition: 0.3s; }
         .spotify-btn:hover { background-color: #1ed760; color: white; transform: scale(1.05); }
@@ -62,7 +62,7 @@
             .journey-item { width: 100%; padding-left: 70px; padding-right: 25px; text-align: left !important; }
             .journey-item::after { left: 21px; right: auto; }
             .right { left: 0; }
-            .hero { height: 40vh; }
+            .hero { height: 60vh; }
             .display-1 { font-size: 2.5rem; }
         }
     </style>
@@ -179,7 +179,6 @@
 
         function closeNav() { document.getElementById('memorySidebar').style.width = '0'; }
 
-        // Close sidebar when clicking outside
         document.addEventListener('click', function(event) {
             const sidebar = document.getElementById('memorySidebar');
             const trigger = document.getElementById('galleryBtn');
