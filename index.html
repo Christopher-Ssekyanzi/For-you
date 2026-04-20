@@ -8,7 +8,6 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         :root {
-            /* --- COLOR PALETTE --- */
             --bg-color: #0f0f0f; 
             --text-color: #e0e0e0;
             --accent-color: #ff8fa3; 
@@ -22,6 +21,8 @@
             --text-color: #1a1a1a;
             --accent-color: #9e0031;
             --card-bg: #ffffff;
+            --glass-bg: rgba(158, 0, 49, 0.1);
+            --line-color: rgba(158, 0, 49, 0.2);
         }
 
         html { scroll-behavior: smooth; }
@@ -34,116 +35,73 @@
             overflow-x: hidden;
         }
 
-        /* --- HERO & LAYOUT FIXES --- */
-        .hero-content { 
-            position: relative; 
-            z-index: 10; 
-            width: 100%;
-            padding: 0 20px;
-        }
+        /* --- HERO SECTION STYLING --- */
+        .hero-content { position: relative; z-index: 10; width: 100%; padding: 0 20px; }
         .main-title {
-            min-height: 1.2em; /* Prevents words from jumping/overlapping when typing */
-            margin-bottom: 15px;
-            line-height: 1.1;
+            min-height: 1.5em; /* Vital space reservation */
+            margin-bottom: 20px;
+            display: block;
         }
-        .cursor { color: var(--accent-color); animation: blink 0.7s infinite; }
+        .cursor { color: var(--accent-color); animation: blink 0.7s infinite; font-weight: 300; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         .hero-aura {
-            pointer-events: none;
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: clamp(200px, 60vw, 450px); 
-            height: clamp(200px, 60vw, 450px); 
-            background: var(--accent-color);
-            filter: blur(100px); opacity: 0.15; border-radius: 50%;
+            pointer-events: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: clamp(250px, 70vw, 500px); height: clamp(250px, 70vw, 500px); 
+            background: var(--accent-color); filter: blur(100px); opacity: 0.12; border-radius: 50%;
             animation: pulse-aura 4s infinite alternate; z-index: -1;
         }
-        @keyframes pulse-aura { 
-            from { transform: translate(-50%, -50%) scale(0.8); opacity: 0.1; } 
-            to { transform: translate(-50%, -50%) scale(1.1); opacity: 0.2; } 
-        }
+        @keyframes pulse-aura { from { transform: translate(-50%, -50%) scale(0.85); } to { transform: translate(-50%, -50%) scale(1.1); } }
 
-        .floating-text { animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-
-        /* --- SCROLL INDICATOR --- */
-        .scroll-down { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); opacity: 0.6; }
-        .mouse { width: 20px; height: 35px; border: 2px solid var(--text-color); border-radius: 15px; position: relative; margin: 0 auto 5px; }
-        .wheel { width: 3px; height: 6px; background: var(--accent-color); position: absolute; top: 6px; left: 50%; transform: translateX(-50%); border-radius: 2px; animation: scroll-wheel 1.5s infinite; }
-        @keyframes scroll-wheel { 0% { top: 6px; opacity: 1; } 100% { top: 20px; opacity: 0; } }
-
-        /* --- MOBILE SIDEBAR --- */
+        /* --- SIDEBAR --- */
         #memorySidebar {
             height: 100%; width: 0; position: fixed; z-index: 2100; top: 0; left: 0;
             background: var(--bg-color); overflow-x: hidden;
             transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
             border-right: 2px solid var(--accent-color);
-            box-shadow: 10px 0 30px rgba(0,0,0,0.5);
         }
         #sidebarOverlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%;
-            height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(3px); z-index: 2000;
+            height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 2000;
         }
         .side-tab-trigger {
             position: fixed; left: 0; top: 50%; transform: translateY(-50%);
             z-index: 1500; background: var(--glass-bg); backdrop-filter: blur(12px);
             color: var(--accent-color); padding: 25px 12px; border-radius: 0 20px 20px 0;
             cursor: pointer; writing-mode: vertical-rl; text-orientation: mixed;
-            font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-            font-size: 0.7rem; border: 1px solid var(--accent-color); border-left: none;
+            font-weight: 700; border: 1px solid var(--accent-color); border-left: none;
         }
 
         /* --- TIMELINE --- */
-        .timeline { position: relative; max-width: 900px; margin: 40px auto; padding: 20px 0; }
-        .timeline::after { 
-            content: ''; position: absolute; width: 2px; background: var(--line-color); 
-            top: 0; bottom: 0; left: 50%; margin-left: -1px; 
-        }
+        .timeline { position: relative; max-width: 900px; margin: 50px auto; }
+        .timeline::after { content: ''; position: absolute; width: 2px; background: var(--line-color); top: 0; bottom: 0; left: 50%; margin-left: -1px; }
         .timeline-item { padding: 10px 40px; position: relative; width: 50%; }
         .timeline-item.left { left: 0; text-align: right; }
         .timeline-item.right { left: 50%; text-align: left; }
-        .timeline-img-wrapper {
-            width: 100%; border-radius: 20px; overflow: hidden;
-            border: 4px solid var(--card-bg); box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            aspect-ratio: 4/3;
-        }
+        .timeline-img-wrapper { width: 100%; border-radius: 20px; overflow: hidden; border: 4px solid var(--card-bg); aspect-ratio: 4/3; background: var(--card-bg); }
         .timeline-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .timeline-text { margin-top: 15px; font-weight: 600; font-size: 1.1rem; }
 
         /* --- FLIP CARDS --- */
-        .flip-card { background-color: transparent; width: 100%; height: 320px; perspective: 1500px; cursor: pointer; }
-        .flip-card-inner {
-            position: relative; width: 100%; height: 100%; text-align: center;
-            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d;
-        }
+        .flip-card { width: 100%; height: 320px; perspective: 1500px; cursor: pointer; margin-bottom: 20px; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; }
         .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
-        .flip-card-front, .flip-card-back {
-            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
-            border-radius: 25px; padding: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .flip-card-front { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.1); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 25px; padding: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .flip-card-front { background: var(--card-bg); border: 1px solid var(--line-color); }
         .flip-card-back { background: var(--accent-color); color: #000; transform: rotateY(180deg); }
 
-        /* --- BUTTONS & THEME --- */
-        .theme-switch {
-            position: fixed; top: 20px; right: 20px; z-index: 3000;
-            background: var(--glass-bg); backdrop-filter: blur(10px);
-            border: 1px solid var(--accent-color); padding: 10px;
-            border-radius: 50%; cursor: pointer; transition: 0.3s;
-        }
-        .btn-romantic { background: var(--accent-color); color: #000 !important; border-radius: 50px; padding: 15px 30px; font-weight: 800; border: none; }
-        .section-title { color: var(--accent-color); font-weight: 800; margin-bottom: 50px; display: inline-block; }
+        /* --- BUTTONS --- */
+        .theme-switch { position: fixed; top: 20px; right: 20px; z-index: 3000; background: var(--glass-bg); border: 1px solid var(--accent-color); padding: 10px; border-radius: 50%; cursor: pointer; }
+        .btn-romantic { background: var(--accent-color); color: #000 !important; border-radius: 50px; padding: 15px 40px; font-weight: 800; border: none; transition: 0.3s; }
+        .btn-romantic:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--glass-bg); }
+        .section-title { color: var(--accent-color); font-weight: 800; margin-bottom: 50px; }
 
-        .heart-particle { position: fixed; pointer-events: none; z-index: 9999; animation: fly-up 1.5s forwards; font-size: 1.2rem; }
-        @keyframes fly-up {
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(var(--tw-x), var(--tw-y)) scale(0); opacity: 0; }
-        }
+        .heart-particle { position: fixed; pointer-events: none; z-index: 9999; animation: fly-up 1.5s forwards; }
+        @keyframes fly-up { 0% { transform: translate(0,0) scale(1); opacity: 1; } 100% { transform: translate(var(--tw-x), var(--tw-y)) scale(0); opacity: 0; } }
 
         @media (max-width: 768px) {
             .timeline::after { left: 31px; }
             .timeline-item { width: 100%; padding-left: 70px; text-align: left !important; left: 0 !important; }
-            .display-1 { font-size: 3.5rem; }
+            .display-1 { font-size: 3rem; }
         }
     </style>
 </head>
@@ -153,79 +111,170 @@
     <div id="sidebarOverlay" onclick="closeNav()"></div>
 
     <div id="memorySidebar">
-        <div class="p-3 d-flex justify-content-between align-items-center" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-            <span style="color: var(--accent-color); font-weight: 700; font-size: 0.9rem; letter-spacing: 1px;">OUR GALLERY</span>
-            <a href="javascript:void(0)" style="font-size: 2.5rem; text-decoration: none; color: var(--accent-color); line-height: 0.8;" onclick="closeNav()">×</a>
+        <div class="p-3 d-flex justify-content-between align-items-center" style="border-bottom: 1px solid var(--line-color);">
+            <span style="color: var(--accent-color); font-weight: 700;">OUR GALLERY</span>
+            <a href="javascript:void(0)" style="font-size: 2rem; text-decoration: none; color: var(--accent-color);" onclick="closeNav()">×</a>
         </div>
-        <div class="sidebar-content" style="max-width: 330px; padding: 30px 20px; text-align: center; margin: 0 auto;">
-            <div style="width: 100%; aspect-ratio: 1; border-radius: 20px; overflow: hidden; margin-bottom: 25px; background: #000; border: 1px solid var(--accent-color);">
-                <img id="sidebarImg" src="Together_1.jpeg" style="width:100%; height:100%; object-fit:cover; transition:0.5s;">
+        <div class="p-4 text-center">
+            <div style="border-radius: 20px; overflow: hidden; margin-bottom: 20px; border: 1px solid var(--accent-color); aspect-ratio: 1;">
+                <img id="sidebarImg" src="Together_1.jpeg" style="width:100%; height:100%; object-fit:cover;">
             </div>
-            <button class="btn btn-romantic w-100 py-3" onclick="nextImage()">Next Memory →</button>
-            <p class="mt-4 opacity-50 small" style="cursor:pointer;" onclick="closeNav()">← Tap to exit</p>
+            <button class="btn btn-romantic w-100" onclick="nextImage()">Next Memory →</button>
         </div>
     </div>
 
     <div class="side-tab-trigger" onclick="openNav()">✨ OPEN GALLERY</div>
 
-    <header class="container text-center d-flex align-items-center justify-content-center" style="min-height: 100vh; position: relative;">
+    <header class="container text-center d-flex flex-column align-items-center justify-content-center" style="min-height: 100vh;">
         <div data-aos="zoom-in" class="hero-content">
             <div class="hero-aura"></div>
-            
             <h1 class="display-1 fw-bold main-title">
                 <span id="typewriter"></span><span class="cursor">|</span>
             </h1>
-            
-            <p class="fs-4 opacity-75 mt-2 floating-text" style="max-width: 600px; margin: 0 auto;">
-                Every moment with you is a favorite memory.
-            </p>
-            
-            <div class="scroll-down">
-                <div class="mouse"><div class="wheel"></div></div>
-                <p class="small mt-2 opacity-50">Scroll down</p>
-            </div>
+            <p class="fs-4 opacity-75">Every moment with you is a favorite memory.</p>
         </div>
     </header>
 
-    <section class="py-5 text-center">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">A song for you😮‍💨</h2>
-            <div class="ratio ratio-16x9 mb-4" style="max-width:850px; margin:auto; border-radius:20px; overflow:hidden; border:4px solid var(--card-bg);">
-                <iframe src="https://www.youtube.com/embed/yKNxeF4KMsY?rel=0" allowfullscreen></iframe>
+    <section class="py-5 text-center container">
+        <h2 class="section-title" data-aos="fade-up">A song for you😮‍💨</h2>
+        <div class="ratio ratio-16x9 mb-4 mx-auto" style="max-width:800px; border-radius:20px; overflow:hidden; border: 4px solid var(--card-bg);">
+            <iframe src="https://www.youtube.com/embed/yKNxeF4KMsY?rel=0" allowfullscreen></iframe>
+        </div>
+        <a href="https://spotify.link/example" target="_blank" class="btn btn-outline-danger px-4 py-2" style="border-radius: 30px; border-color: var(--accent-color); color: var(--accent-color);">Listen on Spotify</a>
+    </section>
+
+    <section class="py-5 container text-center">
+        <h2 class="section-title" data-aos="fade-up">Our Journey</h2>
+        <div class="timeline">
+            <div class="timeline-item left" data-aos="fade-right">
+                <div class="timeline-img-wrapper"><img src="Together_1.jpeg"></div>
+                <p class="mt-3 fw-bold">Where it started</p>
             </div>
-            <a href="https://open.spotify.com/track/7i9p7yXzS9ZtXvG3XzJvX9" target="_blank" class="spotify-link-card" data-aos="fade-up" style="text-decoration:none;">
-                <div class="d-flex align-items-center p-4">
-                    <div class="text-start">
-                        <h4 class="mb-0 fw-bold">Yellow - Coldplay</h4>
-                        <p class="mb-0 opacity-75">Listen on Spotify</p>
-                    </div>
-                </div>
-            </a>
+            <div class="timeline-item right" data-aos="fade-left">
+                <div class="timeline-img-wrapper"><img src="Together_2.jpeg"></div>
+                <p class="mt-3 fw-bold">The first laugh</p>
+            </div>
+            <div class="timeline-item left" data-aos="fade-right">
+                <div class="timeline-img-wrapper"><img src="Gloria_2.jpeg"></div>
+                <p class="mt-3 fw-bold">A special day</p>
+            </div>
         </div>
     </section>
 
-    <section class="py-5">
-        <div class="container text-center">
-            <h2 class="section-title" data-aos="fade-up">Our Journey</h2>
-            <div class="timeline">
-                <div class="timeline-item left" data-aos="fade-right">
-                    <div class="timeline-img-wrapper"><img src="Together_1.jpeg"></div>
-                    <p class="timeline-text">Where it started</p>
+    <section class="py-5 container text-center">
+        <h2 class="section-title" data-aos="fade-up">Why You're Special</h2>
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="flip-left">
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"><h3>Your Heart</h3><p class="small opacity-50">Tap to flip</p></div>
+                        <div class="flip-card-back"><h3>Pure Kindness</h3><p>The way you care for people is so inspiring.</p></div>
+                    </div>
                 </div>
-                <div class="timeline-item right" data-aos="fade-left">
-                    <div class="timeline-img-wrapper"><img src="Together_2.jpeg"></div>
-                    <p class="timeline-text">The first laugh</p>
+            </div>
+            <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"><h3>A Princess</h3><p class="small opacity-50">Tap to flip</p></div>
+                        <div class="flip-card-back"><h3>Natural Grace</h3><p>You carry yourself with rare elegance.</p></div>
+                    </div>
                 </div>
-                <div class="timeline-item left" data-aos="fade-right">
-                    <div class="timeline-img-wrapper"><img src="Gloria_2.jpeg"></div>
-                    <p class="timeline-text">A special day</p>
-                </div>
-                <div class="timeline-item right" data-aos="fade-left">
-                    <div class="timeline-img-wrapper"><img src="Together_3.jpeg"></div>
-                    <p class="timeline-text">Moments in time</p>
-                </div>
-                <div class="timeline-item left" data-aos="fade-right">
-                    <div class="timeline-img-wrapper"><img src="Together_4.jpeg"></div>
-                    <p class="timeline-text">Adventures</p>
-                </div>
-                <div class="timeline-item right" data-aos="fade-left
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 text-center mb-5">
+        <div data-aos="zoom-in">
+            <h2 class="section-title display-4">Ready for our date?</h2>
+            <button id="yesBtn" class="btn btn-romantic btn-lg mt-3" onclick="handleYes()">Yes, let's go! ❤️</button>
+            <div id="successMsg" class="mt-4 p-4 mx-auto" style="display:none; max-width: 400px; background: var(--glass-bg); border-radius: 20px; border: 1px solid var(--accent-color);">
+                <h2 class="fw-bold">It's a Date!</h2>
+                <p>See you soon, princess.</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Start AOS animations
+        AOS.init({ duration: 1000, once: true });
+
+        // Fixed Typewriter Logic
+        const phrases = ["Hello Gloria💐", "You're amazing ✨", "My Princess 👑", "Our Story Begins..."];
+        let pIdx = 0, cIdx = 0, isDeleting = false;
+
+        function type() {
+            const current = phrases[pIdx];
+            const display = document.getElementById("typewriter");
+            
+            if (isDeleting) {
+                display.textContent = current.substring(0, cIdx--);
+            } else {
+                display.textContent = current.substring(0, cIdx++);
+            }
+
+            if (!isDeleting && cIdx > current.length) {
+                isDeleting = true;
+                setTimeout(type, 2000);
+            } else if (isDeleting && cIdx < 0) {
+                isDeleting = false;
+                pIdx = (pIdx + 1) % phrases.length;
+                cIdx = 0;
+                setTimeout(type, 500);
+            } else {
+                setTimeout(type, isDeleting ? 50 : 120);
+            }
+        }
+        window.onload = type;
+
+        // Sidebar Actions
+        function openNav() {
+            document.getElementById("memorySidebar").style.width = window.innerWidth > 768 ? "350px" : "85%";
+            document.getElementById("sidebarOverlay").style.display = "block";
+            document.body.style.overflow = "hidden";
+        }
+        function closeNav() {
+            document.getElementById("memorySidebar").style.width = "0";
+            document.getElementById("sidebarOverlay").style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+
+        // Gallery Switcher
+        const gallery = ["Together_1.jpeg", "Together_2.jpeg", "Gloria_2.jpeg"];
+        let gIdx = 0;
+        function nextImage() {
+            gIdx = (gIdx + 1) % gallery.length;
+            document.getElementById("sidebarImg").src = gallery[gIdx];
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            const b = document.body;
+            const isLight = b.getAttribute("data-theme") === "light";
+            isLight ? b.removeAttribute("data-theme") : b.setAttribute("data-theme", "light");
+            document.getElementById("themeBtn").innerHTML = isLight ? "🌙" : "☀️";
+        }
+
+        // Mouse Hearts
+        function handleMouseMove(e) {
+            if (Math.random() > 0.1) return;
+            const h = document.createElement("div");
+            h.innerHTML = "❤️"; h.className = "heart-particle";
+            h.style.left = e.clientX + "px"; h.style.top = e.clientY + "px";
+            h.style.setProperty('--tw-x', (Math.random()-0.5)*150 + "px");
+            h.style.setProperty('--tw-y', (Math.random()-0.5)*150-100 + "px");
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 1000);
+        }
+
+        // RSVP Logic
+        function handleYes() {
+            document.getElementById('successMsg').style.display = 'block';
+            document.getElementById('yesBtn').style.display = 'none';
+            const phone = "256761417053";
+            const msg = "what time will you pick me up ❤️";
+            setTimeout(() => { window.location.href = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`; }, 2000);
+        }
+    </script>
+</body>
+</html>
