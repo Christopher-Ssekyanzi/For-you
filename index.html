@@ -38,7 +38,8 @@
 
         /* --- HERO SECTION --- */
         .hero-content { position: relative; z-index: 10; width: 100%; padding: 0 20px; }
-        .main-title { min-height: 1.5em; margin-bottom: 20px; display: block; }
+        .main-title { /* min-height: 1.5em; */ margin-bottom: 20px; display: block; }
+        #typewriter-phrases p { min-height: 1.5em; margin: 0; }
         .cursor { color: var(--accent-color); animation: blink 0.7s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
@@ -136,7 +137,9 @@
         <div data-aos="zoom-in" class="hero-content">
             <div class="hero-aura"></div>
             <h1 class="display-1 fw-bold main-title">
-                <span id="greeting" class="glide-in">Hi Gloria 🌺</span><span id="typewriter"></span><span class="cursor">|</span>
+                <span id="greeting" class="glide-in">Hi Gloria 🌺</span><br>
+                <div id="typewriter-phrases"></div>
+                <span class="cursor">|</span>
             </h1>
             <p class="fs-4 opacity-75">Every moment with you is a favorite memory.</p>
             <button class="btn btn-romantic btn-lg mt-4" onclick="scrollToNextSection()">Discover Our Story ↓</button>
@@ -216,41 +219,64 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 1000, once: true });
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
 
         const typewriterPhrases = ["You're the most beautiful flower in my garden ✨", "My heart beats only for you 💖", "Every moment with you is a dream come true 💫"];
         let phraseIndex = 0;
         let charIndex = 0;
         let typingTimeout;
+        let currentPhraseP = null; // Will hold the <p> element for the current phrase
 
         function startTypewriterEffect() {
-            const typewriterElement = document.getElementById("typewriter");
+            const phrasesContainer = document.getElementById("typewriter-phrases");
             const cursorElement = document.querySelector(".cursor");
 
             if (phraseIndex < typewriterPhrases.length) {
-                const currentPhrase = typewriterPhrases[phraseIndex];
+                const currentPhraseText = typewriterPhrases[phraseIndex];
 
-                if (charIndex < currentPhrase.length) {
-                    typewriterElement.textContent += currentPhrase.charAt(charIndex);
+                if (!currentPhraseP) {
+                    // Create a new <p> element for the current phrase
+                    currentPhraseP = document.createElement("p");
+                    currentPhraseP.style.margin = "0"; // Remove default paragraph margin
+                    currentPhraseP.style.minHeight = "1em"; // Ensure it takes up space even when empty
+                    phrasesContainer.appendChild(currentPhraseP);
+                    // Move the cursor to the new paragraph
+                    if (cursorElement) {
+                        currentPhraseP.appendChild(cursorElement);
+                    }
+                }
+
+                if (charIndex < currentPhraseText.length) {
+                    currentPhraseP.textContent += currentPhraseText.charAt(charIndex);
                     charIndex++;
                     typingTimeout = setTimeout(startTypewriterEffect, 100);
                 } else {
+                    // Phrase finished
                     phraseIndex++;
                     charIndex = 0;
+                    currentPhraseP = null; // Reset for the next phrase
+
                     if (phraseIndex < typewriterPhrases.length) {
-                        typewriterElement.textContent = "";
-                        typingTimeout = setTimeout(startTypewriterEffect, 1500);
+                        typingTimeout = setTimeout(startTypewriterEffect, 1500); // Delay before next phrase
                     } else {
+                        // All phrases finished
                         if (cursorElement) cursorElement.style.display = 'none';
                     }
                 }
             } else {
+                // All phrases finished, ensure cursor is hidden
                 if (cursorElement) cursorElement.style.display = 'none';
             }
         }
 
         window.onload = function() {
-            AOS.init({ duration: 1000, once: true });
+            AOS.init({
+                duration: 1000,
+                once: true
+            });
             setTimeout(startTypewriterEffect, 2000);
         };
 
@@ -301,7 +327,9 @@
         function scrollToNextSection() {
             const firstSection = document.querySelector('section');
             if (firstSection) {
-                firstSection.scrollIntoView({ behavior: 'smooth' });
+                firstSection.scrollIntoView({
+                    behavior: 'smooth'
+                });
             }
         }
     </script>
