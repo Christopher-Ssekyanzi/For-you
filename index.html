@@ -343,7 +343,7 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
-            duration: 1000,
+            "duration": 1000,
             once: true
         });
 
@@ -453,7 +453,7 @@
 
         window.onload = function() {
             AOS.init({
-                duration: 1000,
+                "duration": 1000,
                 once: true
             });
             setTimeout(startTypewriterEffect, 2000);
@@ -553,23 +553,23 @@
             const backContentElement = document.getElementById(`card-content-${cardIndex}`);
 
             if (cardElement.classList.contains('flipped')) {
-                if (cardIndex === 0) { // Academic Jokes
+                if (cardIndex === 0) {
                     stopAllVideos();
                     const randomIndex = Math.floor(Math.random() * academicJokes.length);
                     backContentElement.textContent = academicJokes[randomIndex];
-                } else if (cardIndex === 1) { // Reel
+                } else if (cardIndex === 1) {
                     stopAllVideos();
                     backContentElement.src = reelUrl;
                     backContentElement.load();
                     backContentElement.play();
-                } else if (cardIndex === 2) { // Compliment Generator
+                } else if (cardIndex === 2) {
                     stopAllVideos();
                     const randomIndex = Math.floor(Math.random() * compliments.length);
                     backContentElement.textContent = compliments[randomIndex];
                 }
             } else {
                 // When flipped back to front, reset or pause content
-                if (cardIndex === 1 && backContentElement.tagName === 'VIDEO') { // Pause video
+                if (cardIndex === 1 && backContentElement.tagName === 'VIDEO') {
                     backContentElement.pause();
                     backContentElement.removeAttribute('src'); // Clear src to stop loading
                 } else if (backContentElement.tagName === 'H3') {
@@ -594,7 +594,7 @@
             }
 
             if (userGuess === correctKarates) {
-                gameMessage.textContent = `That's what I thought! You deserve $\{userGuess} karates! 😉`;
+                gameMessage.textContent = `That's what I thought! You deserve ${userGuess} karates! 😉`;
                 gameMessage.style.color = 'var(--accent-color)';
                 document.getElementById('guessInput').disabled = true;
                 resetButton.style.display = 'block';
