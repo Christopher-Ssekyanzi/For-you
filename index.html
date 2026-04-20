@@ -6,616 +6,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Gloria</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"> <!-- CORRECTED: Changed aos.js to aos.css -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <style>
-        :root {
-            --bg-color: #0f0f0f;
-            --text-color: #e0e0e0; /* Revert to theme-dependent default */
-            --accent-color: #ff8fa3;
-            --card-bg: #161616;
-            --glass-bg: rgba(255, 143, 163, 0.15);
-            --line-color: rgba(255, 143, 163, 0.2);
-        }
-
-        [data-theme="light"] {
-            --bg-color: #fff9f6;
-            --text-color: #1a1a1a; /* Re-add theme-dependent light mode text color */
-            --accent-color: #9e0031;
-            --card-bg: #ffffff;
-            --glass-bg: rgba(158, 0, 49, 0.1);
-            --line-color: rgba(158, 0, 49, 0.2);
-        }
-
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color); /* Uses the theme-dependent text color */
-            transition: background 0.5s ease, color 0.5s ease;
-            margin: 0;
-            overflow-x: hidden;
-        }
-
-        /* --- HERO SECTION --- */
-        .hero-content { position: relative; z-index: 10; width: 100%; padding: 0 20px; }
-        .main-title { /* min-height: 1.5em; */ margin-bottom: 20px; display: block; }
-        #typewriter-phrases p { min-height: 1.5em; margin: 0; }
-        .cursor { color: var(--accent-color); animation: blink 0.7s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-        /* Custom animation for "Hi Gloria" */
-        @keyframes glideIn {
-            from { transform: translateX(-100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        .glide-in {
-            display: inline-block;
-            animation: glideIn 1.5s ease-out forwards;
-            opacity: 0;
-            margin-right: 10px;
-        }
-
-        /* --- SIDEBAR --- */
-        #memorySidebar {
-            height: 100%; width: 0; position: fixed; z-index: 2100; top: 0; left: 0;
-            background: var(--bg-color); overflow-x: hidden;
-            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-            border-right: 2px solid var(--accent-color);
-        }
-        #sidebarOverlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%;
-            height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 2000;
-        }
-        .side-tab-trigger {
-            position: fixed; left: 0; top: 50%; transform: translateY(-50%);
-            z-index: 1500; background: var(--glass-bg); backdrop-filter: blur(12px);
-            color: var(--accent-color); padding: 25px 12px; border-radius: 0 20px 20px 0;
-            cursor: pointer; writing-mode: vertical-rl; text-orientation: mixed;
-            font-weight: 700; border: 1px solid var(--accent-color); border-left: none;
-        }
-
-        /* --- TIMELINE --- */
+        :root { --bg-color: #0f0f0f; --text-color: #e0e0e0; --accent-color: #ff8fa3; --card-bg: #161616; --glass-bg: rgba(255, 143, 163, 0.15); --line-color: rgba(255, 143, 163, 0.2); }
+        [data-theme="light"] { --bg-color: #fff9f6; --text-color: #1a1a1a; --accent-color: #9e0031; --card-bg: #ffffff; --glass-bg: rgba(158, 0, 49, 0.1); --line-color: rgba(158, 0, 49, 0.2); }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; overflow-x: hidden; }
+        .glide-in { display: inline-block; animation: glideIn 1.5s ease-out forwards; }
+        @keyframes glideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        #memorySidebar { height: 100%; width: 0; position: fixed; z-index: 2100; top: 0; left: 0; background: var(--bg-color); overflow-x: hidden; transition: 0.5s; border-right: 2px solid var(--accent-color); }
+        .side-tab-trigger { position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 1500; background: var(--glass-bg); padding: 25px 12px; cursor: pointer; writing-mode: vertical-rl; border: 1px solid var(--accent-color); }
         .timeline { position: relative; max-width: 900px; margin: 50px auto; }
-        .timeline::after { content: ''; position: absolute; width: 2px; background: var(--line-color); top: 0; bottom: 0; left: 50%; margin-left: -1px; }
-        .timeline-item { padding: 10px 40px; position: relative; width: 50%; }
-        .timeline-item.left { left: 0; text-align: right; }
-        .timeline-item.right { left: 50%; text-align: left; }
-        .timeline-img-wrapper { width: 100%; border-radius: 20px; overflow: hidden; border: 4px solid var(--card-bg); aspect-ratio: 4/3; background: var(--card-bg); box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: all 0.3s ease; }
-        .timeline-img-wrapper:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.3); }
-        .timeline-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* New slideshow wrapper styling */
-        .timeline-slideshow-wrapper {
-            width: 100%; border-radius: 20px; overflow: hidden; border: 4px solid var(--card-bg); aspect-ratio: 4/3; background: var(--card-bg); box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: all 0.3s ease;
-        }
-        .timeline-slideshow-wrapper:hover {
-            transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-        }
-        .timeline-slideshow-wrapper .owl-carousel .item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 16px; /* slightly less than parent to show border */
-        }
-        .timeline-slideshow-wrapper .owl-dots {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            text-align: center;
-            margin-top: 0; /* Override default margin */
-        }
-        .timeline-slideshow-wrapper .owl-dots .owl-dot span {
-            background: var(--accent-color);
-            opacity: 0.5;
-            width: 10px;
-            height: 10px;
-            margin: 0 5px;
-        }
-        .timeline-slideshow-wrapper .owl-dots .owl-dot.active span {
-            opacity: 1;
-            transform: scale(1.2);
-        }
-
-        /* --- FLIP CARDS --- */
-        .flip-card { width: 100%; height: 320px; perspective: 1500px; cursor: pointer; margin-bottom: 20px; }
+        .timeline-img-wrapper { width: 100%; border-radius: 20px; overflow: hidden; aspect-ratio: 4/3; }
+        .timeline-slideshow-wrapper { width: 100%; border-radius: 20px; overflow: hidden; aspect-ratio: 4/3; }
+        .flip-card { height: 320px; perspective: 1500px; cursor: pointer; }
         .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; }
         .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
-        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 25px; padding: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .flip-card-front { background: var(--card-bg); border: 1px solid var(--line-color); }
-        .flip-card-back { background: var(--accent-color); color: #000; transform: rotateY(180deg); font-size: 1.1em; }
-
-        /* --- UI ELEMENTS --- */
-        .theme-switch { position: fixed; top: 20px; right: 20px; z-index: 3000; background: var(--glass-bg); border: 1px solid var(--accent-color); padding: 10px; border-radius: 50%; cursor: pointer; }
-        .btn-romantic { background: var(--accent-color); color: #000 !important; border-radius: 50px; padding: 15px 40px; font-weight: 800; border: none; transition: 0.3s; }
-        .section-title { color: var(--accent-color); font-weight: 800; margin-bottom: 50px; }
-        .heart-particle { position: fixed; pointer-events: none; z-index: 9999; animation: fly-up 1.5s forwards; }
-        @keyframes fly-up { 0% { transform: translate(0,0) scale(1); opacity: 1; } 100% { transform: translate(var(--tw-x), var(--tw-y)) scale(0); opacity: 0; } }
-
-        @media (max-width: 768px) {
-            .timeline::after { left: 31px; }
-            .timeline-item { width: 100%; padding-left: 70px; text-align: left !important; left: 0 !important; }
-            .display-1 { font-size: 3rem; }
-            /* Further mobile adjustments */
-            .hero-content { padding: 0 10px; }
-            .main-title { font-size: 2.5rem; /* Smaller on very small screens */ }
-            #typewriter-phrases p { font-size: 1.2rem; }
-            .flip-card { height: 280px; /* Slightly smaller on mobile */ }
-            .flip-card-front, .flip-card-back { padding: 20px; }
-            .btn-romantic { padding: 10px 20px; font-size: 0.9rem; }
-            .section-title { font-size: 2rem; }
-            .side-tab-trigger { padding: 15px 8px; font-size: 0.8em; border-radius: 0 15px 15px 0; /* Slightly smaller radius */ }
-        }
-
-        @media (max-width: 480px) {
-            .display-1 { font-size: 2.2rem; }
-            .main-title { font-size: 2rem; }
-            #typewriter-phrases p { font-size: 1rem; }
-            .section-title { font-size: 1.8rem; }
-            .hero-content { padding: 0 5px; }
-            .timeline-item { padding-left: 50px; }
-            .flip-card { height: 250px; }
-            .flip-card-front, .flip-card-back { padding: 15px; font-size: 0.9em; }
-            .side-tab-trigger { padding: 10px 6px; font-size: 0.7em; top: 60%; /* Adjust position to avoid top elements */ }
-        }
-
-        /* Additional Mobile-friendly adjustments for smaller screens (e.g., 360px width) */
-        @media (max-width: 360px) {
-            .main-title {
-                font-size: 2rem; /* Even smaller font for main title */
-            }
-            #typewriter-phrases p {
-                font-size: 0.9rem; /* Smaller text for typewriter effect */
-            }
-            .section-title {
-                font-size: 1.5rem; /* Smaller section titles */
-            }
-            .hero-content {
-                padding: 0 5px;
-            }
-            .btn-romantic {
-                padding: 10px 15px;
-                font-size: 0.8rem;
-            }
-            .flip-card {
-                height: 220px; /* Adjust flip card height */
-            }
-            .flip-card-front, .flip-card-back {
-                padding: 10px;
-                font-size: 0.8em;
-            }
-            .timeline-item {
-                padding-left: 40px;
-            }
-            .timeline::after {
-                left: 20px;
-            }
-            .side-tab-trigger {
-                padding: 8px 5px;
-                font-size: 0.65em;
-                top: 55%;
-            }
-        }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 25px; display: flex; align-items: center; justify-content: center; }
+        .flip-card-back { transform: rotateY(180deg); background: var(--accent-color); color: #000; }
+        .btn-romantic { background: var(--accent-color); color: #000; border-radius: 50px; padding: 15px 40px; border: none; }
     </style>
 </head>
-<body onmousemove="handleMouseMove(event)">
-
-    <button class="theme-switch" onclick="toggleTheme()" id="themeBtn">🌙</button>
-    <div id="sidebarOverlay" onclick="closeNav()"></div>
-
+<body>
+    <button class="theme-switch" onclick="toggleTheme()" style="position:fixed; top:20px; right:20px; z-index:3000;">🌙</button>
     <div id="memorySidebar">
-        <div class="p-3 d-flex justify-content-between align-items-center" style="border-bottom: 1px solid var(--line-color);">
-            <span style="color: var(--accent-color); font-weight: 700;">OUR GALLERY</span>
-            <a href="javascript:void(0)" style="font-size: 2rem; text-decoration: none; color: var(--accent-color);" onclick="closeNav()">×</a>
-        </div>
-        <div class="p-4 text-center">
-            <div style="border-radius: 20px; overflow: hidden; margin-bottom: 20px; border: 1px solid var(--accent-color); aspect-ratio: 1; display: flex; align-items: center; justify-content: center;">
-                <img id="sidebarImage" src="" style="width:100%; height:100%; object-fit:cover; display: none;">
-                <video id="sidebarVideo" src="" controls style="width:100%; height:100%; object-fit:cover; display: none;"></video>
-            </div>
-            <button class="btn btn-romantic w-100" onclick="nextImage()">Next Memory →</button>
-        </div>
+        <div class="p-3"><span>OUR GALLERY</span><a href="#" onclick="closeNav()">×</a></div>
+        <div class="p-4"><img id="sidebarImage" style="width:100%; display:none;"><video id="sidebarVideo" controls style="width:100%; display:none;"></video></div>
     </div>
-
     <div class="side-tab-trigger" onclick="openNav()">✨ OPEN GALLERY</div>
-
-    <header class="container text-center d-flex flex-column align-items-start justify-content-center" style="min-height: 100vh; padding-top: 50px; background-image: url('Gloria_1.jpeg'); background-size: cover; background-position: center center;">
-        <div data-aos="zoom-in" class="hero-content">
-            <div class="hero-aura"></div>
-            <h1 class="display-1 fw-bold main-title">
-                <span id="greeting" class="glide-in">Hi Gloria 🌺</span><br>
-                <div id="typewriter-phrases"></div>
-                <span class="cursor">|</span>
-            </h1>
-            <p class="fs-4">Every moment with you is a favorite memory.</p>
-            <button class="btn btn-romantic btn-lg mt-4" onclick="scrollToNextSection()">Discover Our Story ↓</button>
+    <header style="min-height: 100vh; background-image: url('Gloria_1.jpeg'); background-size: cover; background-position: center;">
+        <div class="container p-5">
+            <h1 class="display-1 glide-in">Hi Gloria &#x1f33a;</h1>
+            <div id="typewriter-phrases"></div>
         </div>
     </header>
-
-    <section class="py-5 text-center container">
-        <h2 class="section-title" data-aos="fade-up">A song for you😮‍💨</h2>
-        <div class="ratio ratio-16x9 mb-4 mx-auto" style="max-width:800px; border-radius:20px; overflow:hidden; border: 4px solid var(--card-bg);">
-            <iframe src="https://www.youtube.com/embed/yKNxeF4KMsY?rel=0" allowfullscreen></iframe>
-        </div>
-        <a href="https://spotify.link/example" target="_blank" class="btn btn-outline-danger px-4 py-2" style="border-radius: 30px; border-color: var(--accent-color); color: var(--accent-color);">Listen on Spotify</a>
-    </section>
-
-    <section class="py-5 container text-center">
-        <h2 class="section-title" data-aos="fade-up">Our Journey</h2>
+    <section class="container py-5">
+        <h2 class="text-center">Our Journey</h2>
         <div class="timeline">
-            <div class="timeline-item left" data-aos="fade-right">
-                <div class="timeline-img-wrapper"><img src="Together_1.jpeg"></div>
-                <p class="mt-3 fw-bold">Where it started</p>
-                <p class="mt-2">You cried about this climb for months😅.</p>
-            </div>
-            <!-- Replaced slideshow-1 with a static image -->
-            <div class="timeline-item right" data-aos="fade-left">
-                <div class="timeline-img-wrapper"><img src="Together_2.jpeg"></div>
-                <p class="mt-3 fw-bold">Our first laughs</p>
-                <p class="mt-2">A memory with a sweet smile.</p>
-            </div>
-            <!-- Replaced slideshow-2 with a static image -->
-            <div class="timeline-item left" data-aos="fade-right">
-                <div class="timeline-img-wrapper"><img src="Gloria_3.jpeg"></div>
-                <p class="mt-3 fw-bold">A special day</p>
-                <p class="mt-2">Looking forward to many more.</p>
-            </div>
-            <!-- NEW: Slideshow with only JPG images -->
-            <div class="timeline-item right" data-aos="fade-left">
-                <div class="timeline-slideshow-wrapper">
-                    <div class="owl-carousel owl-theme" id="slideshow-3"></div>
-                </div>
-                <p class="mt-3 fw-bold">Special moments</p>
-                <p class="mt-2">.</p>
-            </div>
+            <div class="timeline-item"><div class="timeline-img-wrapper"><img src="Together_1.jpeg" style="width:100%;"></div></div>
+            <div class="timeline-item"><div class="timeline-slideshow-wrapper"><div class="owl-carousel owl-theme" id="slideshow-3"></div></div></div>
         </div>
     </section>
-
-    <section class="py-5 container text-center">
-        <h2 class="section-title" data-aos="fade-up">Flip for Fun!</h2>
-        <div class="row g-4">
-            <div class="col-md-4" data-aos="flip-left">
-                <div class="flip-card" onclick="flipCard(this, 0)">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front"><h3>Academic Jokes</h3><p class="small">Tap to test your knowledge!</p></div>
-                        <div class="flip-card-back"><h3 id="card-content-0"></h3></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
-                <div class="flip-card" onclick="flipCard(this, 1)">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front"><h3>Your Favorite Reel</h3><p class="small">Tap to play!</p></div>
-                        <div class="flip-card-back"><video id="card-content-1" controls muted playsinline style="width:100%; height:100%; object-fit:cover; border-radius: 25px;"></video></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4" data-aos="flip-left" data-aos-delay="400">
-                <div class="flip-card" onclick="flipCard(this, 2)">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front"><h3>A Sweet Compliment</h3><p class="small">Tap for a boost!</p></div>
-                        <div class="flip-card-back"><h3 id="card-content-2"></h3></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-5 container text-center">
-        <h2 class="section-title" data-aos="fade-up">Let's Play a Game!</h2>
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card p-4 shadow-sm" style="background: var(--card-bg); border-radius: 20px; border: 1px solid var(--line-color);">
-                    <h3 class="mb-3">How many karates do you deserve?</h3>
-                    <input type="number" id="guessInput" class="form-control mb-3 text-center" min="1" max="5" placeholder="Enter your number (1-5)" style="background: var(--glass-bg); color: var(--text-color); border: 1px solid var(--accent-color);">
-                    <button class="btn btn-romantic" onclick="checkGuess()">Submit!</button>
-                    <p id="gameMessage" class="mt-3 fs-5"></p>
-                    <button class="btn btn-outline-secondary mt-3" onclick="resetGame()" style="display:none;" id="resetButton">Try Again</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-5 text-center mb-5">
-        <div data-aos="zoom-in">
-            <h2 class="section-title display-4">Ready for our date?</h2>
-            <button id="yesBtn" class="btn btn-romantic btn-lg mt-3" onclick="handleYes()">Yes, let's go! ❤️</button>
-            <div id="successMsg" class="mt-4 p-4 mx-auto" style="display:none; max-width: 400px; background: var(--glass-bg); border-radius: 20px; border: 1px solid var(--accent-color);">
-                <h2 class="fw-bold">It's a Date!</h2>
-                <p>See you soon, princess.</p>
-            </div>
-        </div>
-    </section>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({
-            "duration": 1000,
-            "once": true
-        });
-
-        const typewriterPhrases = ["Hello Gorgeous ✨", "This is for you❤️"];
-        let phraseIndex = 0;
-        let charIndex = 0;
-        let typingTimeout;
-        let currentPhraseP = null; // Will hold the <p> element for the current phrase
-
-        function startTypewriterEffect() {
-            const phrasesContainer = document.getElementById("typewriter-phrases");
-            const cursorElement = document.querySelector(".cursor");
-
-            if (phraseIndex < typewriterPhrases.length) {
-                const currentPhraseText = typewriterPhrases[phraseIndex];
-
-                if (!currentPhraseP) {
-                    // Create a new <p> element for the current phrase
-                    currentPhraseP = document.createElement("p");
-                    currentPhraseP.style.margin = "0"; // Remove default paragraph margin
-                    currentPhraseP.style.minHeight = "1em"; // Ensure it takes up space even when empty
-                    phrasesContainer.appendChild(currentPhraseP);
-                    // Move the cursor to the new paragraph
-                    if (cursorElement) {
-                        currentPhraseP.appendChild(cursorElement);
-                    }
-                }
-
-                if (charIndex < currentPhraseText.length) {
-                    currentPhraseP.textContent += currentPhraseText.charAt(charIndex);
-                    charIndex++;
-                    typingTimeout = setTimeout(startTypewriterEffect, 100);
-                } else {
-                    // Phrase finished
-                    phraseIndex++;
-                    charIndex = 0;
-                    currentPhraseP = null; // Reset for the next phrase
-
-                    if (phraseIndex < typewriterPhrases.length) {
-                        typingTimeout = setTimeout(startTypewriterEffect, 1500); // Delay before next phrase
-                    }
-                }
-            }
+        const gallery = [{"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"}, {"src": "Gloria_1.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.45.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.00.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.48.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.16.jpeg", "type": "image"}, {"src": "Gloria_3.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.03.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.15 (1).jpeg", "type": "image"}, {"src": "Together_1.jpeg", "type": "image"}, {"src": "Gloria_2.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.13.jpeg", "type": "image"}, {"src": "Together_2.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.08.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.47 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.01.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.59.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.44.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.14 (1).jpeg", "type": "image"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.18.mp4", "type": "video"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.18 (1).mp4", "type": "video"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.00 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.16 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.17.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.11.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.02.jpeg", "type": "image"}, {"src": "Trial_3.png", "type": "image"}, {"src": "Trial_1.png", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.46.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.14.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.48 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.17 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.42.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.12 (1).jpeg", "type": "image"}, {"src": "SAMPLE IMAGE .jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.46 (1).jpeg", "type": "image"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.19.mp4", "type": "video"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.07.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.47.jpeg", "type": "image"}, {"src": "Trial_2.png", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.15.jpeg", "type": "image"}, {"src": "The_reel.mp4", "type": "video"}];
+        function initSlideshow(id, count, typeFilter, extFilter) {
+            console.log('Initializing slideshow:', id);
+            const target = document.getElementById(id);
+            if (!target) return;
+            const items = gallery.filter(i => (!typeFilter || i.type === typeFilter) && (!extFilter || i.src.endsWith(extFilter))).slice(0, count);
+            let html = '';
+            items.forEach(i => { html += `<div class="item"><img src="${i.src}" style="width:100%"></div>`; });
+            target.innerHTML = html;
+            $(`#${id}`).owlCarousel({ loop: true, autoplay: true, items: 1 });
         }
-
-        function stopAllVideos(excludeVideoElement = null) {
-            document.querySelectorAll('video').forEach(video => {
-                if (video !== excludeVideoElement) {
-                    video.pause();
-                    video.currentTime = 0;
-                }
-            });
-        }
-
-        // Modified getRandomMedia to allow filtering by type and extension
-        function getRandomMedia(count, typeFilter = null, extensionFilter = null) {
-            let filteredMedia = gallery;
-            if (typeFilter) {
-                filteredMedia = filteredMedia.filter(item => item.type === typeFilter);
-            }
-            if (extensionFilter) {
-                filteredMedia = filteredMedia.filter(item => item.src.toLowerCase().endsWith('.' + extensionFilter));
-            }
-            if (filteredMedia.length === 0) return [];
-
-            const shuffled = [...filteredMedia].sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, count);
-        }
-
-        // Modified initSlideshow to accept typeFilter and extensionFilter
-        function initSlideshow(id, count, typeFilter = null, extensionFilter = null) {
-            const targetElement = document.getElementById(id);
-            if (!targetElement) return;
-
-            const mediaItems = getRandomMedia(count, typeFilter, extensionFilter);
-            let carouselContent = '';
-            mediaItems.forEach(item => {
-                if (item.type === 'image') {
-                    carouselContent += '<div class="item"><img src="' + item.src + '" alt="Memory" loading="lazy"></div>';
-                } else if (item.type === 'video') {
-                    // For video, include a video tag
-                    carouselContent += '<div class="item"><video controls autoplay muted loop src="' + item.src + '" style="width:100%; height:100%; object-fit:cover; border-radius: 16px;"></video></div>';
-                }
-            });
-            targetElement.innerHTML = carouselContent;
-
-            $(`#${id}`).owlCarousel({
-                loop: true,
-                margin: 10,
-                nav: false,
-                dots: true,
-                autoplay: true,
-                autoplayTimeout: 3000,
-                autoplayHoverPause: true,
-                responsive: {
-                    0: { items: 1 },
-                    600: { items: 1 },
-                    1000: { items: 1 }
-                }
-            });
-
-            // Add event listener to pause other videos when a slideshow video plays
-            targetElement.querySelectorAll('video').forEach(video => {
-                video.addEventListener('play', () => stopAllVideos(video));
-            });
-        }
-
-        window.onload = function() {
-            // Removed duplicate AOS.init() call
-            setTimeout(startTypewriterEffect, 2000);
-            // Initialize with the first media item if available
-            if (gallery.length > 0) {
-                showMedia(gIdx);
-            }
-
-            // Initialize the new slideshow for JPEG images
-            initSlideshow('slideshow-3', 4, 'image', 'jpeg');
-        };
-
-        function openNav() {
-            document.getElementById("memorySidebar").style.width = window.innerWidth > 768 ? "350px" : "85%";
-            document.getElementById("sidebarOverlay").style.display = "block";
-            document.body.style.overflow = "hidden";
-        }
-        function closeNav() {
-            document.getElementById("memorySidebar").style.width = "0";
-            document.getElementById("sidebarOverlay").style.display = "none";
-            document.body.style.overflow = "auto";
-            stopAllVideos(); // Stop videos when sidebar is closed
-        }
-
-        const gallery = JSON.parse('[{"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"}, {"src": "Gloria_1.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.45.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.00.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.48.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.16.jpeg", "type": "image"}, {"src": "Gloria_3.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.03.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.15 (1).jpeg", "type": "image"}, {"src": "Together_1.jpeg", "type": "image"}, {"src": "Gloria_2.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.13.jpeg", "type": "image"}, {"src": "Together_2.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.08.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.47 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.01.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.59.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.44.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.14 (1).jpeg", "type": "image"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.18.mp4", "type": "video"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.18 (1).mp4", "type": "video"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.00 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.16 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.17.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.11.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.02.jpeg", "type": "image"}, {"src": "Trial_3.png", "type": "image"}, {"src": "Trial_1.png", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.46.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.14.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.48 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.17 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.42.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.12 (1).jpeg", "type": "image"}, {"src": "SAMPLE IMAGE .jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.46 (1).jpeg", "type": "image"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.19.mp4", "type": "video"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.07.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.47.jpeg", "type": "image"}, {"src": "Trial_2.png", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.15.jpeg", "type": "image"}, {"src": "The_reel.mp4", "type": "video"}]');
-        let gIdx = 0;
-        const sidebarImage = document.getElementById("sidebarImage");
-        const sidebarVideo = document.getElementById("sidebarVideo");
-
-        function showMedia(index) {
-            stopAllVideos(); // Stop any other playing videos
-            const item = gallery[index];
-
-            // Hide all first and pause video
-            sidebarImage.style.display = 'none';
-            sidebarVideo.style.display = 'none';
-            sidebarVideo.pause();
-            sidebarVideo.removeAttribute('src'); // Clear src to stop loading
-
-            if (item.type === 'image') {
-                sidebarImage.src = item.src;
-                sidebarImage.style.display = 'block';
-            } else if (item.type === 'video') {
-                sidebarVideo.src = item.src;
-                sidebarVideo.style.display = 'block';
-                // sidebarVideo.play(); // Uncomment if you want videos to autoplay
-            }
-        }
-
-        function nextImage() {
-            gIdx = (gIdx + 1) % gallery.length;
-            showMedia(gIdx);
-        }
-
-        function toggleTheme() {
-            const b = document.body;
-            const isLight = b.getAttribute("data-theme") === "light";
-            isLight ? b.removeAttribute("data-theme") : b.setAttribute("data-theme", "light");
-            document.getElementById("themeBtn").innerHTML = isLight ? "🌙" : "☀️";
-        }
-
-        function handleMouseMove(e) {
-            if (Math.random() > 0.1) return;
-            const h = document.createElement("div");
-            h.innerHTML = "❤️"; h.className = "heart-particle";
-            h.style.left = e.clientX + "px"; h.style.top = e.clientY + "px";
-            h.style.setProperty('--tw-x', (Math.random()-0.5)*150 + "px");
-            h.style.setProperty('--tw-y', (Math.random()-0.5)*150-100 + "px");
-            document.body.appendChild(h);
-            setTimeout(() => h.remove(), 1000);
-        }
-
-        // --- Flip Card Logic ---
-        const academicJokes = [
-            "Why was the math book sad? Because it had too many problems!",
-            "Why did the biologist break up with the physicist? They had no chemistry!",
-            "What do you call a a lazy kangaroo? Pouch potato!",
-            "Why can't you trust atoms? They make up everything!",
-            "What do you call a gene that loves to cook? A chef-gene!"
-        ];
-
-        const compliments = [
-            "You light up every room you walk into.",
-            "You are incredibly sweet and kind.",
-            "Your kindness is a superpower.",
-            "Your smile is absolutely beautiful and infectious.",
-            "You have an amazing sense of style and taste in fashion.",
-            "You are incredibly resilient and strong.",
-            "You have such a beautiful soul.",
-            "You definitely chose the right man! (Me, of course!)"
-        ];
-
-        const reelUrl = "The_reel.mp4"; // Updated reel URL
-
-        function flipCard(cardElement, cardIndex) {
-            cardElement.classList.toggle('flipped');
-            const backContentElement = document.getElementById(`card-content-${cardIndex}`);
-
-            if (cardElement.classList.contains('flipped')) {
-                if (cardIndex === 0) {
-                    stopAllVideos(); // No video to exclude
-                    const randomIndex = Math.floor(Math.random() * academicJokes.length);
-                    backContentElement.textContent = academicJokes[randomIndex];
-                } else if (cardIndex === 1) {
-                    stopAllVideos(backContentElement); // Exclude this video from pausing
-                    backContentElement.src = reelUrl;
-                    backContentElement.load();
-                    backContentElement.play();
-                } else if (cardIndex === 2) {
-                    stopAllVideos(); // No video to exclude
-                    const randomIndex = Math.floor(Math.random() * compliments.length);
-                    backContentElement.textContent = compliments[randomIndex];
-                }
-            } else {
-                // When flipped back to front, reset or pause content
-                if (cardIndex === 1 && backContentElement.tagName === 'VIDEO') {
-                    backContentElement.pause();
-                    backContentElement.removeAttribute('src'); // Clear src to stop loading
-                } else if (backContentElement.tagName === 'H3') {
-                    // Optionally clear text content when flipped back
-                    backContentElement.textContent = '';
-                }
-            }
-        }
-
-        // 'How many karates do you deserve?' Game Logic
-        const correctKarates = 3; // Let's say the correct answer is 3 karates
-
-        function checkGuess() {
-            const userGuess = parseInt(document.getElementById('guessInput').value);
-            const gameMessage = document.getElementById('gameMessage');
-            const resetButton = document.getElementById('resetButton');
-
-            if (isNaN(userGuess) || userGuess < 1 || userGuess > 5) {
-                gameMessage.textContent = 'Please enter a number between 1 and 5.';
-                gameMessage.style.color = 'orange';
-                return;
-            }
-
-            if (userGuess === correctKarates) {
-                gameMessage.textContent = `That's what I thought! You deserve ${userGuess} karates! 😉`;
-                gameMessage.style.color = 'var(--accent-color)';
-                document.getElementById('guessInput').disabled = true;
-                resetButton.style.display = 'block';
-            } else {
-                gameMessage.textContent = 'Hmm, let's try that again. Maybe you deserve more... or less?';
-                gameMessage.style.color = 'red';
-            }
-        }
-
-        function resetGame() {
-            document.getElementById('guessInput').value = '';
-            document.getElementById('guessInput').disabled = false;
-            document.getElementById('gameMessage').textContent = '';
-            document.getElementById('resetButton').style.display = 'none';
-        }
-
-        function handleYes() {
-            document.getElementById('successMsg').style.display = 'block';
-            document.getElementById('yesBtn').style.display = 'none';
-            const phone = "256761417053";
-            const msg = "what time will you pick me up ❤️";
-            setTimeout(() => { window.location.href = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`; }, 2000);
-        }
-
-        function scrollToNextSection() {
-            const firstSection = document.querySelector('section');
-            if (firstSection) {
-                firstSection.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        }
+        window.onload = () => { initSlideshow('slideshow-3', 4, 'image', 'jpeg'); };
+        function openNav() { document.getElementById("memorySidebar").style.width = "350px"; }
+        function closeNav() { document.getElementById("memorySidebar").style.width = "0"; }
+        function toggleTheme() { document.body.dataset.theme = document.body.dataset.theme === 'light' ? 'dark' : 'light'; }
     </script>
 </body>
 </html>
