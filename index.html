@@ -27,9 +27,9 @@
         .theme-toggle { position: fixed; top: 15px; right: 15px; z-index: 5000; padding: 12px; border-radius: 50%; background: var(--accent-color); border: none; cursor: pointer; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
         /* Side Gallery */
-        #memorySidebar { height: 100%; width: 0; position: fixed; z-index: 4500; top: 0; left: 0; background: var(--card-bg); overflow-x: hidden; transition: 0.5s; border-right: 2px solid var(--accent-color); padding-top: 60px; }
+        #memorySidebar { height: 100%; width: 0; position: fixed; z-index: 4500; top: 0; left: 0; background: var(--card-bg); overflow-x: hidden; transition: 0.5s; border-right: 2px solid var(--accent-color); padding-top: 60px; box-shadow: 5px 0 15px rgba(0,0,0,0.5); }
         .side-tab-trigger { position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 2500; background: var(--accent-color); color: #000; padding: 20px 10px; cursor: pointer; writing-mode: vertical-rl; border-radius: 0 10px 10px 0; font-weight: bold; border: none; font-size: 0.9rem; }
-        .closebtn { position: absolute; top: 10px; right: 25px; font-size: 36px; color: var(--text-color); text-decoration: none; }
+        .closebtn { position: absolute; top: 10px; right: 25px; font-size: 36px; color: var(--text-color); text-decoration: none; cursor: pointer; }
         .gallery-container-inner { padding: 20px; text-align: center; }
 
         .hero { height: 60vh; background: url('Gloria_1.jpeg') center/cover no-repeat; display: flex; align-items: center; justify-content: center; position: relative; }
@@ -57,7 +57,7 @@
         .flip-card-front { background: var(--card-bg); border: 1px solid var(--accent-color); }
         .flip-card-back { background: var(--accent-color); color: #000; transform: rotateY(180deg); }
 
-        @media (max-width: 768px) {
+        @media (max-width: 768px) { 
             .journey-container::after { left: 31px; }
             .journey-item { width: 100%; padding-left: 70px; padding-right: 25px; text-align: left !important; }
             .journey-item::after { left: 21px; right: auto; }
@@ -69,9 +69,9 @@
 </head>
 <body>
     <button class='theme-toggle' onclick='toggleTheme()'>🌓</button>
-    <button class='side-tab-trigger' onclick='openNav()'>✨ GALLERY</button>
+    <button class='side-tab-trigger' id='galleryBtn' onclick='openNav(event)'>✨ GALLERY</button>
 
-    <div id='memorySidebar'>
+    <div id='memorySidebar' onclick='event.stopPropagation()'>
         <a href='javascript:void(0)' class='closebtn' onclick='closeNav()'>&times;</a>
         <div class='gallery-container-inner'>
             <h3 class='mb-4'>Our Memories</h3>
@@ -171,8 +171,23 @@
 
     <script>
         function toggleTheme() { document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }
-        function openNav() { document.getElementById('memorySidebar').style.width = window.innerWidth < 768 ? '100%' : '350px'; }
+        
+        function openNav(e) { 
+            e.stopPropagation();
+            document.getElementById('memorySidebar').style.width = window.innerWidth < 768 ? '100%' : '350px'; 
+        }
+
         function closeNav() { document.getElementById('memorySidebar').style.width = '0'; }
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('memorySidebar');
+            const trigger = document.getElementById('galleryBtn');
+            if (sidebar.style.width !== '0' && sidebar.style.width !== '' && !sidebar.contains(event.target) && event.target !== trigger) {
+                closeNav();
+            }
+        });
+
         function toggleVideoFlip(card) { const v = document.getElementById('reelVideo'); card.classList.toggle('flipped'); card.classList.contains('flipped') ? v.play() : v.pause(); }
 
         const praises = [
