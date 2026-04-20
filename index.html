@@ -35,7 +35,6 @@
         .hero::before { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.4); }
         .hero-content { position: relative; z-index: 10; text-align: center; color: white; padding: 0 20px; }
 
-        /* Journey Mobile-Friendly Layout */
         .journey-container { position: relative; max-width: 900px; margin: 30px auto; padding: 20px 10px; }
         .journey-container::after { content: ''; position: absolute; width: 2px; background-color: var(--accent-color); top: 0; bottom: 0; left: 50%; margin-left: -1px; opacity: 0.4; }
         .journey-item { padding: 10px 20px; position: relative; width: 50%; }
@@ -54,11 +53,6 @@
         .flip-card-front { background: var(--card-bg); border: 1px solid var(--accent-color); }
         .flip-card-back { background: var(--accent-color); color: #000; transform: rotateY(180deg); }
 
-        .gallery-container-inner { padding: 15px; text-align: center; }
-        #gallery-media-container img, #gallery-media-container video { width: 100%; max-height: 350px; object-fit: contain; border-radius: 10px; }
-
-        .btn-custom { background: var(--accent-color); color: #000; font-weight: bold; border-radius: 30px; padding: 10px 20px; border: none; cursor: pointer; margin: 5px; font-size: 0.9rem; }
-
         @media (max-width: 768px) {
             .journey-container::after { left: 31px; }
             .journey-item { width: 100%; padding-left: 70px; padding-right: 25px; text-align: left !important; }
@@ -66,7 +60,6 @@
             .right { left: 0; }
             .hero { height: 40vh; }
             .display-1 { font-size: 2.5rem; }
-            #memorySidebar { width: 0; max-width: 100%; }
         }
     </style>
 </head>
@@ -96,22 +89,13 @@
         <h2 class='text-center mb-4'>Our Journey</h2>
         <div class='journey-container'>
             <div class='journey-item left'>
-                <div class='journey-frame'>
-                    <img src='Gloria_2.jpeg'>
-                    <div class='p-3'><h6>Started Here</h6><p class='small'>Our first chapter.</p></div>
-                </div>
+                <div class='journey-frame'><img src='Gloria_2.jpeg'></div>
             </div>
             <div class='journey-item right'>
-                <div class='journey-frame'>
-                    <img src='Together_1.jpeg'>
-                    <div class='p-3'><h6>Building Us</h6><p class='small'>Every day is a gift.</p></div>
-                </div>
+                <div class='journey-frame'><img src='Together_1.jpeg'></div>
             </div>
             <div class='journey-item left'>
-                <div class='journey-frame'>
-                    <img src='Gloria_3.jpeg'>
-                    <div class='p-3'><h6>Forever</h6><p class='small'>Hand in hand.</p></div>
-                </div>
+                <div class='journey-frame'><img src='Gloria_3.jpeg'></div>
             </div>
         </div>
     </div>
@@ -141,8 +125,10 @@
             <div class='col-12 col-md-4'>
                 <div class='flip-card' onclick='this.classList.toggle("flipped")'>
                     <div class='flip-card-inner'>
-                        <div class='flip-card-front'><h3>Love</h3></div>
-                        <div class='flip-card-back'><p>Always.</p></div>
+                        <div class='flip-card-front'><h3>YouTube Tribute</h3></div>
+                        <div class='flip-card-back' style='padding:0;'>
+                            <iframe width='100%' height='100%' src='https://www.youtube.com/embed/dQw4w9WgXcQ' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen style='border-radius:15px;'></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -150,48 +136,20 @@
     </div>
 
     <script>
-        function toggleTheme() {
-            const body = document.documentElement;
-            const currentTheme = body.getAttribute('data-theme');
-            body.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
-        }
-
+        function toggleTheme() { document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }
         function openNav() { document.getElementById('memorySidebar').style.width = window.innerWidth < 768 ? '100%' : '350px'; }
         function closeNav() { document.getElementById('memorySidebar').style.width = '0'; }
-
-        function toggleVideoFlip(card) {
-            const video = document.getElementById('reelVideo');
-            card.classList.toggle('flipped');
-            if (card.classList.contains('flipped')) {
-                video.play();
-            } else {
-                video.pause();
-            }
-        }
-
+        function toggleVideoFlip(card) { const v = document.getElementById('reelVideo'); card.classList.toggle('flipped'); card.classList.contains('flipped') ? v.play() : v.pause(); }
+        
         const galleryData = [{"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"}, {"src": "Gloria_1.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.45.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.00.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.48.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.16.jpeg", "type": "image"}, {"src": "Gloria_3.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.03.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.15 (1).jpeg", "type": "image"}, {"src": "Together_1.jpeg", "type": "image"}, {"src": "Gloria_2.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.13.jpeg", "type": "image"}, {"src": "Together_2.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.08.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.47 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.01.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.59.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.44.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.14 (1).jpeg", "type": "image"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.18.mp4", "type": "video"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.18 (1).mp4", "type": "video"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.00 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.16 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.17.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.11.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.02.jpeg", "type": "image"}, {"src": "Trial_3.png", "type": "image"}, {"src": "Trial_1.png", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.46.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.14.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.48 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.17 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.42.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.12 (1).jpeg", "type": "image"}, {"src": "SAMPLE IMAGE .jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.46 (1).jpeg", "type": "image"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.19.mp4", "type": "video"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.07.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.47.jpeg", "type": "image"}, {"src": "Trial_2.png", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.15.jpeg", "type": "image"}, {"src": "The_reel.mp4", "type": "video"}];
         let currentIndex = 0;
-
         function updateGallery() {
-            const container = document.getElementById('gallery-media-container');
-            if (!galleryData.length) return;
-            const item = galleryData[currentIndex];
-            container.innerHTML = '';
-            if (item.type === 'image') {
-                const img = document.createElement('img');
-                img.src = item.src;
-                container.appendChild(img);
-            } else {
-                const video = document.createElement('video');
-                video.src = item.src;
-                video.controls = true;
-                container.appendChild(video);
-            }
+            const c = document.getElementById('gallery-media-container'); if(!galleryData.length) return; const item = galleryData[currentIndex]; c.innerHTML = '';
+            if(item.type === 'image') { const img = document.createElement('img'); img.src = item.src; img.style.width='100%'; c.appendChild(img); }
+            else { const vid = document.createElement('video'); vid.src = item.src; vid.controls = true; vid.style.width='100%'; c.appendChild(vid); }
         }
-
         function nextMedia() { currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }
         function prevMedia() { currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length; updateGallery(); }
-
         updateGallery();
     </script>
 </body>
