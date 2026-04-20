@@ -10,7 +10,7 @@
     <style>
         :root {
             --bg-color: #0f0f0f;
-            --text-color: #FFC0CB; /* Vibrant Pink for all text */
+            --text-color: #e0e0e0; /* Revert to theme-dependent default */
             --accent-color: #ff8fa3;
             --card-bg: #161616;
             --glass-bg: rgba(255, 143, 163, 0.15);
@@ -19,7 +19,7 @@
 
         [data-theme="light"] {
             --bg-color: #fff9f6;
-            /* Removed --text-color here to ensure it uses the fixed pink from :root */
+            --text-color: #1a1a1a; /* Re-add theme-dependent light mode text color */
             --accent-color: #9e0031;
             --card-bg: #ffffff;
             --glass-bg: rgba(158, 0, 49, 0.1);
@@ -30,7 +30,7 @@
         body {
             font-family: 'Segoe UI', sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color); /* Uses the fixed pink */
+            color: var(--text-color); /* Uses the theme-dependent text color */
             transition: background 0.5s ease, color 0.5s ease;
             margin: 0;
             overflow-x: hidden;
@@ -283,9 +283,6 @@
 
                     if (phraseIndex < typewriterPhrases.length) {
                         typingTimeout = setTimeout(startTypewriterEffect, 1500); // Delay before next phrase
-                    } else {
-                        // All phrases finished
-                        if (cursorElement) cursorElement.style.display = 'none';
                     }
                 }
             }
