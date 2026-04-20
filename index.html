@@ -11,32 +11,33 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css'>
     <style>
         :root { --bg-color: #0f0f0f; --text-color: #e0e0e0; --accent-color: #ff8fa3; --card-bg: #161616; }
-        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', sans-serif; transition: 0.5s; overflow-x: hidden; }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', sans-serif; transition: 0.5s; overflow-x: hidden; margin: 0; }
         .hero { height: 100vh; background: url('Gloria_1.jpeg') center/cover no-repeat; display: flex; align-items: center; justify-content: center; position: relative; }
         .hero::before { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5); }
         .hero-content { position: relative; z-index: 10; text-align: center; }
         #memorySidebar { height: 100%; width: 0; position: fixed; z-index: 2000; top: 0; left: 0; background: #111; overflow-x: hidden; transition: 0.5s; border-right: 2px solid var(--accent-color); }
-        .side-tab-trigger { position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 1500; background: var(--accent-color); color: #000; padding: 20px 10px; cursor: pointer; writing-mode: vertical-rl; border-radius: 0 10px 10px 0; font-weight: bold; }
-        .timeline-item { margin-bottom: 50px; }
-        .gallery-img { border-radius: 15px; width: 100%; height: 400px; object-fit: cover; border: 2px solid var(--accent-color); }
+        .side-tab-trigger { position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 1500; background: var(--accent-color); color: #000; padding: 25px 12px; cursor: pointer; writing-mode: vertical-rl; border-radius: 0 10px 10px 0; font-weight: bold; border: none; }
+        .gallery-img { border-radius: 15px; width: 100%; height: auto; margin-bottom: 15px; border: 1px solid var(--accent-color); }
+        .main-carousel-item img { border-radius: 20px; width: 100%; height: 500px; object-fit: cover; border: 2px solid var(--accent-color); }
+        h1 { font-size: 5rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.7); }
     </style>
 </head>
 <body>
     <div id='memorySidebar'>
-        <div class='p-3 text-end'><a href='javascript:void(0)' onclick='closeNav()' style='color:white; font-size: 2rem;'>&times;</a></div>
-        <div class='container' id='sidebar-content'></div>
+        <div class='p-3 text-end'><a href='javascript:void(0)' onclick='closeNav()' style='color:white; font-size: 2.5rem; text-decoration: none;'>&times;</a></div>
+        <div class='container' id='sidebar-content' style='padding-bottom: 100px;'></div>
     </div>
-    <div class='side-tab-trigger' onclick='openNav()'>OPEN GALLERY ✨</div>
+    <button class='side-tab-trigger' onclick='openNav()'>✨ OPEN MEMORIES</button>
 
     <div class='hero'>
         <div class='hero-content'>
-            <h1 class='display-1 fw-bold'>Hi Gloria 🌸</h1>
-            <p id='typewriter' style='font-size: 2rem; color: var(--accent-color);'></p>
+            <h1 class='display-1 fw-bold'>Hi Gloria 33A</h1>
+            <p id='typewriter' style='font-size: 2rem; color: var(--accent-color); height: 1.5em;'></p>
         </div>
     </div>
 
     <div class='container py-5'>
-        <h2 class='text-center mb-5'>Our Journey</h2>
+        <h2 class='text-center mb-5' style='color: var(--accent-color);'>Our Journey</h2>
         <div class='owl-carousel owl-theme' id='main-gallery'></div>
     </div>
 
@@ -52,13 +53,13 @@
             const sidebar = $('#sidebar-content');
             galleryData.forEach(item => {
                 if(item.type === 'image') {
-                    owl.append(`<div class='item'><img src='${item.src}' class='gallery-img'></div>`);
-                    sidebar.append(`<img src='${item.src}' class='img-fluid mb-3 rounded'>`);
+                    owl.append(`<div class='item main-carousel-item'><img src='${item.src}'></div>`);
+                    sidebar.append(`<img src='${item.src}' class='gallery-img'>`);
                 }
             });
-            owl.owlCarousel({ loop: true, margin: 20, items: 1, autoplay: true });
+            owl.owlCarousel({ loop: true, margin: 20, items: 1, autoplay: true, autoplayTimeout: 3000 });
 
-            const phrases = ["You are amazing.", "Every moment is a gift.", "Always in my heart."];
+            const phrases = ["You are amazing.", "Every moment is a gift.", "Specifically for you."];
             let i = 0, j = 0; const el = document.getElementById('typewriter');
             function type() {
                 if (j < phrases[i].length) { el.innerHTML += phrases[i][j++]; setTimeout(type, 100); }
