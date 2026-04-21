@@ -89,70 +89,45 @@
             transform: rotate(-2deg);
         }
 
-        /* --- IMPROVED LOVE SECTION VISUALS --- */
-        .love-section {
-            padding: 100px 20px;
-            text-align: center;
-            /* Added a subtle gradient to make the section stand out */
-            background: linear-gradient(180deg, var(--bg-color) 0%, var(--card-bg) 100%);
-            border-top: 2px solid var(--accent-color);
-            /* Important: position relative keeps the runaway button inside this section only */
-            position: relative; 
-            overflow: hidden;
-            min-height: 400px;
+        /* --- BOKEH BACKGROUND FOR JOURNEY --- */
+        .journey-wrapper {
+            position: relative;
+            background-color: var(--bg-color);
+            overflow: hidden; /* Keeps particles inside the section */
         }
 
-        .love-question {
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: var(--accent-color);
-            margin-bottom: 40px;
-            text-shadow: 0 0 10px rgba(255, 143, 163, 0.2);
+        .bokeh-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Behind the content */
+            pointer-events: none; /* Allows clicking through to cards */
         }
 
-        #noBtn {
-            transition: all 0.15s ease-out;
-            /* High z-index to ensure it stays above background elements */
-            z-index: 10; 
+        /* The individual bokeh circles */
+        .bokeh-dot {
+            position: absolute;
+            background: var(--accent-color);
+            border-radius: 50%;
+            opacity: 0.15; /* Very subtle so it doesn't distract */
+            filter: blur(40px); /* Creates the soft glow */
+            animation: float-bokeh linear infinite;
         }
 
-        .btn-yes {
-            /* Adding a pulse effect to the Yes button to make it more inviting */
-            animation: pulse-green 2s infinite;
-            box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+        @keyframes float-bokeh {
+            0% { transform: translateY(110vh) scale(1); opacity: 0; }
+            20% { opacity: 0.15; }
+            80% { opacity: 0.15; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
 
-        @keyframes pulse-green {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+        /* --- JOURNEY CONTENT --- */
+        .journey-content-inner {
+            position: relative;
+            z-index: 5; /* Above the bokeh */
         }
-
-        /* --- GALLERY & SIDEBAR --- */
-        .theme-toggle {
-            position: fixed; top: 15px; right: 15px; z-index: 5000;
-            padding: 15px; border-radius: 50%; background: var(--accent-color);
-            border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            transition: opacity 0.3s;
-        }
-        .theme-toggle.hidden { opacity: 0; pointer-events: none; }
-
-        .side-tab-trigger {
-            position: fixed; bottom: 25px; right: 25px; z-index: 2500;
-            background: var(--accent-color); color: #000; width: 65px; height: 65px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5); font-size: 1.5rem;
-        }
-
-        #memorySidebar {
-            height: 100%; width: 0; position: fixed; z-index: 4500;
-            top: 0; left: 0; background: var(--card-bg); overflow-x: hidden;
-            transition: 0.5s; border-right: 2px solid var(--accent-color);
-        }
-
-        .gallery-container-inner { padding: 20px; height: 100%; display: flex; flex-direction: column; text-align: center; }
-        #gallery-media-container { flex-grow: 1; display: flex; align-items: center; justify-content: center; }
-        .gallery-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 20px 0; }
 
         /* --- TIMELINE & CARDS --- */
         .journey-container { position: relative; max-width: 900px; margin: 30px auto; padding: 20px 10px; }
@@ -172,6 +147,35 @@
 
         .game-card { background: var(--card-bg); border: 2px solid var(--accent-color); border-radius: 15px; padding: 30px; margin: 40px auto; max-width: 500px; }
         .game-input { background: transparent; border: none; border-bottom: 2px solid var(--accent-color); color: var(--text-color); text-align: center; font-size: 1.5rem; width: 100px; margin: 20px 0; outline: none; }
+
+        /* --- LOVE SECTION --- */
+        .love-section {
+            padding: 100px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg-color) 0%, var(--card-bg) 100%);
+            border-top: 2px solid var(--accent-color);
+            position: relative; 
+            overflow: hidden;
+            min-height: 400px;
+        }
+        .love-question { font-weight: 800; letter-spacing: 2px; color: var(--accent-color); margin-bottom: 40px; }
+        #noBtn { transition: all 0.15s ease-out; z-index: 10; }
+        .btn-yes { animation: pulse-green 2s infinite; box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+        }
+
+        /* --- GALLERY & SIDEBAR --- */
+        .theme-toggle { position: fixed; top: 15px; right: 15px; z-index: 5000; padding: 15px; border-radius: 50%; background: var(--accent-color); border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.4); transition: opacity 0.3s; }
+        .theme-toggle.hidden { opacity: 0; pointer-events: none; }
+        .side-tab-trigger { position: fixed; bottom: 25px; right: 25px; z-index: 2500; background: var(--accent-color); color: #000; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5); font-size: 1.5rem; }
+        #memorySidebar { height: 100%; width: 0; position: fixed; z-index: 4500; top: 0; left: 0; background: var(--card-bg); overflow-x: hidden; transition: 0.5s; border-right: 2px solid var(--accent-color); }
+        .gallery-container-inner { padding: 20px; height: 100%; display: flex; flex-direction: column; text-align: center; }
+        #gallery-media-container { flex-grow: 1; display: flex; align-items: center; justify-content: center; }
+        .gallery-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 20px 0; }
 
         @media (max-width: 768px) {
             .gloria-text { font-size: 3.2rem; }
@@ -221,17 +225,22 @@
         </div>
     </div>
 
-    <div class='container py-5'>
-        <h2 class='text-center mb-4'>Our Journey</h2>
-        <div class='journey-container'>
-            <div class='journey-item left'>
-                <div class='journey-frame'><img src='Together_1.jpeg'><div class='p-3'><h5>The first Smile</h5><p class='small m-0'>Every journey starts with a moment that takes your breath away.</p></div></div>
+    <div class="journey-wrapper">
+        <div class="bokeh-container" id="bokehBg">
             </div>
-            <div class='journey-item right'>
-                <div class='journey-frame'><img src='Together_2.jpeg'><div class='p-3'><h5>Unforgettable memory</h5><p class='small m-0'>Still think we should hang it in the Louvre😮‍💨</p></div></div>
-            </div>
-            <div class='journey-item left'>
-                <div class='journey-frame'><img src='Gloria_3.jpeg'><div class='p-3'><h5>A special day🍰</h5><p class='small m-0'>In every look, there's a story of elegance and strength.</p></div></div>
+        
+        <div class='container py-5 journey-content-inner'>
+            <h2 class='text-center mb-4'>Our Journey</h2>
+            <div class='journey-container'>
+                <div class='journey-item left'>
+                    <div class='journey-frame'><img src='Together_1.jpeg'><div class='p-3'><h5>The first Smile</h5><p class='small m-0'>Every journey starts with a moment that takes your breath away.</p></div></div>
+                </div>
+                <div class='journey-item right'>
+                    <div class='journey-frame'><img src='Together_2.jpeg'><div class='p-3'><h5>Unforgettable memory</h5><p class='small m-0'>Still think we should hang it in the Louvre😮‍💨</p></div></div>
+                </div>
+                <div class='journey-item left'>
+                    <div class='journey-frame'><img src='Gloria_3.jpeg'><div class='p-3'><h5>A special day🍰</h5><p class='small m-0'>In every look, there's a story of elegance and strength.</p></div></div>
+                </div>
             </div>
         </div>
     </div>
@@ -286,6 +295,32 @@
     </div>
 
     <script>
+        /* Logic to create Bokeh Particles */
+        function createBokeh() {
+            const container = document.getElementById('bokehBg');
+            const particleCount = 15; // Number of floating circles
+
+            for (let i = 0; i < particleCount; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'bokeh-dot';
+                
+                // Randomize size, position, and speed
+                const size = Math.random() * 150 + 50;
+                const pos = Math.random() * 100;
+                const delay = Math.random() * 15;
+                const duration = Math.random() * 20 + 15;
+
+                dot.style.width = `${size}px`;
+                dot.style.height = `${size}px`;
+                dot.style.left = `${pos}%`;
+                dot.style.animationDelay = `${delay}s`;
+                dot.style.animationDuration = `${duration}s`;
+
+                container.appendChild(dot);
+            }
+        }
+        createBokeh();
+
         const galleryData = [
             {"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"},
             {"src": "Gloria_1.jpeg", "type": "image"},
@@ -358,32 +393,21 @@
             if(card.classList.contains('flipped')) { v.play(); } else { v.pause(); }
         }
 
-        /* IMPROVED RUNAWAY BUTTON LOGIC */
         function moveButton() {
             const btn = document.getElementById('noBtn');
             const section = document.getElementById('loveSection');
-            
-            // Switching to absolute position within the container instead of fixed screen position
-            // This ensures the button doesn't float on top when scrolling away
             btn.style.position = 'absolute';
-            
-            // Get dimensions of the section to set boundaries for the button jump
             const maxX = section.clientWidth - btn.offsetWidth - 20;
             const maxY = section.clientHeight - btn.offsetHeight - 20;
-            
-            // Randomize position within the section
             const newX = Math.floor(Math.random() * maxX);
             const newY = Math.floor(Math.random() * maxY);
-            
             btn.style.left = newX + 'px';
             btn.style.top = newY + 'px';
         }
 
-        /* WHATSAPP INTEGRATION */
         function sendWhatsApp() {
             const phone = "256761417053";
             const message = "THANK YOU FOR THE SUPRISE MY ENGINEER❤️";
-            // Encodes message for a clean URL and opens WhatsApp
             window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
         }
 
