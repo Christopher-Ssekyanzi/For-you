@@ -3,7 +3,7 @@
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
-    <title>For Mercy's Lovely Daughter</title>
+    <title>For Gloria</title>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>
     <style>
         :root {
@@ -12,6 +12,8 @@
             --accent-color: #ff8fa3;
             --card-bg: #161616;
             --transition: all 0.3s ease;
+            --minion-yellow: #ffdb00;
+            --minion-blue: #2b59c3;
         }
         [data-theme='light'] {
             --bg-color: #f8f9fa;
@@ -28,86 +30,9 @@
             padding-bottom: 80px;
         }
 
-        /* Visibility Logic for Theme Toggle */
-        .theme-toggle {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            z-index: 5000;
-            padding: 15px;
-            border-radius: 50%;
-            background: var(--accent-color);
-            color: #000;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            transition: opacity 0.3s ease;
-        }
-        .theme-toggle.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* Mobile-Friendly Floating Gallery Button */
-        .side-tab-trigger {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 2500;
-            background: var(--accent-color);
-            color: #000;
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Full-Screen Sidebar */
-        #memorySidebar {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            z-index: 4500;
-            top: 0;
-            left: 0;
-            background: var(--card-bg);
-            overflow-x: hidden;
-            transition: 0.5s;
-            border-right: 2px solid var(--accent-color);
-        }
-
-        .gallery-container-inner {
-            padding: 20px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-        }
-
-        #gallery-media-container {
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 250px;
-        }
-
-        .gallery-controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            padding: 20px 0;
-        }
-
-        /* Sections Styling */
+        /* --- SPECIAL HERO EFFECTS --- */
         .hero {
-            min-height: 90vh;
+            min-height: 100vh;
             background: url('Gloria_1.jpeg') center/cover no-repeat;
             display: flex;
             align-items: center;
@@ -118,82 +43,106 @@
             content: '';
             position: absolute;
             top:0; left:0; right:0; bottom:0;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.4);
         }
         .hero-content {
             position: relative;
             z-index: 10;
             text-align: center;
-            color: white;
             padding: 0 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
         }
 
-        .journey-container {
-            position: relative;
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 20px 10px;
+        /* Animated Glowing Text for Gloria */
+        .gloria-text {
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(to right, #ff8fa3, #ffdb00, #ff8fa3);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+            text-shadow: 0 0 20px rgba(255, 143, 163, 0.3);
         }
-        .journey-container::after {
-            content: '';
-            position: absolute;
-            width: 2px;
-            background-color: var(--accent-color);
-            top: 0; bottom: 0; left: 50%;
-            opacity: 0.4;
+
+        @keyframes shine {
+            to { background-position: 200% center; }
         }
+
+        .spice-statement {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #fff;
+            opacity: 0.9;
+        }
+
+        /* Minion Themed Phrase */
+        .minion-badge {
+            display: inline-block;
+            background-color: var(--minion-yellow);
+            color: #333;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 800;
+            border: 4px solid var(--minion-blue);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transform: rotate(-2deg);
+        }
+
+        /* --- GALLERY & SIDEBAR --- */
+        .theme-toggle {
+            position: fixed; top: 15px; right: 15px; z-index: 5000;
+            padding: 15px; border-radius: 50%; background: var(--accent-color);
+            border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: opacity 0.3s;
+        }
+        .theme-toggle.hidden { opacity: 0; pointer-events: none; }
+
+        .side-tab-trigger {
+            position: fixed; bottom: 25px; right: 25px; z-index: 2500;
+            background: var(--accent-color); color: #000; width: 65px; height: 65px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5); font-size: 1.5rem;
+        }
+
+        #memorySidebar {
+            height: 100%; width: 0; position: fixed; z-index: 4500;
+            top: 0; left: 0; background: var(--card-bg); overflow-x: hidden;
+            transition: 0.5s; border-right: 2px solid var(--accent-color);
+        }
+
+        .gallery-container-inner { padding: 20px; height: 100%; display: flex; flex-direction: column; text-align: center; }
+        #gallery-media-container { flex-grow: 1; display: flex; align-items: center; justify-content: center; }
+        .gallery-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 20px 0; }
+
+        /* --- TIMELINE & CARDS --- */
+        .journey-container { position: relative; max-width: 900px; margin: 30px auto; padding: 20px 10px; }
+        .journey-container::after { content: ''; position: absolute; width: 2px; background: var(--accent-color); top: 0; bottom: 0; left: 50%; opacity: 0.3; }
         .journey-item { padding: 10px 20px; position: relative; width: 50%; }
-        .journey-item::after {
-            content: '❤';
-            position: absolute;
-            width: 20px; height: 20px;
-            right: -10px; background-color: var(--bg-color);
-            border: 2px solid var(--accent-color);
-            top: 20px; border-radius: 50%;
-            z-index: 1; color: var(--accent-color);
-            font-size: 10px; text-align: center; line-height: 16px;
-        }
         .left { left: 0; text-align: right; }
         .right { left: 50%; text-align: left; }
-        .right::after { left: -10px; }
         .journey-frame { border: 2px solid var(--accent-color); border-radius: 15px; overflow: hidden; background: var(--card-bg); }
         .journey-frame img { width: 100%; height: auto; max-height: 400px; object-fit: contain; background: #000; }
 
-        .flip-card { background-color: transparent; width: 100%; height: 350px; perspective: 1000px; margin-bottom: 20px; }
-        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; }
+        .flip-card { height: 350px; perspective: 1000px; margin-bottom: 20px; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; }
         .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
-        .flip-card-front, .flip-card-back {
-            position: absolute;
-            width: 100%; height: 100%;
-            backface-visibility: hidden;
-            border-radius: 15px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-        }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
         .flip-card-front { background: var(--card-bg); border: 1px solid var(--accent-color); }
         .flip-card-back { background: var(--accent-color); color: #000; transform: rotateY(180deg); }
 
-        .game-card {
-            background: var(--card-bg); border: 2px solid var(--accent-color);
-            border-radius: 15px; padding: 30px; margin: 40px auto; max-width: 500px;
-        }
-        .game-input {
-            background: transparent; border: none; border-bottom: 2px solid var(--accent-color);
-            color: var(--text-color); text-align: center; font-size: 1.5rem; width: 100px; margin: 20px 0; outline: none;
-        }
+        .game-card { background: var(--card-bg); border: 2px solid var(--accent-color); border-radius: 15px; padding: 30px; margin: 40px auto; max-width: 500px; }
+        .game-input { background: transparent; border: none; border-bottom: 2px solid var(--accent-color); color: var(--text-color); text-align: center; font-size: 1.5rem; width: 100px; margin: 20px 0; outline: none; }
 
         @media (max-width: 768px) {
+            .gloria-text { font-size: 3.2rem; }
+            .spice-statement { font-size: 1.1rem; }
             .journey-container::after { left: 31px; }
-            .journey-item { width: 100%; padding-left: 70px; padding-right: 25px; text-align: left !important; }
-            .journey-item::after { left: 21px; }
+            .journey-item { width: 100%; padding-left: 70px; text-align: left !important; }
             .right { left: 0; }
-            .hero { min-height: 60vh; }
-            .display-1 { font-size: 3rem; }
+            .hero { min-height: 80vh; }
             .flip-card { height: 280px; }
         }
     </style>
@@ -204,7 +153,7 @@
 
     <div id='memorySidebar'>
         <div class='gallery-container-inner'>
-            <h3 class='mb-4 mt-2'>Our Memories</h3>
+            <h3 class='mb-4'>Our Memories</h3>
             <div id='gallery-media-container'></div>
             <div class='gallery-controls'>
                 <button class='btn btn-outline-info' onclick='prevMedia()'>⬅ Prev</button>
@@ -217,7 +166,9 @@
 
     <div class='hero'>
         <div class='hero-content'>
-            <h1 class='display-1 fw-bold'>For Gloria ✨</h1>
+            <h1 class='gloria-text'>For Gloria ✨</h1>
+            <p class='spice-statement'>My constant, my favorite chapter, and my always.</p>
+            <div class='minion-badge'>🍌 I made this for you!</div>
         </div>
     </div>
 
@@ -228,9 +179,7 @@
                 <div class='ratio ratio-16x9 rounded overflow-hidden shadow' style='border: 2px solid var(--accent-color);'>
                     <iframe src='https://www.youtube.com/embed/q7mlB-adMBc' allowfullscreen></iframe>
                 </div>
-                <a href='https://spotify.com' target='_blank' class='btn btn-success rounded-pill mt-4 px-4 fw-bold'>
-                    🎵 Open on Spotify
-                </a>
+                <a href='#' class='btn btn-success rounded-pill mt-4 px-4 fw-bold'>🎵 Open on Spotify</a>
             </div>
         </div>
     </div>
@@ -272,8 +221,8 @@
             <div class='col-12 col-md-4'>
                 <div class='flip-card' onclick='handlePraiseClick(this)'>
                     <div class='flip-card-inner'>
-                        <div class='flip-card-front'><h3>Whats here, find out yourself😉</h3><p class='small'>Don't blush, just tap</p></div>
-                        <div class='flip-card-back'><p id='praiseText' class='fw-bold px-3 text-center'>You are such a cutie.</p></div>
+                        <div class='flip-card-front'><h3>Praises for You</h3><p class='small'>Don't blush, just tap</p></div>
+                        <div class='flip-card-back'><p id='praiseText' class='fw-bold text-center'>You are breathtakingly beautiful.</p></div>
                     </div>
                 </div>
             </div>
@@ -283,11 +232,11 @@
     <div class='container text-center mb-5'>
         <div class='game-card'>
             <h3>💎 The Carat Challenge</h3>
-            <p>Gloria Veronica, how many carats?</p>
+            <p>Gloria, how many carats?</p>
             <input type='number' id='caratInput' class='game-input' placeholder='?'>
             <br>
             <button class='btn btn-outline-danger' onclick='playCarat()'>Check!</button>
-            <p id='gameFeedback' class='mt-3 fw-bold' style='min-height: 24px;'></p>
+            <p id='gameFeedback' class='mt-3 fw-bold'></p>
         </div>
     </div>
 
@@ -364,8 +313,8 @@
             if(card.classList.contains('flipped')) { v.play(); } else { v.pause(); }
         }
 
-        const affirmations = [ "You are my greatest adventure.", "You are capable of amazing things.", "Senior Engineer😅🫶.", "I am so proud of everything you are." ];
-        const praises = [ "You are breathtakingly beautiful.", "Your taste in clothes is impeccable!", "You chose the best man. 😉" ];
+        const affirmations = [ "You are my greatest adventure.", "Senior Engineer😅🫶.", "Proud of you always." ];
+        const praises = [ "Breathtakingly beautiful.", "Stunning taste!", "You chose the best man. 😉" ];
 
         function handleAffirmationClick(card) {
             if (!card.classList.contains('flipped')) { document.getElementById('affirmationText').innerText = affirmations[Math.floor(Math.random() * affirmations.length)]; }
@@ -378,14 +327,11 @@
         }
 
         let caratAttempts = 0;
-        const targetAttempts = Math.floor(Math.random() * 3) + 2;
         function playCarat() {
-            const input = document.getElementById('caratInput').value;
             const feedback = document.getElementById('gameFeedback');
-            if(!input) return;
             caratAttempts++;
-            if(caratAttempts < targetAttempts) { feedback.innerText = "Hmm, " + input + "? Not quite enough! Try again. 😉"; } 
-            else { feedback.innerHTML = "<span style='color:var(--accent-color)'>BINGO!</span> You're my everything. ❤️"; caratAttempts = 0; }
+            if(caratAttempts < 3) { feedback.innerText = "Not quite enough for a queen! 😉"; } 
+            else { feedback.innerHTML = "BINGO! You're my everything. ❤️"; caratAttempts = 0; }
         }
     </script>
 </body>
