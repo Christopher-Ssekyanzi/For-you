@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang='en' data-theme='dark'>
 <head>
@@ -14,73 +13,226 @@
             --card-bg: #161616;
             --transition: all 0.3s ease;
         }
-
         [data-theme='light'] {
             --bg-color: #f8f9fa;
             --text-color: #212529;
             --accent-color: #d63384;
             --card-bg: #ffffff;
         }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', sans-serif;
+            transition: var(--transition);
+            overflow-x: hidden;
+            padding-bottom: 80px; /* Space for the floating gallery button */
+        }
 
-        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', sans-serif; transition: var(--transition); overflow-x: hidden; }
+        /* Mobile-Optimized Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 5000;
+            padding: 15px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            color: #000;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            font-size: 1.2rem;
+        }
 
-        .theme-toggle { position: fixed; top: 15px; right: 15px; z-index: 5000; padding: 12px; border-radius: 50%; background: var(--accent-color); border: none; cursor: pointer; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        /* Floating Gallery Button (FAB) for Mobile */
+        .side-tab-trigger {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 2500;
+            background: var(--accent-color);
+            color: #000;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
 
-        /* Side Gallery */
-        #memorySidebar { height: 100%; width: 0; position: fixed; z-index: 4500; top: 0; left: 0; background: var(--card-bg); overflow-x: hidden; transition: 0.5s; border-right: 2px solid var(--accent-color); padding-top: 60px; box-shadow: 5px 0 15px rgba(0,0,0,0.5); }
-        .side-tab-trigger { position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 2500; background: var(--accent-color); color: #000; padding: 20px 10px; cursor: pointer; writing-mode: vertical-rl; border-radius: 0 10px 10px 0; font-weight: bold; border: none; font-size: 0.9rem; }
-        .closebtn { position: absolute; top: 10px; right: 25px; font-size: 36px; color: var(--text-color); text-decoration: none; cursor: pointer; }
-        .gallery-container-inner { padding: 20px; text-align: center; }
+        /* Sidebar Gallery */
+        #memorySidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 4500;
+            top: 0;
+            left: 0;
+            background: var(--card-bg);
+            overflow-x: hidden;
+            transition: 0.5s;
+            border-right: 2px solid var(--accent-color);
+            padding-top: 60px;
+        }
 
-        .hero { min-height: 90vh; background: url('Gloria_1.jpeg') center/cover no-repeat; display: flex; align-items: center; justify-content: center; position: relative; }
-        .hero::before { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.3); }
-        .hero-content { position: relative; z-index: 10; text-align: center; color: white; padding: 0 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); }
+        .closebtn {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 40px;
+            color: var(--text-color);
+            text-decoration: none;
+            cursor: pointer;
+        }
 
-        .spotify-btn { background-color: #1DB954; color: white; border: none; padding: 10px 25px; border-radius: 30px; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 15px; transition: 0.3s; }
-        .game-card { background: var(--card-bg); border: 2px solid var(--accent-color); border-radius: 15px; padding: 30px; margin: 40px auto; max-width: 500px; transition: var(--transition); }
-        .game-input { background: transparent; border: none; border-bottom: 2px solid var(--accent-color); color: var(--text-color); text-align: center; font-size: 1.5rem; width: 100px; margin: 20px 0; outline: none; }
+        .hero {
+            min-height: 80vh;
+            background: url('Gloria_1.jpeg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top:0; left:0; right:0; bottom:0;
+            background: rgba(0,0,0,0.3);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
 
-        .journey-container { position: relative; max-width: 900px; margin: 30px auto; padding: 20px 10px; }
-        .journey-container::after { content: ''; position: absolute; width: 2px; background-color: var(--accent-color); top: 0; bottom: 0; left: 50%; margin-left: -1px; opacity: 0.4; }
-        .journey-item { padding: 10px 20px; position: relative; width: 50%; }
-        .journey-item::after { content: '❤'; position: absolute; width: 20px; height: 20px; right: -10px; background-color: var(--bg-color); border: 2px solid var(--accent-color); top: 20px; border-radius: 50%; z-index: 1; color: var(--accent-color); font-size: 10px; text-align: center; line-height: 16px; }
-        .left { left: 0; text-align: right; }
-        .right { left: 50%; text-align: left; }
-        .right::after { left: -10px; }
-        
-        .journey-frame { border: 2px solid var(--accent-color); border-radius: 15px; overflow: hidden; background: var(--card-bg); }
-        .journey-frame img { width: 100%; height: auto; max-height: 400px; object-fit: contain; background: #000; }
-        .journey-caption { padding: 15px; font-size: 0.95rem; }
+        .journey-container {
+            position: relative;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px 15px;
+        }
+        .journey-container::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: var(--accent-color);
+            top: 0; bottom: 0; left: 50%;
+            opacity: 0.3;
+        }
 
-        .flip-card { background-color: transparent; width: 100%; height: 350px; perspective: 1000px; margin-bottom: 20px; }
-        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; }
+        .journey-item {
+            padding: 10px 20px;
+            position: relative;
+            width: 50%;
+        }
+        .journey-frame {
+            border: 2px solid var(--accent-color);
+            border-radius: 15px;
+            overflow: hidden;
+            background: var(--card-bg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .journey-frame img {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: cover;
+        }
+
+        /* Responsive Flip Cards */
+        .flip-card {
+            height: 350px;
+            perspective: 1000px;
+            margin-bottom: 20px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
         .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
-        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px; }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
         .flip-card-front { background: var(--card-bg); border: 1px solid var(--accent-color); }
         .flip-card-back { background: var(--accent-color); color: #000; transform: rotateY(180deg); }
 
-        @media (max-width: 768px) { 
-            .journey-container::after { left: 31px; }
-            .journey-item { width: 100%; padding-left: 70px; padding-right: 25px; text-align: left !important; }
-            .journey-item::after { left: 21px; right: auto; }
-            .right { left: 0; }
-            .hero { min-height: 70vh; }
-            .journey-frame img { max-height: 300px; }
+        /* Game Card Styles */
+        .game-card {
+            background: var(--card-bg);
+            border: 2px solid var(--accent-color);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 500px;
+        }
+        .game-input {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--accent-color);
+            color: var(--text-color);
+            text-align: center;
+            font-size: 1.5rem;
+            width: 100px;
+            margin: 20px 0;
+            outline: none;
+        }
+
+        /* Specific Mobile Overrides */
+        @media (max-width: 768px) {
+            .journey-container::after { left: 20px; }
+            .journey-item {
+                width: 100%;
+                padding-left: 45px;
+                padding-right: 0;
+                text-align: left !important;
+            }
+            .right, .left { left: 0; }
+            .hero { min-height: 60vh; }
+            .display-1 { font-size: 3rem; }
+            .flip-card { height: 280px; }
+            
+            /* Enhanced tap targets for gallery controls */
+            .btn-outline-info {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <button class='theme-toggle' onclick='toggleTheme()'>🌓</button>
-    <button class='side-tab-trigger' id='galleryBtn' onclick='openNav(event)'>✨ GALLERY</button>
+    <button class='theme-toggle' onclick='toggleTheme()' aria-label="Switch Theme">🌓</button>
+    <button class='side-tab-trigger' id='galleryBtn' onclick='openNav(event)'>✨</button>
 
     <div id='memorySidebar' onclick='event.stopPropagation()'>
-        <a href='javascript:void(0)' class='closebtn' onclick='closeNav()'>&times;</a>
-        <div class='gallery-container-inner'>
+        <a href='javascript:void(0)' class='closebtn' onclick='closeNav()'>×</a>
+        <div class='gallery-container-inner' style="padding: 40px 20px; text-align: center;">
             <h3 class='mb-4'>Our Memories</h3>
-            <div id='gallery-media-container'></div>
-            <div class='mt-3'>
-                <button class='btn btn-outline-info btn-sm' onclick='prevMedia()'>Prev</button>
-                <button class='btn btn-outline-info btn-sm' onclick='nextMedia()'>Next</button>
+            <div id='gallery-media-container' style="min-height: 250px;"></div>
+            <div class='mt-4 d-flex justify-content-between gap-2'>
+                <button class='btn btn-outline-info flex-grow-1' onclick='prevMedia()'>Prev</button>
+                <button class='btn btn-outline-info flex-grow-1' onclick='nextMedia()'>Next</button>
             </div>
         </div>
     </div>
@@ -95,10 +247,10 @@
         <h2 class='mb-4'>Our Tune🎼</h2>
         <div class='row justify-content-center'>
             <div class='col-12 col-md-8'>
-                <div style='position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 15px; border: 2px solid var(--accent-color);'>
-                    <iframe src='https://www.youtube.com/embed/q7mlB-adMBc' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' frameborder='0' allowfullscreen></iframe>
+                <div class='ratio ratio-16x9 shadow rounded' style='border: 2px solid var(--accent-color);'>
+                    <iframe src='https://www.youtube.com/embed/q7mlB-adMBc' title="YouTube video" allowfullscreen></iframe>
                 </div>
-                <a href='https://open.spotify.com/track/3AJwUDP919kvQ9QcozQPxg?si=c5976879b83d4b0f' target='_blank' class='spotify-btn'>
+                <a href='https://open.spotify.com/' target='_blank' class='btn btn-success rounded-pill mt-4 px-4 fw-bold'>
                     🎵 Open on Spotify
                 </a>
             </div>
@@ -109,25 +261,25 @@
         <h2 class='text-center mb-4'>Our Journey</h2>
         <div class='journey-container'>
             <div class='journey-item left'>
-                <div class='journey-frame'><img src='Together_1.jpeg'><div class='journey-caption'><h5>The first Smile</h5><p>Every journey starts with a moment that takes your breath away, you complained for a month😒.</p></div></div>
+                <div class='journey-frame'><img src='Together_1.jpeg'><div class='p-3'><h5>The first Smile</h5><p class='small m-0'>Every journey starts with a moment that takes your breath away.</p></div></div>
             </div>
             <div class='journey-item right'>
-                <div class='journey-frame'><img src='Together_2.jpeg'><div class='journey-caption'><h5>Unforgetable memory</h5><p>.</p>Still thing we should hang it in the Loure😮‍💨</div></div>
+                <div class='journey-frame'><img src='Together_2.jpeg'><div class='p-3'><h5>Unforgettable Memory</h5><p class='small m-0'>Still think we should hang it in the Louvre😮‍💨</p></div></div>
             </div>
             <div class='journey-item left'>
-                <div class='journey-frame'><img src='Gloria_3.jpeg'><div class='journey-caption'><h5>A special day🍰</h5><p>In every look, there's a story of elegance and strength, the only sucessful date😅.</p></div></div>
+                <div class='journey-frame'><img src='Gloria_3.jpeg'><div class='p-3'><h5>A special day🍰</h5><p class='small m-0'>In every look, there's a story of elegance and strength.</p></div></div>
             </div>
         </div>
     </div>
 
     <div class='container pb-5'>
-        <h2 class='text-center mb-4'>Gloria Veroniica, Hold on to this!</h2>
+        <h2 class='text-center mb-4'>Gloria Veronica, Hold on to this!</h2>
         <div class='row g-3'>
             <div class='col-12 col-md-4'>
                 <div class='flip-card' onclick='handleAffirmationClick(this)'>
                     <div class='flip-card-inner'>
                         <div class='flip-card-front'><h3>Secret Message</h3><p class='small'>Tap to reveal</p></div>
-                        <div class='flip-card-back'><p id='affirmationText' style='font-weight:bold;'>You are my greatest adventure.</p></div>
+                        <div class='flip-card-back'><p id='affirmationText' class='fw-bold'>You are my greatest adventure.</p></div>
                     </div>
                 </div>
             </div>
@@ -142,10 +294,8 @@
             <div class='col-12 col-md-4'>
                 <div class='flip-card' onclick='handlePraiseClick(this)'>
                     <div class='flip-card-inner'>
-                        <div class='flip-card-front'><h3>Praises for You</h3><p class='small'>Dont blush but tap</p></div>
-                        <div class='flip-card-back'>
-                            <p id='praiseText' style='font-size: 1.1rem; font-weight: bold;'>You are breathtakingly beautiful, inside and out.</p>
-                        </div>
+                        <div class='flip-card-front'><h3>Praises for You</h3><p class='small'>Don't blush, just tap</p></div>
+                        <div class='flip-card-back'><p id='praiseText' class='fw-bold px-3 text-center'>You are breathtakingly beautiful, inside and out.</p></div>
                     </div>
                 </div>
             </div>
@@ -158,15 +308,22 @@
             <p>Gloria, how many carats?</p>
             <input type='number' id='caratInput' class='game-input' placeholder='?'>
             <br>
-            <button class='btn btn-outline-danger' onclick='playCarat()'>Check!</button>
-            <p id='gameFeedback' class='mt-3' style='min-height: 24px;'></p>
+            <button class='btn btn-danger px-4' onclick='playCarat()'>Check!</button>
+            <p id='gameFeedback' class='mt-3 fw-bold' style='min-height: 24px;'></p>
         </div>
     </div>
 
     <script>
-        function toggleTheme() { document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }
-        function openNav(e) { e.stopPropagation(); document.getElementById('memorySidebar').style.width = window.innerWidth < 768 ? '100%' : '350px'; }
-        function closeNav() { document.getElementById('memorySidebar').style.width = '0'; }
+        function toggleTheme() {
+            document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        }
+        function openNav(e) {
+            e.stopPropagation();
+            document.getElementById('memorySidebar').style.width = window.innerWidth < 768 ? '100%' : '400px';
+        }
+        function closeNav() {
+            document.getElementById('memorySidebar').style.width = '0';
+        }
 
         let caratAttempts = 0;
         const targetAttempts = Math.floor(Math.random() * 3) + 2;
@@ -178,64 +335,73 @@
             if(caratAttempts < targetAttempts) {
                 feedback.innerText = "Hmm, " + input + "? Not quite enough carats for a queen! Try again. 😉";
             } else {
-                feedback.innerHTML = "<b style='color:var(--accent-color)'>BINGO!</b> Whether it's " + input + " or a million, I'll always give you all the carats in the world because you're my everything. ❤️";
+                feedback.innerHTML = "<span style='color:var(--accent-color)'>BINGO!</span> Whether it's " + input + " or a million, I'll always give you all the carats in the world because you're my everything. ❤️";
                 caratAttempts = 0;
             }
         }
 
-        function toggleVideoFlip(card) { const v = document.getElementById('reelVideo'); card.classList.toggle('flipped'); card.classList.contains('flipped') ? v.play() : v.pause(); }
+        function toggleVideoFlip(card) {
+            const v = document.getElementById('reelVideo');
+            card.classList.toggle('flipped');
+            if(card.classList.contains('flipped')) { v.play(); } else { v.pause(); }
+        }
 
         const affirmations = [
-            "You are my greatest adventure.",
-            "You are a cow😅.",
-            "You are capable of amazing things.",
-            "Your kindness is a superpower.",
-            "Senior Engineer😅🫶.",
+            "You are my greatest adventure.", "You are capable of amazing things.",
+            "Your kindness is a superpower.", "Senior Engineer😅🫶.",
             "I am so proud of everything you are."
         ];
 
         const praises = [
             "You are breathtakingly beautiful, inside and out.",
-            "Your taste in clothes is impeccable—you always look stunning!",
+            "Your taste in clothes is impeccable!",
             "I love how you chose the best man for yourself. 😉",
-            "You have a radiance that lights up every room you enter.",
-            "Your fashion sense is a perfect reflection of your elegant soul.",
-            "Truly, you are a masterpiece of grace and style.",
-            "Beyond your stunning looks, your heart is what I treasure most.",
             "You make every outfit look like it was made for royalty.",
-            "You clearly have excellent judgment—I mean, look who you chose!",
             "Every time I see you, I'm reminded how lucky I am."
         ];
 
         function handleAffirmationClick(card) {
-             if (card.classList.contains('flipped')) {
-                card.classList.remove('flipped');
-            } else {
-                const textElem = document.getElementById('affirmationText');
-                textElem.innerText = affirmations[Math.floor(Math.random() * affirmations.length)];
+            if (card.classList.contains('flipped')) { card.classList.remove('flipped'); } 
+            else {
+                document.getElementById('affirmationText').innerText = affirmations[Math.floor(Math.random() * affirmations.length)];
                 card.classList.add('flipped');
             }
         }
 
         function handlePraiseClick(card) {
-            if (card.classList.contains('flipped')) {
-                card.classList.remove('flipped');
-            } else {
-                const textElem = document.getElementById('praiseText');
-                textElem.innerText = praises[Math.floor(Math.random() * praises.length)];
+            if (card.classList.contains('flipped')) { card.classList.remove('flipped'); } 
+            else {
+                document.getElementById('praiseText').innerText = praises[Math.floor(Math.random() * praises.length)];
                 card.classList.add('flipped');
             }
         }
 
-        const galleryData = [{"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"}, {"src": "Gloria_1.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.45.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.00.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.48.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.16.jpeg", "type": "image"}, {"src": "Gloria_3.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.03.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.15 (1).jpeg", "type": "image"}, {"src": "Together_1.jpeg", "type": "image"}, {"src": "Gloria_2.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.13.jpeg", "type": "image"}, {"src": "Together_2.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.08.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.47 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.01.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.59.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.44.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.14 (1).jpeg", "type": "image"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.18.mp4", "type": "video"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.18 (1).mp4", "type": "video"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.00 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.16 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.17.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.11.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.02.jpeg", "type": "image"}, {"src": "Trial_3.png", "type": "image"}, {"src": "Trial_1.png", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.46.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.14.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.48 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.17 (1).jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.42.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.12 (1).jpeg", "type": "image"}, {"src": "SAMPLE IMAGE .jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.46 (1).jpeg", "type": "image"}, {"src": "WhatsApp Video 2026-04-20 at 16.17.19.mp4", "type": "video"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.07.jpeg", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.16.47.jpeg", "type": "image"}, {"src": "Trial_2.png", "type": "image"}, {"src": "WhatsApp Image 2026-04-20 at 16.17.15.jpeg", "type": "image"}, {"src": "The_reel.mp4", "type": "video"}];
+        const galleryData = [
+            {"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"},
+            {"src": "Gloria_1.jpeg", "type": "image"},
+            {"src": "WhatsApp Video 2026-04-20 at 16.17.18.mp4", "type": "video"},
+            {"src": "Together_1.jpeg", "type": "image"},
+            {"src": "Gloria_3.jpeg", "type": "image"}
+        ];
+
         let currentIndex = 0;
         function updateGallery() {
-            const c = document.getElementById('gallery-media-container'); if(!galleryData.length) return; const item = galleryData[currentIndex]; c.innerHTML = '';
-            if(item.type === 'image') { const img = document.createElement('img'); img.src = item.src; img.style.width='100%'; img.style.borderRadius='10px'; c.appendChild(img); }
-            else { const vid = document.createElement('video'); vid.src = item.src; vid.controls = true; vid.style.width='100%'; vid.style.borderRadius='10px'; c.appendChild(vid); }
+            const container = document.getElementById('gallery-media-container');
+            container.innerHTML = '';
+            const item = galleryData[currentIndex];
+            if(item.type === 'video') {
+                let vid = document.createElement('video');
+                vid.src = item.src; vid.controls = true; vid.style.width = '100%';
+                container.appendChild(vid);
+            } else {
+                let img = document.createElement('img');
+                img.src = item.src; img.style.width = '100%'; img.classList.add('rounded', 'shadow-sm');
+                container.appendChild(img);
+            }
         }
         function nextMedia() { currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }
         function prevMedia() { currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length; updateGallery(); }
+        
         updateGallery();
     </script>
 </body>
