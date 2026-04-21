@@ -25,10 +25,10 @@
             font-family: 'Segoe UI', sans-serif;
             transition: var(--transition);
             overflow-x: hidden;
-            padding-bottom: 80px; /* Space for the floating gallery button */
+            padding-bottom: 80px;
         }
 
-        /* Mobile-Optimized Theme Toggle */
+        /* Visibility Logic for Theme Toggle */
         .theme-toggle {
             position: fixed;
             top: 15px;
@@ -41,10 +41,14 @@
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            font-size: 1.2rem;
+            transition: opacity 0.3s ease;
+        }
+        .theme-toggle.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
 
-        /* Floating Gallery Button (FAB) for Mobile */
+        /* Mobile-Friendly Floating Gallery Button */
         .side-tab-trigger {
             position: fixed;
             bottom: 25px;
@@ -58,14 +62,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
             border: none;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
             font-size: 1.5rem;
             cursor: pointer;
         }
 
-        /* Sidebar Gallery */
+        /* Full-Screen Sidebar */
         #memorySidebar {
             height: 100%;
             width: 0;
@@ -77,21 +80,34 @@
             overflow-x: hidden;
             transition: 0.5s;
             border-right: 2px solid var(--accent-color);
-            padding-top: 60px;
         }
 
-        .closebtn {
-            position: absolute;
-            top: 15px;
-            right: 25px;
-            font-size: 40px;
-            color: var(--text-color);
-            text-decoration: none;
-            cursor: pointer;
+        .gallery-container-inner {
+            padding: 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
         }
 
+        #gallery-media-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 250px;
+        }
+
+        .gallery-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 20px 0;
+        }
+
+        /* Sections Styling */
         .hero {
-            min-height: 80vh;
+            min-height: 90vh;
             background: url('Gloria_1.jpeg') center/cover no-repeat;
             display: flex;
             align-items: center;
@@ -117,7 +133,7 @@
             position: relative;
             max-width: 900px;
             margin: 30px auto;
-            padding: 20px 15px;
+            padding: 20px 10px;
         }
         .journey-container::after {
             content: '';
@@ -125,114 +141,76 @@
             width: 2px;
             background-color: var(--accent-color);
             top: 0; bottom: 0; left: 50%;
-            opacity: 0.3;
+            opacity: 0.4;
         }
-
-        .journey-item {
-            padding: 10px 20px;
-            position: relative;
-            width: 50%;
-        }
-        .journey-frame {
+        .journey-item { padding: 10px 20px; position: relative; width: 50%; }
+        .journey-item::after {
+            content: '❤';
+            position: absolute;
+            width: 20px; height: 20px;
+            right: -10px; background-color: var(--bg-color);
             border: 2px solid var(--accent-color);
-            border-radius: 15px;
-            overflow: hidden;
-            background: var(--card-bg);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            top: 20px; border-radius: 50%;
+            z-index: 1; color: var(--accent-color);
+            font-size: 10px; text-align: center; line-height: 16px;
         }
-        .journey-frame img {
-            width: 100%;
-            height: auto;
-            max-height: 400px;
-            object-fit: cover;
-        }
+        .left { left: 0; text-align: right; }
+        .right { left: 50%; text-align: left; }
+        .right::after { left: -10px; }
+        .journey-frame { border: 2px solid var(--accent-color); border-radius: 15px; overflow: hidden; background: var(--card-bg); }
+        .journey-frame img { width: 100%; height: auto; max-height: 400px; object-fit: contain; background: #000; }
 
-        /* Responsive Flip Cards */
-        .flip-card {
-            height: 350px;
-            perspective: 1000px;
-            margin-bottom: 20px;
-        }
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-            cursor: pointer;
-        }
+        .flip-card { background-color: transparent; width: 100%; height: 350px; perspective: 1000px; margin-bottom: 20px; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; }
         .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
         .flip-card-front, .flip-card-back {
             position: absolute;
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             backface-visibility: hidden;
             border-radius: 15px;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 15px;
         }
         .flip-card-front { background: var(--card-bg); border: 1px solid var(--accent-color); }
         .flip-card-back { background: var(--accent-color); color: #000; transform: rotateY(180deg); }
 
-        /* Game Card Styles */
         .game-card {
-            background: var(--card-bg);
-            border: 2px solid var(--accent-color);
-            border-radius: 15px;
-            padding: 30px;
-            margin: 40px auto;
-            max-width: 500px;
+            background: var(--card-bg); border: 2px solid var(--accent-color);
+            border-radius: 15px; padding: 30px; margin: 40px auto; max-width: 500px;
         }
         .game-input {
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid var(--accent-color);
-            color: var(--text-color);
-            text-align: center;
-            font-size: 1.5rem;
-            width: 100px;
-            margin: 20px 0;
-            outline: none;
+            background: transparent; border: none; border-bottom: 2px solid var(--accent-color);
+            color: var(--text-color); text-align: center; font-size: 1.5rem; width: 100px; margin: 20px 0; outline: none;
         }
 
-        /* Specific Mobile Overrides */
         @media (max-width: 768px) {
-            .journey-container::after { left: 20px; }
-            .journey-item {
-                width: 100%;
-                padding-left: 45px;
-                padding-right: 0;
-                text-align: left !important;
-            }
-            .right, .left { left: 0; }
+            .journey-container::after { left: 31px; }
+            .journey-item { width: 100%; padding-left: 70px; padding-right: 25px; text-align: left !important; }
+            .journey-item::after { left: 21px; }
+            .right { left: 0; }
             .hero { min-height: 60vh; }
             .display-1 { font-size: 3rem; }
             .flip-card { height: 280px; }
-            
-            /* Enhanced tap targets for gallery controls */
-            .btn-outline-info {
-                padding: 12px 25px;
-                font-size: 1rem;
-            }
         }
     </style>
 </head>
 <body>
-    <button class='theme-toggle' onclick='toggleTheme()' aria-label="Switch Theme">🌓</button>
-    <button class='side-tab-trigger' id='galleryBtn' onclick='openNav(event)'>✨</button>
+    <button class='theme-toggle' id='themeToggler' onclick='toggleTheme()'>🌓</button>
+    <button class='side-tab-trigger' onclick='openNav()'>✨</button>
 
-    <div id='memorySidebar' onclick='event.stopPropagation()'>
-        <a href='javascript:void(0)' class='closebtn' onclick='closeNav()'>×</a>
-        <div class='gallery-container-inner' style="padding: 40px 20px; text-align: center;">
-            <h3 class='mb-4'>Our Memories</h3>
-            <div id='gallery-media-container' style="min-height: 250px;"></div>
-            <div class='mt-4 d-flex justify-content-between gap-2'>
-                <button class='btn btn-outline-info flex-grow-1' onclick='prevMedia()'>Prev</button>
-                <button class='btn btn-outline-info flex-grow-1' onclick='nextMedia()'>Next</button>
+    <div id='memorySidebar'>
+        <div class='gallery-container-inner'>
+            <h3 class='mb-4 mt-2'>Our Memories</h3>
+            <div id='gallery-media-container'></div>
+            <div class='gallery-controls'>
+                <button class='btn btn-outline-info' onclick='prevMedia()'>⬅ Prev</button>
+                <button class='btn btn-outline-info' onclick='nextMedia()'>Next ➡</button>
+                <button class='btn btn-primary' id='slideBtn' onclick='toggleSlideshow()'>▶ Play</button>
+                <button class='btn btn-danger' onclick='closeNav()'>✖ Back</button>
             </div>
         </div>
     </div>
@@ -247,10 +225,10 @@
         <h2 class='mb-4'>Our Tune🎼</h2>
         <div class='row justify-content-center'>
             <div class='col-12 col-md-8'>
-                <div class='ratio ratio-16x9 shadow rounded' style='border: 2px solid var(--accent-color);'>
-                    <iframe src='https://www.youtube.com/embed/q7mlB-adMBc' title="YouTube video" allowfullscreen></iframe>
+                <div class='ratio ratio-16x9 rounded overflow-hidden shadow' style='border: 2px solid var(--accent-color);'>
+                    <iframe src='https://www.youtube.com/embed/q7mlB-adMBc' allowfullscreen></iframe>
                 </div>
-                <a href='https://open.spotify.com/' target='_blank' class='btn btn-success rounded-pill mt-4 px-4 fw-bold'>
+                <a href='https://spotify.com' target='_blank' class='btn btn-success rounded-pill mt-4 px-4 fw-bold'>
                     🎵 Open on Spotify
                 </a>
             </div>
@@ -264,7 +242,7 @@
                 <div class='journey-frame'><img src='Together_1.jpeg'><div class='p-3'><h5>The first Smile</h5><p class='small m-0'>Every journey starts with a moment that takes your breath away.</p></div></div>
             </div>
             <div class='journey-item right'>
-                <div class='journey-frame'><img src='Together_2.jpeg'><div class='p-3'><h5>Unforgettable Memory</h5><p class='small m-0'>Still think we should hang it in the Louvre😮‍💨</p></div></div>
+                <div class='journey-frame'><img src='Together_2.jpeg'><div class='p-3'><h5>Unforgettable memory</h5><p class='small m-0'>Still think we should hang it in the Louvre😮‍💨</p></div></div>
             </div>
             <div class='journey-item left'>
                 <div class='journey-frame'><img src='Gloria_3.jpeg'><div class='p-3'><h5>A special day🍰</h5><p class='small m-0'>In every look, there's a story of elegance and strength.</p></div></div>
@@ -308,74 +286,12 @@
             <p>Gloria, how many carats?</p>
             <input type='number' id='caratInput' class='game-input' placeholder='?'>
             <br>
-            <button class='btn btn-danger px-4' onclick='playCarat()'>Check!</button>
+            <button class='btn btn-outline-danger' onclick='playCarat()'>Check!</button>
             <p id='gameFeedback' class='mt-3 fw-bold' style='min-height: 24px;'></p>
         </div>
     </div>
 
     <script>
-        function toggleTheme() {
-            document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-        }
-        function openNav(e) {
-            e.stopPropagation();
-            document.getElementById('memorySidebar').style.width = window.innerWidth < 768 ? '100%' : '400px';
-        }
-        function closeNav() {
-            document.getElementById('memorySidebar').style.width = '0';
-        }
-
-        let caratAttempts = 0;
-        const targetAttempts = Math.floor(Math.random() * 3) + 2;
-        function playCarat() {
-            const input = document.getElementById('caratInput').value;
-            const feedback = document.getElementById('gameFeedback');
-            if(!input) return;
-            caratAttempts++;
-            if(caratAttempts < targetAttempts) {
-                feedback.innerText = "Hmm, " + input + "? Not quite enough carats for a queen! Try again. 😉";
-            } else {
-                feedback.innerHTML = "<span style='color:var(--accent-color)'>BINGO!</span> Whether it's " + input + " or a million, I'll always give you all the carats in the world because you're my everything. ❤️";
-                caratAttempts = 0;
-            }
-        }
-
-        function toggleVideoFlip(card) {
-            const v = document.getElementById('reelVideo');
-            card.classList.toggle('flipped');
-            if(card.classList.contains('flipped')) { v.play(); } else { v.pause(); }
-        }
-
-        const affirmations = [
-            "You are my greatest adventure.", "You are capable of amazing things.",
-            "Your kindness is a superpower.", "Senior Engineer😅🫶.",
-            "I am so proud of everything you are."
-        ];
-
-        const praises = [
-            "You are breathtakingly beautiful, inside and out.",
-            "Your taste in clothes is impeccable!",
-            "I love how you chose the best man for yourself. 😉",
-            "You make every outfit look like it was made for royalty.",
-            "Every time I see you, I'm reminded how lucky I am."
-        ];
-
-        function handleAffirmationClick(card) {
-            if (card.classList.contains('flipped')) { card.classList.remove('flipped'); } 
-            else {
-                document.getElementById('affirmationText').innerText = affirmations[Math.floor(Math.random() * affirmations.length)];
-                card.classList.add('flipped');
-            }
-        }
-
-        function handlePraiseClick(card) {
-            if (card.classList.contains('flipped')) { card.classList.remove('flipped'); } 
-            else {
-                document.getElementById('praiseText').innerText = praises[Math.floor(Math.random() * praises.length)];
-                card.classList.add('flipped');
-            }
-        }
-
         const galleryData = [
             {"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"},
             {"src": "Gloria_1.jpeg", "type": "image"},
@@ -385,6 +301,25 @@
         ];
 
         let currentIndex = 0;
+        let slideInterval = null;
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+        }
+
+        function openNav() {
+            document.getElementById('memorySidebar').style.width = "100%";
+            document.getElementById('themeToggler').classList.add('hidden');
+            updateGallery();
+        }
+
+        function closeNav() {
+            stopSlideshow();
+            document.getElementById('memorySidebar').style.width = "0";
+            document.getElementById('themeToggler').classList.remove('hidden');
+        }
+
         function updateGallery() {
             const container = document.getElementById('gallery-media-container');
             container.innerHTML = '';
@@ -395,14 +330,63 @@
                 container.appendChild(vid);
             } else {
                 let img = document.createElement('img');
-                img.src = item.src; img.style.width = '100%'; img.classList.add('rounded', 'shadow-sm');
+                img.src = item.src; img.style.width = '100%'; img.classList.add('rounded', 'shadow');
                 container.appendChild(img);
             }
         }
-        function nextMedia() { currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }
-        function prevMedia() { currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length; updateGallery(); }
-        
-        updateGallery();
+
+        function nextMedia() { stopSlideshow(); currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }
+        function prevMedia() { stopSlideshow(); currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length; updateGallery(); }
+
+        function toggleSlideshow() {
+            const btn = document.getElementById('slideBtn');
+            if (slideInterval) { stopSlideshow(); } 
+            else {
+                btn.innerText = "⏸ Pause";
+                btn.classList.replace('btn-primary', 'btn-warning');
+                slideInterval = setInterval(() => { currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }, 3000);
+            }
+        }
+
+        function stopSlideshow() {
+            if (slideInterval) {
+                clearInterval(slideInterval);
+                slideInterval = null;
+                const btn = document.getElementById('slideBtn');
+                btn.innerText = "▶ Play";
+                btn.classList.replace('btn-warning', 'btn-primary');
+            }
+        }
+
+        function toggleVideoFlip(card) {
+            const v = document.getElementById('reelVideo');
+            card.classList.toggle('flipped');
+            if(card.classList.contains('flipped')) { v.play(); } else { v.pause(); }
+        }
+
+        const affirmations = [ "You are my greatest adventure.", "You are capable of amazing things.", "Senior Engineer😅🫶.", "I am so proud of everything you are." ];
+        const praises = [ "You are breathtakingly beautiful.", "Your taste in clothes is impeccable!", "You chose the best man. 😉" ];
+
+        function handleAffirmationClick(card) {
+            if (!card.classList.contains('flipped')) { document.getElementById('affirmationText').innerText = affirmations[Math.floor(Math.random() * affirmations.length)]; }
+            card.classList.toggle('flipped');
+        }
+
+        function handlePraiseClick(card) {
+            if (!card.classList.contains('flipped')) { document.getElementById('praiseText').innerText = praises[Math.floor(Math.random() * praises.length)]; }
+            card.classList.toggle('flipped');
+        }
+
+        let caratAttempts = 0;
+        const targetAttempts = Math.floor(Math.random() * 3) + 2;
+        function playCarat() {
+            const input = document.getElementById('caratInput').value;
+            const feedback = document.getElementById('gameFeedback');
+            if(!input) return;
+            caratAttempts++;
+            if(caratAttempts < targetAttempts) { feedback.innerText = "Hmm, " + input + "? Not quite enough! Try again. 😉"; } 
+            else { feedback.innerHTML = "<span style='color:var(--accent-color)'>BINGO!</span> You're my everything. ❤️"; caratAttempts = 0; }
+        }
     </script>
 </body>
 </html>
