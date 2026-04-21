@@ -1,111 +1,458 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en' data-theme='dark'>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Journey Section - Aurora Effect</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <title>For Gloria</title>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>
     <style>
         :root {
-            --bg-dark: #0f0f0f;
-            --accent-pink: #ff8fa3;
-            --accent-gold: #ffdb00;
-            --accent-blue: #375a7f;
-            --card-bg: rgba(22, 22, 22, 0.8);
+            --bg-color: #0f0f0f;
+            --text-color: #e0e0e0;
+            --accent-color: #ff8fa3;
+            --card-bg: #161616;
+            --transition: all 0.3s ease;
+            --minion-yellow: #ffdb00;
+            --minion-blue: #2b59c3;
         }
-
+        [data-theme='light'] {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --accent-color: #d63384;
+            --card-bg: #ffffff;
+        }
         body {
-            background-color: var(--bg-dark);
-            color: #e0e0e0;
-            font-family: sans-serif;
-            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', sans-serif;
+            transition: var(--transition);
+            overflow-x: hidden;
+            padding-bottom: 80px;
         }
 
-        /* --- THE AURORA BACKGROUND --- */
+        /* --- HERO EFFECTS --- */
+        .hero {
+            min-height: 100vh;
+            background: url('Gloria_1.jpeg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top:0; left:0; right:0; bottom:0;
+            background: rgba(0,0,0,0.4);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .gloria-text {
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(to right, #ff8fa3, #ffdb00, #ff8fa3);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+            text-shadow: 0 0 20px rgba(255, 143, 163, 0.3);
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        .spice-statement {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #fff;
+            opacity: 0.9;
+        }
+
+        .minion-badge {
+            display: inline-block;
+            background-color: var(--minion-yellow);
+            color: #333;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 800;
+            border: 4px solid var(--minion-blue);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transform: rotate(-2deg);
+        }
+
+        /* --- NIGHT SKY BACKGROUND FOR JOURNEY --- */
         .journey-wrapper {
             position: relative;
-            padding: 100px 0;
-            background-color: var(--bg-dark);
-            overflow: hidden; /* Keeps the large animated mesh inside the section */
-        }
-
-        .aurora-bg {
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            z-index: 1; /* Stay behind the timeline */
-            /* Layered radial gradients for the mesh look */
-            background: radial-gradient(circle at 50% 50%, var(--accent-pink), transparent 50%),
-                        radial-gradient(circle at 80% 20%, var(--accent-gold), transparent 40%),
-                        radial-gradient(circle at 10% 80%, var(--accent-blue), transparent 50%);
-            filter: blur(80px); /* Smooths the edges of the colors */
-            opacity: 0.25; /* Keeps it subtle */
-            animation: aurora-rotation 30s linear infinite;
-        }
-
-        @keyframes aurora-rotation {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* --- CONTENT STYLING --- */
-        .journey-content {
-            position: relative;
-            z-index: 10; /* Ensures content is above the aurora */
-        }
-
-        .timeline-item {
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(10px); /* Makes the cards feel part of the aurora */
+            background-color: #050505; /* Deeper black for the space feel */
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 80px 0;
         }
 
-        .timeline-img {
+        .star-field {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 250px;
-            object-fit: cover;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
         }
 
-        .timeline-body {
-            padding: 20px;
+        /* Basic Star Styling */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.1; transform: scale(0.8); }
+            50% { opacity: 0.8; transform: scale(1.2); }
+        }
+
+        /* Shooting Star Effect */
+        .shooting-star {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1), 
+                        0 0 0 8px rgba(255, 255, 255, 0.1), 
+                        0 0 20px rgba(255, 255, 255, 1);
+            animation: shoot 3s linear infinite;
+            z-index: 2;
+        }
+
+        .shooting-star::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 300px;
+            height: 1px;
+            background: linear-gradient(90deg, white, transparent);
+        }
+
+        @keyframes shoot {
+            0% { transform: rotate(315deg) translateX(0); opacity: 1; }
+            70% { opacity: 1; }
+            100% { transform: rotate(315deg) translateX(-1000px); opacity: 0; }
+        }
+
+        /* --- TIMELINE & CARDS --- */
+        .journey-content-inner { position: relative; z-index: 10; }
+        .journey-container { position: relative; max-width: 900px; margin: 30px auto; padding: 20px 10px; }
+        .journey-container::after { content: ''; position: absolute; width: 2px; background: var(--accent-color); top: 0; bottom: 0; left: 50%; opacity: 0.3; }
+        .journey-item { padding: 10px 20px; position: relative; width: 50%; }
+        .left { left: 0; text-align: right; }
+        .right { left: 50%; text-align: left; }
+        .journey-frame { border: 2px solid var(--accent-color); border-radius: 15px; overflow: hidden; background: var(--card-bg); }
+        .journey-frame img { width: 100%; height: auto; max-height: 400px; object-fit: contain; background: #000; }
+
+        .flip-card { height: 350px; perspective: 1000px; margin-bottom: 20px; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        .flip-card-front { background: var(--card-bg); border: 1px solid var(--accent-color); }
+        .flip-card-back { background: var(--accent-color); color: #000; transform: rotateY(180deg); }
+
+        .game-card { background: var(--card-bg); border: 2px solid var(--accent-color); border-radius: 15px; padding: 30px; margin: 40px auto; max-width: 500px; }
+        .game-input { background: transparent; border: none; border-bottom: 2px solid var(--accent-color); color: var(--text-color); text-align: center; font-size: 1.5rem; width: 100px; margin: 20px 0; outline: none; }
+
+        /* --- LOVE SECTION --- */
+        .love-section {
+            padding: 100px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg-color) 0%, var(--card-bg) 100%);
+            border-top: 2px solid var(--accent-color);
+            position: relative; 
+            overflow: hidden;
+            min-height: 400px;
+        }
+        .love-question { font-weight: 800; letter-spacing: 2px; color: var(--accent-color); margin-bottom: 40px; }
+        #noBtn { transition: all 0.15s ease-out; z-index: 10; }
+        .btn-yes { animation: pulse-green 2s infinite; box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+
+        /* --- GALLERY & SIDEBAR --- */
+        .theme-toggle { position: fixed; top: 15px; right: 15px; z-index: 5000; padding: 15px; border-radius: 50%; background: var(--accent-color); border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.4); transition: opacity 0.3s; }
+        .theme-toggle.hidden { opacity: 0; pointer-events: none; }
+        .side-tab-trigger { position: fixed; bottom: 25px; right: 25px; z-index: 2500; background: var(--accent-color); color: #000; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5); font-size: 1.5rem; }
+        #memorySidebar { height: 100%; width: 0; position: fixed; z-index: 4500; top: 0; left: 0; background: var(--card-bg); overflow-x: hidden; transition: 0.5s; border-right: 2px solid var(--accent-color); }
+        .gallery-container-inner { padding: 20px; height: 100%; display: flex; flex-direction: column; text-align: center; }
+        #gallery-media-container { flex-grow: 1; display: flex; align-items: center; justify-content: center; }
+        .gallery-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 20px 0; }
+
+        @media (max-width: 768px) {
+            .gloria-text { font-size: 3.2rem; }
+            .spice-statement { font-size: 1.1rem; }
+            .journey-container::after { left: 31px; }
+            .journey-item { width: 100%; padding-left: 70px; text-align: left !important; }
+            .right { left: 0; }
+            .hero { min-height: 80vh; }
+            .flip-card { height: 280px; }
         }
     </style>
 </head>
 <body>
+    <button class='theme-toggle' id='themeToggler' onclick='toggleTheme()'>🌓</button>
+    <button class='side-tab-trigger' onclick='openNav()'>✨</button>
+
+    <div id='memorySidebar'>
+        <div class='gallery-container-inner'>
+            <h3 class='mb-4'>Our Memories</h3>
+            <div id='gallery-media-container'></div>
+            <div class='gallery-controls'>
+                <button class='btn btn-outline-info' onclick='prevMedia()'>⬅ Prev</button>
+                <button class='btn btn-outline-info' onclick='nextMedia()'>Next ➡</button>
+                <button class='btn btn-primary' id='slideBtn' onclick='toggleSlideshow()'>▶ Play</button>
+                <button class='btn btn-danger' onclick='closeNav()'>✖ Back</button>
+            </div>
+        </div>
+    </div>
+
+    <div class='hero'>
+        <div class='hero-content'>
+            <h1 class='gloria-text'>Hello Gloria ✨</h1>
+            <p class='spice-statement'>Welcome to your space Gorgeous💐.</p>
+            <div class='minion-badge'>Made with thought 🙂‍↔️</div>
+        </div>
+    </div>
 
     <div class="journey-wrapper">
-        <div class="aurora-bg"></div>
+        <div class="star-field" id="starField">
+            </div>
         
-        <div class="container journey-content">
-            <h2 class="text-center mb-5">Our Journey</h2>
-            
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="timeline-item">
-                        <img src="https://via.placeholder.com/800x400" class="timeline-img" alt="Milestone 1">
-                        <div class="timeline-body">
-                            <h4>Chapter One</h4>
-                            <p>This is where the adventure began. A brief description of the memory or event that started the journey.</p>
-                        </div>
-                    </div>
+        <div class='container py-5 journey-content-inner'>
+            <h2 class='text-center mb-4'>Our Journey</h2>
+            <div class='journey-container'>
+                <div class='journey-item left'>
+                    <div class='journey-frame'><img src='Together_1.jpeg'><div class='p-3'><h5>The first Smile</h5><p class='small m-0'>Every journey starts with a moment that takes your breath away.</p></div></div>
+                </div>
+                <div class='journey-item right'>
+                    <div class='journey-frame'><img src='Together_2.jpeg'><div class='p-3'><h5>Unforgettable memory</h5><p class='small m-0'>Still think we should hang it in the Louvre😮‍💨</p></div></div>
+                </div>
+                <div class='journey-item left'>
+                    <div class='journey-frame'><img src='Gloria_3.jpeg'><div class='p-3'><h5>A special day🍰</h5><p class='small m-0'>In every look, there's a story of elegance and strength.</p></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    <div class="timeline-item">
-                        <img src="https://via.placeholder.com/800x400" class="timeline-img" alt="Milestone 2">
-                        <div class="timeline-body">
-                            <h4>Chapter Two</h4>
-                            <p>As time went on, things became even more exciting. A significant milestone that shaped the path forward.</p>
-                        </div>
+    <div class='container pb-5'>
+        <h2 class='text-center mb-4'>Gloria Veronica, Hold on to this!</h2>
+        <div class='row g-3'>
+            <div class='col-12 col-md-4'>
+                <div class='flip-card' onclick='handleAffirmationClick(this)'>
+                    <div class='flip-card-inner'>
+                        <div class='flip-card-front'><h3>Secret Message</h3><p class='small'>Tap to reveal</p></div>
+                        <div class='flip-card-back'><p id='affirmationText' class='fw-bold'>You are my greatest adventure.</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-12 col-md-4'>
+                <div class='flip-card' onclick='toggleVideoFlip(this)'>
+                    <div class='flip-card-inner'>
+                        <div class='flip-card-front'><img src='Gloria_1.jpeg' style='width:100%; height:100%; object-fit:cover; border-radius:15px;'></div>
+                        <div class='flip-card-back'><video id='reelVideo' src='The_reel.mp4' loop style='width:100%; height:100%; object-fit:cover; border-radius:15px;'></video></div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-12 col-md-4'>
+                <div class='flip-card' onclick='handlePraiseClick(this)'>
+                    <div class='flip-card-inner'>
+                        <div class='flip-card-front'><h3>Praises for You</h3><p class='small'>Don't blush, just tap</p></div>
+                        <div class='flip-card-back'><p id='praiseText' class='fw-bold text-center'>You are breathtakingly beautiful.</p></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class='love-section' id="loveSection">
+        <h2 class='love-question'>DO YOU LOVE THIS ?</h2>
+        <div class='d-flex justify-content-center gap-4 align-items-center' style="min-height: 120px;">
+            <button class='btn btn-success btn-yes px-5 py-3 fw-bold' onclick="sendWhatsApp()">YES</button>
+            <button id='noBtn' class='btn btn-danger px-5 py-3 fw-bold' onmouseover="moveButton()">NO</button>
+        </div>
+    </div>
+
+    <script>
+        /* --- STAR FIELD LOGIC --- */
+        function initStars() {
+            const field = document.getElementById('starField');
+            const count = 100; // Total number of stars
+
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random size (0.5px to 2.5px)
+                const size = Math.random() * 2 + 0.5;
+                // Random positions
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                // Random twinkling speed (2s to 6s)
+                const duration = Math.random() * 4 + 2;
+                const delay = Math.random() * 5;
+
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.setProperty('--duration', `${duration}s`);
+                star.style.animationDelay = `${delay}s`;
+
+                field.appendChild(star);
+            }
+        }
+
+        /* --- SHOOTING STAR LOGIC --- */
+        function createShootingStar() {
+            const field = document.getElementById('starField');
+            const shootingStar = document.createElement('div');
+            shootingStar.className = 'shooting-star';
+            
+            // Start at a random top position on the right
+            shootingStar.style.top = Math.random() * 50 + '%';
+            shootingStar.style.right = '-100px'; 
+
+            field.appendChild(shootingStar);
+
+            // Remove it after the animation finishes
+            setTimeout(() => {
+                shootingStar.remove();
+            }, 3000);
+        }
+
+        // Initialize stars and set interval for shooting stars
+        initStars();
+        setInterval(createShootingStar, 4000); // streaks every 4 seconds
+
+        /* --- THE REST OF YOUR LOGIC --- */
+        const galleryData = [
+            {"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"},
+            {"src": "Gloria_1.jpeg", "type": "image"},
+            {"src": "WhatsApp Video 2026-04-20 at 16.17.18.mp4", "type": "video"},
+            {"src": "Together_1.jpeg", "type": "image"},
+            {"src": "Gloria_3.jpeg", "type": "image"}
+        ];
+
+        let currentIndex = 0;
+        let slideInterval = null;
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+        }
+
+        function openNav() {
+            document.getElementById('memorySidebar').style.width = "100%";
+            document.getElementById('themeToggler').classList.add('hidden');
+            updateGallery();
+        }
+
+        function closeNav() {
+            stopSlideshow();
+            document.getElementById('memorySidebar').style.width = "0";
+            document.getElementById('themeToggler').classList.remove('hidden');
+        }
+
+        function updateGallery() {
+            const container = document.getElementById('gallery-media-container');
+            container.innerHTML = '';
+            const item = galleryData[currentIndex];
+            if(item.type === 'video') {
+                let vid = document.createElement('video');
+                vid.src = item.src; vid.controls = true; vid.style.width = '100%';
+                container.appendChild(vid);
+            } else {
+                let img = document.createElement('img');
+                img.src = item.src; img.style.width = '100%'; img.classList.add('rounded', 'shadow');
+                container.appendChild(img);
+            }
+        }
+
+        function nextMedia() { stopSlideshow(); currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }
+        function prevMedia() { stopSlideshow(); currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length; updateGallery(); }
+
+        function toggleSlideshow() {
+            const btn = document.getElementById('slideBtn');
+            if (slideInterval) { stopSlideshow(); } 
+            else {
+                btn.innerText = "⏸ Pause";
+                btn.classList.replace('btn-primary', 'btn-warning');
+                slideInterval = setInterval(() => { currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }, 3000);
+            }
+        }
+
+        function stopSlideshow() {
+            if (slideInterval) {
+                clearInterval(slideInterval);
+                slideInterval = null;
+                const btn = document.getElementById('slideBtn');
+                btn.innerText = "▶ Play";
+                btn.classList.replace('btn-warning', 'btn-primary');
+            }
+        }
+
+        function toggleVideoFlip(card) {
+            const v = document.getElementById('reelVideo');
+            card.classList.toggle('flipped');
+            if(card.classList.contains('flipped')) { v.play(); } else { v.pause(); }
+        }
+
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const section = document.getElementById('loveSection');
+            btn.style.position = 'absolute';
+            const maxX = section.clientWidth - btn.offsetWidth - 20;
+            const maxY = section.clientHeight - btn.offsetHeight - 20;
+            const newX = Math.floor(Math.random() * maxX);
+            const newY = Math.floor(Math.random() * maxY);
+            btn.style.left = newX + 'px';
+            btn.style.top = newY + 'px';
+        }
+
+        function sendWhatsApp() {
+            const phone = "256761417053";
+            const message = "THANK YOU FOR THE SUPRISE MY ENGINEER❤️";
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        const affirmations = [ "You are my greatest adventure.", "Senior Engineer😅🫶.", "Proud of you always.", "You look like an animal😅" ];
+        const praises = [ "Breathtakingly beautiful.", "Stunning taste!", "You chose the best man. 😉" ];
+
+        function handleAffirmationClick(card) {
+            if (!card.classList.contains('flipped')) { document.getElementById('affirmationText').innerText = affirmations[Math.floor(Math.random() * affirmations.length)]; }
+            card.classList.toggle('flipped');
+        }
+
+        function handlePraiseClick(card) {
+            if (!card.classList.contains('flipped')) { document.getElementById('praiseText').innerText = praises[Math.floor(Math.random() * praises.length)]; }
+            card.classList.toggle('flipped');
+        }
+
+        let caratAttempts = 0;
+        function playCarat() {
+            const feedback = document.getElementById('gameFeedback');
+            caratAttempts++;
+            if(caratAttempts < 4) { feedback.innerText = "Come on Gloriana😅, dont you deserve better! 😉"; } 
+            else { feedback.innerHTML = "BINGO! That's what i thought, i dont mind a Billion though❤️"; caratAttempts = 0; }
+        }
+    </script>
 </body>
 </html>
