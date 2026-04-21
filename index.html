@@ -30,7 +30,7 @@
             padding-bottom: 80px;
         }
 
-        /* --- SPECIAL HERO EFFECTS --- */
+        /* --- HERO EFFECTS --- */
         .hero {
             min-height: 100vh;
             background: url('Gloria_1.jpeg') center/cover no-repeat;
@@ -52,7 +52,6 @@
             padding: 0 20px;
         }
 
-        /* Animated Glowing Text for Gloria */
         .gloria-text {
             font-size: 5rem;
             font-weight: 900;
@@ -76,7 +75,6 @@
             opacity: 0.9;
         }
 
-        /* Minion Themed Phrase */
         .minion-badge {
             display: inline-block;
             background-color: var(--minion-yellow);
@@ -89,6 +87,45 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             transform: rotate(-2deg);
+        }
+
+        /* --- IMPROVED LOVE SECTION VISUALS --- */
+        .love-section {
+            padding: 100px 20px;
+            text-align: center;
+            /* Added a subtle gradient to make the section stand out */
+            background: linear-gradient(180deg, var(--bg-color) 0%, var(--card-bg) 100%);
+            border-top: 2px solid var(--accent-color);
+            /* Important: position relative keeps the runaway button inside this section only */
+            position: relative; 
+            overflow: hidden;
+            min-height: 400px;
+        }
+
+        .love-question {
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--accent-color);
+            margin-bottom: 40px;
+            text-shadow: 0 0 10px rgba(255, 143, 163, 0.2);
+        }
+
+        #noBtn {
+            transition: all 0.15s ease-out;
+            /* High z-index to ensure it stays above background elements */
+            z-index: 10; 
+        }
+
+        .btn-yes {
+            /* Adding a pulse effect to the Yes button to make it more inviting */
+            animation: pulse-green 2s infinite;
+            box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+        }
+
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
         }
 
         /* --- GALLERY & SIDEBAR --- */
@@ -135,20 +172,6 @@
 
         .game-card { background: var(--card-bg); border: 2px solid var(--accent-color); border-radius: 15px; padding: 30px; margin: 40px auto; max-width: 500px; }
         .game-input { background: transparent; border: none; border-bottom: 2px solid var(--accent-color); color: var(--text-color); text-align: center; font-size: 1.5rem; width: 100px; margin: 20px 0; outline: none; }
-
-        /* --- NEW LOVE SECTION --- */
-        .love-section {
-            padding: 60px 20px;
-            text-align: center;
-            background: var(--card-bg);
-            border-top: 2px solid var(--accent-color);
-            position: relative;
-        }
-
-        #noBtn {
-            transition: all 0.2s ease;
-            z-index: 9999;
-        }
 
         @media (max-width: 768px) {
             .gloria-text { font-size: 3.2rem; }
@@ -254,10 +277,10 @@
         </div>
     </div>
 
-    <div class='love-section'>
-        <h2 class='mb-4'>DO YOU LOVE THIS ?</h2>
-        <div class='d-flex justify-content-center gap-4 align-items-center' style="min-height: 100px;">
-            <button class='btn btn-success px-5 py-3 fw-bold' onclick="sendWhatsApp()">YES</button>
+    <div class='love-section' id="loveSection">
+        <h2 class='love-question'>DO YOU LOVE THIS ?</h2>
+        <div class='d-flex justify-content-center gap-4 align-items-center' style="min-height: 120px;">
+            <button class='btn btn-success btn-yes px-5 py-3 fw-bold' onclick="sendWhatsApp()">YES</button>
             <button id='noBtn' class='btn btn-danger px-5 py-3 fw-bold' onmouseover="moveButton()">NO</button>
         </div>
     </div>
@@ -335,21 +358,32 @@
             if(card.classList.contains('flipped')) { v.play(); } else { v.pause(); }
         }
 
-        /* RUNAWAY BUTTON LOGIC */
+        /* IMPROVED RUNAWAY BUTTON LOGIC */
         function moveButton() {
             const btn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - btn.offsetWidth - 20);
-            const y = Math.random() * (window.innerHeight - btn.offsetHeight - 20);
+            const section = document.getElementById('loveSection');
             
-            btn.style.position = 'fixed';
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
+            // Switching to absolute position within the container instead of fixed screen position
+            // This ensures the button doesn't float on top when scrolling away
+            btn.style.position = 'absolute';
+            
+            // Get dimensions of the section to set boundaries for the button jump
+            const maxX = section.clientWidth - btn.offsetWidth - 20;
+            const maxY = section.clientHeight - btn.offsetHeight - 20;
+            
+            // Randomize position within the section
+            const newX = Math.floor(Math.random() * maxX);
+            const newY = Math.floor(Math.random() * maxY);
+            
+            btn.style.left = newX + 'px';
+            btn.style.top = newY + 'px';
         }
 
-        /* WHATSAPP LOGIC */
+        /* WHATSAPP INTEGRATION */
         function sendWhatsApp() {
-            const phone = "256761417053";
+            const phone = "25671417053";
             const message = "THANK YOU FOR THE SUPRISE";
+            // Encodes message for a clean URL and opens WhatsApp
             window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
         }
 
