@@ -190,3 +190,104 @@
             </div>
             <div class='col-12 col-md-4'>
                 <div class='flip-card' onclick='toggleVideoFlip(this)'>
+                    <div class='flip-card-inner'>
+                        <div class='flip-card-front'><img src='Gloria_1.jpeg' style='width:100%; height:100%; object-fit:cover; border-radius:15px;'></div>
+                        <div class='flip-card-back'><video id='reelVideo' src='The_reel.mp4' loop style='width:100%; height:100%; object-fit:cover; border-radius:15px;'></video></div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-12 col-md-4'>
+                <div class='flip-card' onclick='handlePraiseClick(this)'>
+                    <div class='flip-card-inner'>
+                        <div class='flip-card-front'><h3>Praises for You</h3></div>
+                        <div class='flip-card-back'><p id='praiseText' class='fw-bold text-center'></p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='container text-center mb-5'>
+        <div class='game-card'>
+            <h3>💎 The Carat Challenge</h3>
+            <p>Gloria, how many carats?</p>
+            <input type='number' id='caratInput' class='game-input' placeholder=''>
+            <br>
+            <button class='btn btn-outline-danger' onclick='playCarat()'>Check!</button>
+            <p id='gameFeedback' class='mt-3 fw-bold'></p>
+        </div>
+    </div>
+
+    <div class='love-section' id="loveSection">
+        <h2 class='love-question'>DO YOU LOVE THIS ?</h2>
+        <div class='d-flex justify-content-center gap-4 align-items-center' style="min-height: 120px;">
+            <button class='btn btn-success btn-yes px-5 py-3 fw-bold' onclick="sendWhatsApp()">YES</button>
+            <button id='noBtn' class='btn btn-danger px-5 py-3 fw-bold' onmouseover="moveButton()">NO</button>
+        </div>
+    </div>
+
+    <script>
+        // Gallery logic
+        const galleryData = [
+            {"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"},
+            {"src": "Gloria_1.jpeg", "type": "image"},
+            {"src": "WhatsApp Video 2026-04-20 at 16.17.18.mp4", "type": "video"},
+            {"src": "Together_1.jpeg", "type": "image"},
+            {"src": "Gloria_3.jpeg", "type": "image"}
+        ];
+        let currentIndex = 0;
+        let slideInterval = null;
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+        }
+        function openNav() { document.getElementById('memorySidebar').style.width = "100%"; document.getElementById('themeToggler').classList.add('hidden'); updateGallery(); }
+        function closeNav() { stopSlideshow(); document.getElementById('memorySidebar').style.width = "0"; document.getElementById('themeToggler').classList.remove('hidden'); }
+        function updateGallery() {
+            const container = document.getElementById('gallery-media-container');
+            container.innerHTML = ''; const item = galleryData[currentIndex];
+            if(item.type === 'video') {
+                let vid = document.createElement('video'); vid.src = item.src; vid.controls = true; vid.style.width = '100%'; container.appendChild(vid);
+            } else {
+                let img = document.createElement('img'); img.src = item.src; img.style.width = '100%'; img.classList.add('rounded', 'shadow'); container.appendChild(img);
+            }
+        }
+        function nextMedia() { stopSlideshow(); currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }
+        function prevMedia() { stopSlideshow(); currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length; updateGallery(); }
+        function toggleSlideshow() {
+            const btn = document.getElementById('slideBtn');
+            if (slideInterval) { stopSlideshow(); } 
+            else { btn.innerText = "⏸ Pause"; slideInterval = setInterval(() => { currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }, 3000); }
+        }
+        function stopSlideshow() { if (slideInterval) { clearInterval(slideInterval); slideInterval = null; document.getElementById('slideBtn').innerText = "▶ Play"; } }
+        function toggleVideoFlip(card) { const v = document.getElementById('reelVideo'); card.classList.toggle('flipped'); if(card.classList.contains('flipped')) { v.play(); } else { v.pause(); } }
+
+        // Love Section Logic
+        function moveButton() {
+            const btn = document.getElementById('noBtn'); const section = document.getElementById('loveSection');
+            btn.style.position = 'absolute';
+            const maxX = section.clientWidth - btn.offsetWidth - 20;
+            const maxY = section.clientHeight - btn.offsetHeight - 20;
+            btn.style.left = Math.floor(Math.random() * maxX) + 'px';
+            btn.style.top = Math.floor(Math.random() * maxY) + 'px';
+        }
+        function sendWhatsApp() {
+            const phone = "256761417053"; const message = "THANK YOU FOR THE SUPRISE MY ENGINEER❤️";
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        // Affirmations and Game
+        const affirmations = [ "You are my greatest adventure.", "Senior Engineer😅🫶.", "Proud of you always.", "You look like an animal😅" ];
+        const praises = [ "Breathtakingly beautiful.", "Stunning taste!", "You chose the best man. 😉" ];
+        function handleAffirmationClick(card) { if (!card.classList.contains('flipped')) { document.getElementById('affirmationText').innerText = affirmations[Math.floor(Math.random() * affirmations.length)]; } card.classList.toggle('flipped'); }
+        function handlePraiseClick(card) { if (!card.classList.contains('flipped')) { document.getElementById('praiseText').innerText = praises[Math.floor(Math.random() * praises.length)]; } card.classList.toggle('flipped'); }
+        let caratAttempts = 0;
+        function playCarat() {
+            const feedback = document.getElementById('gameFeedback'); caratAttempts++;
+            if(caratAttempts < 4) { feedback.innerText = "Come on Gloriana😅, dont you deserve better! 😉"; } 
+            else { feedback.innerHTML = "BINGO! That's what i thought, i dont mind a Billion though❤️"; caratAttempts = 0; }
+        }
+    </script>
+</body>
+</html>
