@@ -136,6 +136,20 @@
         .game-card { background: var(--card-bg); border: 2px solid var(--accent-color); border-radius: 15px; padding: 30px; margin: 40px auto; max-width: 500px; }
         .game-input { background: transparent; border: none; border-bottom: 2px solid var(--accent-color); color: var(--text-color); text-align: center; font-size: 1.5rem; width: 100px; margin: 20px 0; outline: none; }
 
+        /* --- NEW LOVE SECTION --- */
+        .love-section {
+            padding: 60px 20px;
+            text-align: center;
+            background: var(--card-bg);
+            border-top: 2px solid var(--accent-color);
+            position: relative;
+        }
+
+        #noBtn {
+            transition: all 0.2s ease;
+            z-index: 9999;
+        }
+
         @media (max-width: 768px) {
             .gloria-text { font-size: 3.2rem; }
             .spice-statement { font-size: 1.1rem; }
@@ -240,6 +254,14 @@
         </div>
     </div>
 
+    <div class='love-section'>
+        <h2 class='mb-4'>DO YOU LOVE THIS ?</h2>
+        <div class='d-flex justify-content-center gap-4 align-items-center' style="min-height: 100px;">
+            <button class='btn btn-success px-5 py-3 fw-bold' onclick="sendWhatsApp()">YES</button>
+            <button id='noBtn' class='btn btn-danger px-5 py-3 fw-bold' onmouseover="moveButton()">NO</button>
+        </div>
+    </div>
+
     <script>
         const galleryData = [
             {"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"},
@@ -311,6 +333,24 @@
             const v = document.getElementById('reelVideo');
             card.classList.toggle('flipped');
             if(card.classList.contains('flipped')) { v.play(); } else { v.pause(); }
+        }
+
+        /* RUNAWAY BUTTON LOGIC */
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth - 20);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight - 20);
+            
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        /* WHATSAPP LOGIC */
+        function sendWhatsApp() {
+            const phone = "25671417053";
+            const message = "THANK YOU FOR THE SUPRISE";
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
         }
 
         const affirmations = [ "You are my greatest adventure.", "Senior Engineer😅🫶.", "Proud of you always." ];
