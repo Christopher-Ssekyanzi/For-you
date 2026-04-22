@@ -6,6 +6,7 @@
     <title>For Gloria</title>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>
     <style>
+        /* CSS Variables for theme and brand colors */
         :root {
             --bg-color: #0f0f0f;
             --text-color: #e0e0e0;
@@ -30,7 +31,7 @@
             padding-bottom: 80px;
         }
 
-        /* --- HERO EFFECTS --- */
+        /* --- HERO SECTION (PICTURE BACKGROUND) --- */
         .hero {
             min-height: 100vh;
             background: url('Gloria_1.jpeg') center/cover no-repeat;
@@ -52,37 +53,46 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-transform: uppercase; transform: rotate(-2deg);
         }
 
-        /* --- OPTION 4: ANIMATED WAVES --- */
-        .journey-wrapper {
+        /* --- TWINKLING SKY WRAPPER --- */
+        /* This covers everything below the hero image */
+        .sky-wrapper {
             position: relative;
-            background-color: var(--bg-color);
+            background-color: #050505; /* Deep space black */
             overflow: hidden;
-            padding: 80px 0;
         }
-        .waves-bg {
+
+        /* The canvas for stars and planets */
+        .star-field {
             position: absolute;
-            bottom: 0; left: 0; width: 100%;
-            height: 150px; /* How high the waves go */
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1; pointer-events: none;
         }
-        .wave {
-            position: absolute; bottom: 0; left: 0; width: 200%; height: 100%;
-            background: url('https://raw.githubusercontent.com/uicardio/wave-animation/master/wave.png');
-            background-size: 50% 100px;
-            opacity: 0.1; /* Very subtle opacity */
-            animation: move-wave 20s linear infinite;
-        }
-        .wave1 { z-index: 1000; opacity: 0.1; animation: move-wave 25s linear infinite; bottom: 0; }
-        .wave2 { z-index: 999; opacity: 0.05; animation: move-wave 15s linear infinite; bottom: 10px; }
-        .wave3 { z-index: 998; opacity: 0.08; animation: move-wave 10s linear infinite; bottom: 15px; }
 
-        @keyframes move-wave {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        /* Individual Star Style */
+        .star {
+            position: absolute; background: white; border-radius: 50%; opacity: 0;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.1; transform: scale(0.8); }
+            50% { opacity: 0.8; transform: scale(1.2); }
         }
 
-        /* --- JOURNEY CONTENT --- */
-        .journey-content-inner { position: relative; z-index: 10; }
+        /* Planet Styles */
+        .planet {
+            position: absolute; border-radius: 50%; opacity: 0.15;
+            filter: blur(2px); z-index: 2; animation: drift 60s infinite linear;
+        }
+        /* Drift effect for planets */
+        @keyframes drift {
+            from { transform: rotate(0deg) translateX(10px) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(10px) rotate(-360deg); }
+        }
+
+        /* --- CONTENT ON TOP OF SKY --- */
+        .content-overlay { position: relative; z-index: 10; }
+
+        /* --- TIMELINE STYLING --- */
         .journey-container { position: relative; max-width: 900px; margin: 30px auto; padding: 20px 10px; }
         .journey-container::after { content: ''; position: absolute; width: 2px; background: var(--accent-color); top: 0; bottom: 0; left: 50%; opacity: 0.3; }
         .journey-item { padding: 10px 20px; position: relative; width: 50%; }
@@ -91,33 +101,32 @@
         .journey-frame { border: 2px solid var(--accent-color); border-radius: 15px; overflow: hidden; background: var(--card-bg); }
         .journey-frame img { width: 100%; height: auto; max-height: 400px; object-fit: contain; background: #000; }
 
-        /* --- FLIP CARDS & GAME --- */
+        /* --- FLIP CARDS --- */
         .flip-card { height: 350px; perspective: 1000px; margin-bottom: 20px; }
         .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; }
         .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
         .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
         .flip-card-front { background: var(--card-bg); border: 1px solid var(--accent-color); }
         .flip-card-back { background: var(--accent-color); color: #000; transform: rotateY(180deg); }
+
+        /* --- GAME & LOVE SECTIONS --- */
         .game-card { background: var(--card-bg); border: 2px solid var(--accent-color); border-radius: 15px; padding: 30px; margin: 40px auto; max-width: 500px; }
         .game-input { background: transparent; border: none; border-bottom: 2px solid var(--accent-color); color: var(--text-color); text-align: center; font-size: 1.5rem; width: 100px; margin: 20px 0; outline: none; }
+        .love-section { padding: 100px 20px; text-align: center; position: relative; min-height: 450px; }
+        #noBtn { transition: all 0.15s ease-out; z-index: 50; }
+        .btn-yes { animation: pulse-green 2s infinite; }
 
-        /* --- LOVE SECTION --- */
-        .love-section {
-            padding: 100px 20px; text-align: center;
-            background: linear-gradient(180deg, var(--bg-color) 0%, var(--card-bg) 100%);
-            border-top: 2px solid var(--accent-color); position: relative; overflow: hidden; min-height: 400px;
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
         }
-        #noBtn { transition: all 0.15s ease-out; z-index: 10; }
-        .btn-yes { animation: pulse-green 2s infinite; box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
 
-        /* --- SIDEBAR & TOGGLE --- */
-        .theme-toggle { position: fixed; top: 15px; right: 15px; z-index: 5000; padding: 15px; border-radius: 50%; background: var(--accent-color); border: none; cursor: pointer; transition: opacity 0.3s; }
+        /* --- UI CONTROLS --- */
+        .theme-toggle { position: fixed; top: 15px; right: 15px; z-index: 5000; padding: 15px; border-radius: 50%; background: var(--accent-color); border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
         .theme-toggle.hidden { opacity: 0; pointer-events: none; }
         .side-tab-trigger { position: fixed; bottom: 25px; right: 25px; z-index: 2500; background: var(--accent-color); color: #000; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5); font-size: 1.5rem; }
         #memorySidebar { height: 100%; width: 0; position: fixed; z-index: 4500; top: 0; left: 0; background: var(--card-bg); overflow-x: hidden; transition: 0.5s; border-right: 2px solid var(--accent-color); }
-        .gallery-container-inner { padding: 20px; height: 100%; display: flex; flex-direction: column; text-align: center; }
-        #gallery-media-container { flex-grow: 1; display: flex; align-items: center; justify-content: center; }
-        .gallery-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 20px 0; }
 
         @media (max-width: 768px) {
             .gloria-text { font-size: 3.2rem; }
@@ -134,10 +143,10 @@
     <button class='side-tab-trigger' onclick='openNav()'>✨</button>
 
     <div id='memorySidebar'>
-        <div class='gallery-container-inner'>
+        <div class='gallery-container-inner' style="padding: 20px; text-align: center;">
             <h3 class='mb-4'>Our Memories</h3>
             <div id='gallery-media-container'></div>
-            <div class='gallery-controls'>
+            <div class='mt-4 d-flex justify-content-center gap-2'>
                 <button class='btn btn-outline-info' onclick='prevMedia()'>⬅ Prev</button>
                 <button class='btn btn-outline-info' onclick='nextMedia()'>Next ➡</button>
                 <button class='btn btn-primary' id='slideBtn' onclick='toggleSlideshow()'>▶ Play</button>
@@ -154,80 +163,126 @@
         </div>
     </div>
 
-    <div class="journey-wrapper">
-        <div class="waves-bg">
-            <div class="wave wave1"></div>
-            <div class="wave wave2"></div>
-            <div class="wave wave3"></div>
-        </div>
-        
-        <div class='container py-5 journey-content-inner'>
-            <h2 class='text-center mb-4'>Our Journey</h2>
-            <div class='journey-container'>
-                <div class='journey-item left'>
-                    <div class='journey-frame'><img src='Together_1.jpeg'><div class='p-3'><h5>The first Smile</h5><p class='small m-0'>Every journey starts with a moment that takes your breath away.</p></div></div>
-                </div>
-                <div class='journey-item right'>
-                    <div class='journey-frame'><img src='Together_2.jpeg'><div class='p-3'><h5>Unforgettable memory</h5><p class='small m-0'>Still think we should hang it in the Louvre😮‍💨</p></div></div>
-                </div>
-                <div class='journey-item left'>
-                    <div class='journey-frame'><img src='Gloria_3.jpeg'><div class='p-3'><h5>A special day🍰</h5><p class='small m-0'>In every look, there's a story of elegance and strength.</p></div></div>
-                </div>
+    <div class="sky-wrapper">
+        <div class="star-field" id="starField">
             </div>
-        </div>
-    </div>
 
-    <div class='container pb-5'>
-        <h2 class='text-center mb-4'>Gloria Veronica, Hold on to this!</h2>
-        <div class='row g-3'>
-            <div class='col-12 col-md-4'>
-                <div class='flip-card' onclick='handleAffirmationClick(this)'>
-                    <div class='flip-card-inner'>
-                        <div class='flip-card-front'><h3>Secret Message</h3></div>
-                        <div class='flip-card-back'><p id='affirmationText' class='fw-bold'></p></div>
+        <div class="content-overlay">
+            
+            <div class='container py-5 text-center'>
+                <h2 class='mb-4'>Our Tune🎼</h2>
+                <div class='row justify-content-center'>
+                    <div class='col-12 col-md-8'>
+                        <div class='ratio ratio-16x9 rounded overflow-hidden shadow' style='border: 2px solid var(--accent-color);'>
+                            <iframe src='https://www.youtube.com/embed/q7mlB-adMBc' allowfullscreen></iframe>
+                        </div>
+                        <a href='#' class='btn btn-success rounded-pill mt-4 px-4 fw-bold'>🎵 Open on Spotify</a>
                     </div>
                 </div>
             </div>
-            <div class='col-12 col-md-4'>
-                <div class='flip-card' onclick='toggleVideoFlip(this)'>
-                    <div class='flip-card-inner'>
-                        <div class='flip-card-front'><img src='Gloria_1.jpeg' style='width:100%; height:100%; object-fit:cover; border-radius:15px;'></div>
-                        <div class='flip-card-back'><video id='reelVideo' src='The_reel.mp4' loop style='width:100%; height:100%; object-fit:cover; border-radius:15px;'></video></div>
+
+            <div class='container py-5'>
+                <h2 class='text-center mb-4'>Our Journey</h2>
+                <div class='journey-container'>
+                    <div class='journey-item left'>
+                        <div class='journey-frame'><img src='Together_1.jpeg'><div class='p-3'><h5>The first Smile</h5><p class='small m-0'>Every journey starts with a moment that takes your breath away.</p></div></div>
+                    </div>
+                    <div class='journey-item right'>
+                        <div class='journey-frame'><img src='Together_2.jpeg'><div class='p-3'><h5>Unforgettable memory</h5><p class='small m-0'>Still think we should hang it in the Louvre😮‍💨</p></div></div>
+                    </div>
+                    <div class='journey-item left'>
+                        <div class='journey-frame'><img src='Gloria_3.jpeg'><div class='p-3'><h5>A special day🍰</h5><p class='small m-0'>In every look, there's a story of elegance and strength.</p></div></div>
                     </div>
                 </div>
             </div>
-            <div class='col-12 col-md-4'>
-                <div class='flip-card' onclick='handlePraiseClick(this)'>
-                    <div class='flip-card-inner'>
-                        <div class='flip-card-front'><h3>Praises for You</h3></div>
-                        <div class='flip-card-back'><p id='praiseText' class='fw-bold text-center'></p></div>
+
+            <div class='container pb-5'>
+                <h2 class='text-center mb-4'>Gloria Veronica, Hold on to this!</h2>
+                <div class='row g-3'>
+                    <div class='col-12 col-md-4'>
+                        <div class='flip-card' onclick='handleAffirmationClick(this)'>
+                            <div class='flip-card-inner'>
+                                <div class='flip-card-front'><h3>Secret Message</h3><p class='small'>Tap to reveal</p></div>
+                                <div class='flip-card-back'><p id='affirmationText' class='fw-bold'></p></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-12 col-md-4'>
+                        <div class='flip-card' onclick='toggleVideoFlip(this)'>
+                            <div class='flip-card-inner'>
+                                <div class='flip-card-front'><img src='Gloria_1.jpeg' style='width:100%; height:100%; object-fit:cover; border-radius:15px;'></div>
+                                <div class='flip-card-back'><video id='reelVideo' src='The_reel.mp4' loop style='width:100%; height:100%; object-fit:cover; border-radius:15px;'></video></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-12 col-md-4'>
+                        <div class='flip-card' onclick='handlePraiseClick(this)'>
+                            <div class='flip-card-inner'>
+                                <div class='flip-card-front'><h3>Praises for You</h3><p class='small'>Don't blush, just tap</p></div>
+                                <div class='flip-card-back'><p id='praiseText' class='fw-bold text-center'></p></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class='container text-center mb-5'>
-        <div class='game-card'>
-            <h3>💎 The Carat Challenge</h3>
-            <p>Gloria, how many carats?</p>
-            <input type='number' id='caratInput' class='game-input' placeholder=''>
-            <br>
-            <button class='btn btn-outline-danger' onclick='playCarat()'>Check!</button>
-            <p id='gameFeedback' class='mt-3 fw-bold'></p>
-        </div>
-    </div>
+            <div class='container text-center mb-5'>
+                <div class='game-card'>
+                    <h3>💎 The Carat Challenge</h3>
+                    <p>Gloria, how many carats?</p>
+                    <input type='number' id='caratInput' class='game-input' placeholder=''>
+                    <br>
+                    <button class='btn btn-outline-danger' onclick='playCarat()'>Check!</button>
+                    <p id='gameFeedback' class='mt-3 fw-bold'></p>
+                </div>
+            </div>
 
-    <div class='love-section' id="loveSection">
-        <h2 class='love-question'>DO YOU LOVE THIS ?</h2>
-        <div class='d-flex justify-content-center gap-4 align-items-center' style="min-height: 120px;">
-            <button class='btn btn-success btn-yes px-5 py-3 fw-bold' onclick="sendWhatsApp()">YES</button>
-            <button id='noBtn' class='btn btn-danger px-5 py-3 fw-bold' onmouseover="moveButton()">NO</button>
-        </div>
-    </div>
+            <div class='love-section' id="loveSection">
+                <h2 class='love-question'>DO YOU LOVE THIS ?</h2>
+                <div class='d-flex justify-content-center gap-4 align-items-center' style="min-height: 120px;">
+                    <button class='btn btn-success btn-yes px-5 py-3 fw-bold' onclick="sendWhatsApp()">YES</button>
+                    <button id='noBtn' class='btn btn-danger px-5 py-3 fw-bold' onmouseover="moveButton()">NO</button>
+                </div>
+            </div>
 
-    <script>
-        // Gallery logic
+        </div> </div> <script>
+        /* --- STAR AND PLANET GENERATION --- */
+        function initSky() {
+            const field = document.getElementById('starField');
+            const starCount = 250; // High star density
+
+            // Generate Stars
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 2 + 0.5;
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                const duration = Math.random() * 4 + 2;
+                star.style.width = star.style.height = `${size}px`;
+                star.style.left = `${x}%`; star.style.top = `${y}%`;
+                star.style.setProperty('--duration', `${duration}s`);
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                field.appendChild(star);
+            }
+
+            // Generate Planets
+            const planetColors = ['#ff5f6d', '#4facfe', '#ffdb00', '#ff8fa3'];
+            for (let i = 0; i < 6; i++) {
+                const planet = document.createElement('div');
+                planet.className = 'planet';
+                const size = Math.random() * 100 + 40;
+                planet.style.width = planet.style.height = `${size}px`;
+                planet.style.background = `radial-gradient(circle, ${planetColors[i%4]}, transparent)`;
+                planet.style.left = `${Math.random() * 90}%`;
+                planet.style.top = `${Math.random() * 90}%`;
+                planet.style.animationDuration = `${Math.random() * 40 + 40}s`;
+                field.appendChild(planet);
+            }
+        }
+        initSky();
+
+        /* --- THE LOGIC --- */
         const galleryData = [
             {"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"},
             {"src": "Gloria_1.jpeg", "type": "image"},
@@ -235,6 +290,7 @@
             {"src": "Together_1.jpeg", "type": "image"},
             {"src": "Gloria_3.jpeg", "type": "image"}
         ];
+
         let currentIndex = 0;
         let slideInterval = null;
 
@@ -242,28 +298,46 @@
             const current = document.documentElement.getAttribute('data-theme');
             document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
         }
-        function openNav() { document.getElementById('memorySidebar').style.width = "100%"; document.getElementById('themeToggler').classList.add('hidden'); updateGallery(); }
-        function closeNav() { stopSlideshow(); document.getElementById('memorySidebar').style.width = "0"; document.getElementById('themeToggler').classList.remove('hidden'); }
+
+        function openNav() {
+            document.getElementById('memorySidebar').style.width = "100%";
+            document.getElementById('themeToggler').classList.add('hidden');
+            updateGallery();
+        }
+
+        function closeNav() {
+            stopSlideshow();
+            document.getElementById('memorySidebar').style.width = "0";
+            document.getElementById('themeToggler').classList.remove('hidden');
+        }
+
         function updateGallery() {
             const container = document.getElementById('gallery-media-container');
-            container.innerHTML = ''; const item = galleryData[currentIndex];
+            container.innerHTML = '';
+            const item = galleryData[currentIndex];
             if(item.type === 'video') {
                 let vid = document.createElement('video'); vid.src = item.src; vid.controls = true; vid.style.width = '100%'; container.appendChild(vid);
             } else {
                 let img = document.createElement('img'); img.src = item.src; img.style.width = '100%'; img.classList.add('rounded', 'shadow'); container.appendChild(img);
             }
         }
+
         function nextMedia() { stopSlideshow(); currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }
         function prevMedia() { stopSlideshow(); currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length; updateGallery(); }
+
         function toggleSlideshow() {
             const btn = document.getElementById('slideBtn');
             if (slideInterval) { stopSlideshow(); } 
             else { btn.innerText = "⏸ Pause"; slideInterval = setInterval(() => { currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }, 3000); }
         }
-        function stopSlideshow() { if (slideInterval) { clearInterval(slideInterval); slideInterval = null; document.getElementById('slideBtn').innerText = "▶ Play"; } }
-        function toggleVideoFlip(card) { const v = document.getElementById('reelVideo'); card.classList.toggle('flipped'); if(card.classList.contains('flipped')) { v.play(); } else { v.pause(); } }
 
-        // Love Section Logic
+        function stopSlideshow() { if (slideInterval) { clearInterval(slideInterval); slideInterval = null; document.getElementById('slideBtn').innerText = "▶ Play"; } }
+
+        function toggleVideoFlip(card) {
+            const v = document.getElementById('reelVideo'); card.classList.toggle('flipped');
+            if(card.classList.contains('flipped')) { v.play(); } else { v.pause(); }
+        }
+
         function moveButton() {
             const btn = document.getElementById('noBtn'); const section = document.getElementById('loveSection');
             btn.style.position = 'absolute';
@@ -272,16 +346,26 @@
             btn.style.left = Math.floor(Math.random() * maxX) + 'px';
             btn.style.top = Math.floor(Math.random() * maxY) + 'px';
         }
+
         function sendWhatsApp() {
-            const phone = "256761417053"; const message = "THANK YOU FOR THE SUPRISE MY ENGINEER❤️";
+            const phone = "256761417053";
+            const message = "THANK YOU FOR THE SUPRISE MY ENGINEER❤️";
             window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
         }
 
-        // Affirmations and Game
         const affirmations = [ "You are my greatest adventure.", "Senior Engineer😅🫶.", "Proud of you always.", "You look like an animal😅" ];
         const praises = [ "Breathtakingly beautiful.", "Stunning taste!", "You chose the best man. 😉" ];
-        function handleAffirmationClick(card) { if (!card.classList.contains('flipped')) { document.getElementById('affirmationText').innerText = affirmations[Math.floor(Math.random() * affirmations.length)]; } card.classList.toggle('flipped'); }
-        function handlePraiseClick(card) { if (!card.classList.contains('flipped')) { document.getElementById('praiseText').innerText = praises[Math.floor(Math.random() * praises.length)]; } card.classList.toggle('flipped'); }
+
+        function handleAffirmationClick(card) {
+            if (!card.classList.contains('flipped')) { document.getElementById('affirmationText').innerText = affirmations[Math.floor(Math.random() * affirmations.length)]; }
+            card.classList.toggle('flipped');
+        }
+
+        function handlePraiseClick(card) {
+            if (!card.classList.contains('flipped')) { document.getElementById('praiseText').innerText = praises[Math.floor(Math.random() * praises.length)]; }
+            card.classList.toggle('flipped');
+        }
+
         let caratAttempts = 0;
         function playCarat() {
             const feedback = document.getElementById('gameFeedback'); caratAttempts++;
