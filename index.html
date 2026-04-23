@@ -6,6 +6,7 @@
     <title>For Gloria</title>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>
     <style>
+        /* Global CSS Variables */
         :root {
             --bg-color: #0f0f0f; --text-color: #e0e0e0; --accent-color: #ff8fa3;
             --card-bg: #161616; --transition: all 0.3s ease; --minion-yellow: #ffdb00;
@@ -16,18 +17,22 @@
         }
         body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', sans-serif; transition: var(--transition); overflow-x: hidden; padding-bottom: 80px; }
 
+        /* --- HERO SECTION --- */
         .hero { min-height: 100vh; background: url('Gloria_1.jpeg') center/cover no-repeat; display: flex; align-items: center; justify-content: center; position: relative; }
         .hero::before { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.4); }
         .hero-content { position: relative; z-index: 10; text-align: center; padding: 0 20px; }
-        .gloria-text { font-size: 5rem; font-weight: 900; background: linear-gradient(to right, #ff8fa3, #ffdb00, #ff8fa3); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 3s linear infinite; }
+        .gloria-text { font-size: 5rem; font-weight: 900; background: linear-gradient(to right, #ff8fa3, #ffdb00, #ff8fa3); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 3s linear infinite; text-shadow: 0 0 20px rgba(255, 143, 163, 0.3); }
         @keyframes shine { to { background-position: 200% center; } }
         .spice-statement { font-size: 1.5rem; font-style: italic; margin-bottom: 20px; color: #fff; opacity: 0.9; }
-        .minion-badge { display: inline-block; background-color: var(--minion-yellow); color: #333; padding: 10px 25px; border-radius: 50px; font-weight: 800; border: 4px solid var(--minion-blue); cursor: pointer; user-select: none; }
+        .minion-badge { display: inline-block; background-color: var(--minion-yellow); color: #333; padding: 10px 25px; border-radius: 50px; font-weight: 800; border: 4px solid var(--minion-blue); cursor: pointer; user-select: none; box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-transform: uppercase; transform: rotate(-2deg); }
 
+        /* --- SKY WRAPPER --- */
         .sky-wrapper { position: relative; background-color: #050505; overflow: hidden; }
         .star-field { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         .star { position: absolute; background: white; border-radius: 50%; opacity: 0; animation: twinkle var(--duration) infinite ease-in-out; }
         @keyframes twinkle { 0%, 100% { opacity: 0.1; transform: scale(0.8); } 50% { opacity: 0.8; transform: scale(1.2); } }
+        .planet { position: absolute; border-radius: 50%; opacity: 0.15; filter: blur(2px); z-index: 2; animation: drift 60s infinite linear; }
+        @keyframes drift { from { transform: rotate(0deg) translateX(10px) rotate(0deg); } to { transform: rotate(360deg) translateX(10px) rotate(-360deg); } }
         .content-overlay { position: relative; z-index: 10; }
 
         /* --- ECONOMY & EMPATHY STYLES --- */
@@ -36,7 +41,7 @@
         .mood-btn:hover { transform: scale(1.05); }
         
         .economy-card { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(255, 215, 0, 0.15); margin-bottom: 40px; transition: border-color 0.5s; }
-        .coin-balance { font-size: 3.5rem; font-weight: 900; color: var(--gold); line-height: 1; margin: 10px 0; transition: color 0.5s; }
+        .coin-balance { font-size: 3.5rem; font-weight: 900; color: var(--gold); line-height: 1; margin: 10px 0; transition: color 0.5s; text-shadow: 0 0 15px rgba(255, 215, 0, 0.4); }
         .task-btn { border-radius: 10px; font-weight: bold; transition: transform 0.2s; display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 10px; padding: 12px 15px; }
         .earn-btn { background-color: rgba(40, 167, 69, 0.1); border: 1px solid #28a745; color: #28a745; }
         .spend-btn { background-color: rgba(220, 53, 69, 0.1); border: 1px solid #dc3545; color: #dc3545; transition: all 0.3s; }
@@ -48,15 +53,67 @@
         .gloria-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .gloria-modal-content { background: var(--card-bg); border: 2px solid var(--accent-color); border-radius: 20px; padding: 30px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
         .verse-text { font-size: 1.2rem; font-style: italic; margin-bottom: 20px; line-height: 1.6; }
-        textarea { width: 100%; background: transparent; border: 1px solid var(--accent-color); border-radius: 10px; color: var(--text-color); padding: 15px; margin-bottom: 15px; min-height: 100px; }
+        textarea { width: 100%; background: transparent; border: 1px solid var(--accent-color); border-radius: 10px; color: var(--text-color); padding: 15px; margin-bottom: 15px; min-height: 100px; outline: none; }
         
         /* --- ADMIN DASHBOARD --- */
-        #adminPanel { display: none; background: #000; color: #0f0; border: 2px solid #0f0; padding: 20px; border-radius: 10px; margin: 30px auto; max-width: 800px; font-family: monospace; text-align: left; }
+        #adminPanel { display: none; background: #000; color: #0f0; border: 2px solid #0f0; padding: 20px; border-radius: 10px; margin: 30px auto; max-width: 800px; font-family: monospace; text-align: left; box-shadow: 0 0 20px rgba(0,255,0,0.2); }
         .admin-msg { border-bottom: 1px dashed #0f0; padding-bottom: 10px; margin-bottom: 10px; }
 
+        /* --- ORIGINAL CONTENT STYLES --- */
+        .journey-container { position: relative; max-width: 900px; margin: 30px auto; padding: 20px 10px; }
+        .journey-container::after { content: ''; position: absolute; width: 2px; background: var(--accent-color); top: 0; bottom: 0; left: 50%; opacity: 0.3; }
+        .journey-item { padding: 10px 20px; position: relative; width: 50%; }
+        .left { left: 0; text-align: right; }
+        .right { left: 50%; text-align: left; }
+        .journey-frame { border: 2px solid var(--accent-color); border-radius: 15px; overflow: hidden; background: var(--card-bg); }
+        .journey-frame img { width: 100%; height: auto; max-height: 400px; object-fit: contain; background: #000; }
+
+        .flip-card { height: 350px; perspective: 1000px; margin-bottom: 20px; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        .flip-card-front { background: var(--card-bg); border: 1px solid var(--accent-color); }
+        .flip-card-back { background: var(--accent-color); color: #000; transform: rotateY(180deg); }
+
+        .game-card { background: var(--card-bg); border: 2px solid var(--accent-color); border-radius: 15px; padding: 30px; margin: 40px auto; max-width: 500px; }
+        .game-input { background: transparent; border: none; border-bottom: 2px solid var(--accent-color); color: var(--text-color); text-align: center; font-size: 1.5rem; width: 100px; margin: 20px 0; outline: none; }
+        .love-section { padding: 100px 20px; text-align: center; position: relative; min-height: 450px; }
+        #noBtn { transition: all 0.15s ease-out; z-index: 50; }
+        .btn-yes { animation: pulse-green 2s infinite; }
+        @keyframes pulse-green { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); } }
+
+        .theme-toggle { position: fixed; top: 15px; right: 15px; z-index: 5000; padding: 15px; border-radius: 50%; background: var(--accent-color); border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+        .theme-toggle.hidden { opacity: 0; pointer-events: none; }
+        .side-tab-trigger { position: fixed; bottom: 25px; right: 25px; z-index: 2500; background: var(--accent-color); color: #000; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5); font-size: 1.5rem; }
+        #memorySidebar { height: 100%; width: 0; position: fixed; z-index: 4500; top: 0; left: 0; background: var(--card-bg); overflow-x: hidden; transition: 0.5s; border-right: 2px solid var(--accent-color); }
+
+        @media (max-width: 768px) {
+            .gloria-text { font-size: 3.2rem; }
+            .journey-container::after { left: 31px; }
+            .journey-item { width: 100%; padding-left: 70px; text-align: left !important; }
+            .right { left: 0; }
+            .hero { min-height: 80vh; }
+            .flip-card { height: 280px; }
+        }
     </style>
 </head>
 <body>
+
+    <button class='theme-toggle' id='themeToggler' onclick='toggleTheme()'>🌓</button>
+    <button class='side-tab-trigger' onclick='openNav()'>✨</button>
+
+    <div id='memorySidebar'>
+        <div class='gallery-container-inner' style="padding: 20px; text-align: center; height: 100%; display: flex; flex-direction: column;">
+            <h3 class='mb-4'>Our Memories</h3>
+            <div id='gallery-media-container' style="flex-grow: 1; display: flex; align-items: center; justify-content: center; margin: 20px 0;"></div>
+            <div class='mt-4 d-flex justify-content-center gap-2'>
+                <button class='btn btn-outline-info' onclick='prevMedia()'>⬅ Prev</button>
+                <button class='btn btn-outline-info' onclick='nextMedia()'>Next ➡</button>
+                <button class='btn btn-primary' id='slideBtn' onclick='toggleSlideshow()'>▶ Play</button>
+                <button class='btn btn-danger' onclick='closeNav()'>✖ Back</button>
+            </div>
+        </div>
+    </div>
 
     <div class='hero'>
         <div class='hero-content'>
@@ -73,12 +130,12 @@
             <div class="container py-4">
                 
                 <div id="adminPanel">
-                    <div class="d-flex justify-content-between">
-                        <h4>👨‍💻 Engineer's Dashboard</h4>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="m-0">👨‍💻 Engineer's Dashboard</h4>
                         <button class="btn btn-sm btn-outline-danger" onclick="document.getElementById('adminPanel').style.display='none'">Close</button>
                     </div>
-                    <p>Live Database Feed:</p>
-                    <div id="adminMessages" style="max-height: 300px; overflow-y: auto;">Waiting for data...</div>
+                    <p class="text-muted">Live Database Feed:</p>
+                    <div id="adminMessages" style="max-height: 300px; overflow-y: auto; background: rgba(0,255,0,0.1); padding: 15px; border-radius: 5px;">Waiting for data...</div>
                 </div>
 
                 <div class="mood-container">
@@ -91,7 +148,7 @@
                 <div class="row justify-content-center">
                     <div class="col-12 col-lg-10">
                         <div class="economy-card text-center" id="economyCard">
-                            <h4 style="text-transform: uppercase; font-weight: 800; opacity: 0.8;">👑 The Royal Treasury</h4>
+                            <h4 style="text-transform: uppercase; font-weight: 800; opacity: 0.8; letter-spacing: 1px;">👑 The Royal Treasury</h4>
                             <div class="coin-balance" id="coinDisplay">...</div>
                             <p class="fst-italic mb-4">Gloria Coins</p>
 
@@ -139,7 +196,7 @@
             <div class="gloria-modal" id="verseModal">
                 <div class="gloria-modal-content">
                     <h5 class="fw-bold mb-3" style="color: var(--accent-color);">Your Daily Verse 📖</h5>
-                    <p class="verse-text" id="verseText">Loading today's scripture...</p>
+                    <p class="verse-text" id="verseText">Opening the Word...</p>
                     <p class="small text-muted mb-4">Take a deep breath and dwell on this for a moment.</p>
                     <button class="btn btn-secondary w-100 fw-bold rounded-pill" id="claimVerseBtn" disabled onclick="claimVerse()">
                         Meditating... (Wait 15s)
@@ -155,6 +212,82 @@
                     <p id="wordCountErr" class="text-danger small fw-bold" style="display:none;">Keep going! You need a few more words. ❤️</p>
                     <button class="btn btn-success w-100 fw-bold rounded-pill" onclick="submitTextTask()">Send to Christopher</button>
                     <button class="btn btn-link text-muted mt-2" onclick="closeModal('inputModal')">Cancel</button>
+                </div>
+            </div>
+
+            <div class='container py-5 text-center'>
+                <h2 class='mb-4'>Our Tune🎼</h2>
+                <div class='row justify-content-center'>
+                    <div class='col-12 col-md-8'>
+                        <div class='ratio ratio-16x9 rounded overflow-hidden shadow' style='border: 2px solid var(--accent-color);'>
+                            <iframe src='https://www.youtube.com/embed/q7mlB-adMBc' allowfullscreen></iframe>
+                        </div>
+                        <a href='#' class='btn btn-success rounded-pill mt-4 px-4 fw-bold'>🎵 Open on Spotify</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class='container py-5'>
+                <h2 class='text-center mb-4'>Our Journey</h2>
+                <div class='journey-container'>
+                    <div class='journey-item left'>
+                        <div class='journey-frame'><img src='Together_1.jpeg'><div class='p-3'><h5>The first Smile</h5><p class='small m-0'>Every journey starts with a moment that takes your breath away.</p></div></div>
+                    </div>
+                    <div class='journey-item right'>
+                        <div class='journey-frame'><img src='Together_2.jpeg'><div class='p-3'><h5>Unforgettable memory</h5><p class='small m-0'>Still think we should hang it in the Louvre😮‍💨</p></div></div>
+                    </div>
+                    <div class='journey-item left'>
+                        <div class='journey-frame'><img src='Gloria_3.jpeg'><div class='p-3'><h5>A special day🍰</h5><p class='small m-0'>In every look, there's a story of elegance and strength.</p></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class='container pb-5'>
+                <h2 class='text-center mb-4'>Gloria Veronica, Hold on to this!</h2>
+                <div class='row g-3'>
+                    <div class='col-12 col-md-4'>
+                        <div class='flip-card' onclick='handleAffirmationClick(this)'>
+                            <div class='flip-card-inner'>
+                                <div class='flip-card-front'><h3>Secret Message</h3><p class='small'>Tap to reveal</p></div>
+                                <div class='flip-card-back'><p id='affirmationText' class='fw-bold'></p></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-12 col-md-4'>
+                        <div class='flip-card' onclick='toggleVideoFlip(this)'>
+                            <div class='flip-card-inner'>
+                                <div class='flip-card-front'><img src='Gloria_1.jpeg' style='width:100%; height:100%; object-fit:cover; border-radius:15px;'></div>
+                                <div class='flip-card-back'><video id='reelVideo' src='The_reel.mp4' loop muted playsinline style='width:100%; height:100%; object-fit:cover; border-radius:15px;'></video></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-12 col-md-4'>
+                        <div class='flip-card' onclick='handlePraiseClick(this)'>
+                            <div class='flip-card-inner'>
+                                <div class='flip-card-front'><h3>Praises for You</h3><p class='small'>Don't blush, just tap</p></div>
+                                <div class='flip-card-back'><p id='praiseText' class='fw-bold text-center'></p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class='container text-center mb-5'>
+                <div class='game-card'>
+                    <h3>💎 The Carat Challenge</h3>
+                    <p>Gloria, how many carats?</p>
+                    <input type='number' id='caratInput' class='game-input' placeholder=''>
+                    <br>
+                    <button class='btn btn-outline-danger' onclick='playCarat()'>Check!</button>
+                    <p id='gameFeedback' class='mt-3 fw-bold'></p>
+                </div>
+            </div>
+
+            <div class='love-section' id="loveSection">
+                <h2 class='love-question'>DO YOU LOVE THIS ?</h2>
+                <div class='d-flex justify-content-center gap-4 align-items-center' style="min-height: 120px;">
+                    <button class='btn btn-success btn-yes px-5 py-3 fw-bold' onclick="sendWhatsApp()">YES</button>
+                    <button id='noBtn' class='btn btn-danger px-5 py-3 fw-bold' onmouseover="moveButton()">NO</button>
                 </div>
             </div>
 
@@ -210,7 +343,7 @@
                     // Loop backwards to show newest first
                     Object.values(data).reverse().forEach(msg => {
                         box.innerHTML += `<div class="admin-msg">
-                            <strong style="color: #fff;">[${msg.timestamp}] ${msg.type}:</strong><br>
+                            <strong style="color: #0f0;">[${msg.timestamp}] ${msg.type}:</strong><br>
                             ${msg.text}
                         </div>`;
                     });
@@ -224,12 +357,20 @@
     <script>
         function initSky() {
             const field = document.getElementById('starField');
-            for (let i = 0; i < 150; i++) {
+            for (let i = 0; i < 250; i++) {
                 const star = document.createElement('div'); star.className = 'star';
                 star.style.width = star.style.height = `${Math.random() * 2 + 0.5}px`;
                 star.style.left = `${Math.random() * 100}%`; star.style.top = `${Math.random() * 100}%`;
                 star.style.setProperty('--duration', `${Math.random() * 4 + 2}s`);
                 star.style.animationDelay = `${Math.random() * 5}s`; field.appendChild(star);
+            }
+            const planetColors = ['#ff5f6d', '#4facfe', '#ffdb00', '#ff8fa3'];
+            for (let i = 0; i < 6; i++) {
+                const planet = document.createElement('div'); planet.className = 'planet';
+                const size = Math.random() * 100 + 40; planet.style.width = planet.style.height = `${size}px`;
+                planet.style.background = `radial-gradient(circle, ${planetColors[i%4]}, transparent)`;
+                planet.style.left = `${Math.random() * 90}%`; planet.style.top = `${Math.random() * 90}%`;
+                planet.style.animationDuration = `${Math.random() * 40 + 40}s`; field.appendChild(planet);
             }
         }
         initSky();
@@ -320,26 +461,35 @@
             alert("Good job taking care of yourself. +20 Coins! 💜");
         }
 
-        // --- BIBLE VERSE (Dwell Time) ---
-        // A curated list of beautiful verses so it never breaks
-        const verses = [
-            `"I have loved you with an everlasting love; I have drawn you with unfailing kindness." - Jeremiah 31:3`,
-            `"Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go." - Joshua 1:9`,
-            `"Let all that you do be done in love." - 1 Corinthians 16:14`,
-            `"The Lord bless you and keep you; the Lord make his face shine on you and be gracious to you." - Numbers 6:24-25`
-        ];
-
+        // --- BIBLE VERSE (Live API & Dwell Time) ---
         let verseTimer;
-        function openVerseModal() {
+        
+        async function openVerseModal() {
             document.getElementById('verseModal').style.display = 'flex';
-            // Pick a verse based on the day of the week so it rotates
-            document.getElementById('verseText').innerText = verses[new Date().getDay() % verses.length];
+            document.getElementById('verseText').innerText = "Opening the Word... 📖";
             
             const claimBtn = document.getElementById('claimVerseBtn');
             claimBtn.disabled = true;
             claimBtn.className = "btn btn-secondary w-100 fw-bold rounded-pill";
-            let timeLeft = 15;
             
+            try {
+                // Fetch the verse from the free API
+                const response = await fetch('https://labs.bible.org/api/?passage=random&type=json');
+                const data = await response.json();
+                
+                const book = data[0].bookname;
+                const chapter = data[0].chapter;
+                const verseNum = data[0].verse;
+                const text = data[0].text;
+                
+                document.getElementById('verseText').innerHTML = `"${text}" <br><br><b>- ${book} ${chapter}:${verseNum}</b>`;
+                
+            } catch (error) {
+                // Fallback just in case the API is down
+                document.getElementById('verseText').innerText = '"Let all that you do be done in love." - 1 Corinthians 16:14';
+            }
+
+            let timeLeft = 15;
             clearInterval(verseTimer);
             verseTimer = setInterval(() => {
                 timeLeft--;
@@ -373,7 +523,6 @@
 
         function submitTextTask() {
             const text = document.getElementById('taskInput').value;
-            // Check word count (split by spaces)
             const wordCount = text.trim().split(/\s+/).filter(word => word.length > 0).length;
             
             if (wordCount < 15) {
@@ -381,7 +530,6 @@
                 return;
             }
 
-            // Success! Save to database and give coins
             window.dbSaveMessage(currentTaskType, text);
             window.dbRunTransaction(currentTaskReward);
             closeModal('inputModal');
@@ -390,6 +538,58 @@
 
         function closeModal(id) {
             document.getElementById(id).style.display = 'none';
+        }
+
+        // --- ORIGINAL GALLERY & INTERACTIVITY ---
+        const galleryData = [
+            {"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"},
+            {"src": "Gloria_1.jpeg", "type": "image"},
+            {"src": "WhatsApp Video 2026-04-20 at 16.17.18.mp4", "type": "video"},
+            {"src": "Together_1.jpeg", "type": "image"},
+            {"src": "Gloria_3.jpeg", "type": "image"}
+        ];
+        let currentIndex = 0; let slideInterval = null;
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+        }
+        function openNav() { document.getElementById('memorySidebar').style.width = "100%"; document.getElementById('themeToggler').classList.add('hidden'); updateGallery(); }
+        function closeNav() { stopSlideshow(); document.getElementById('memorySidebar').style.width = "0"; document.getElementById('themeToggler').classList.remove('hidden'); }
+        function updateGallery() {
+            const container = document.getElementById('gallery-media-container'); container.innerHTML = '';
+            const item = galleryData[currentIndex];
+            if(item.type === 'video') { let vid = document.createElement('video'); vid.src = item.src; vid.controls = true; vid.style.width = '100%'; container.appendChild(vid); } 
+            else { let img = document.createElement('img'); img.src = item.src; img.style.width = '100%'; img.classList.add('rounded', 'shadow'); container.appendChild(img); }
+        }
+        function nextMedia() { stopSlideshow(); currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }
+        function prevMedia() { stopSlideshow(); currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length; updateGallery(); }
+        function toggleSlideshow() {
+            const btn = document.getElementById('slideBtn');
+            if (slideInterval) { stopSlideshow(); } 
+            else { btn.innerText = "⏸ Pause"; slideInterval = setInterval(() => { currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }, 3000); }
+        }
+        function stopSlideshow() { if (slideInterval) { clearInterval(slideInterval); slideInterval = null; document.getElementById('slideBtn').innerText = "▶ Play"; } }
+        
+        function toggleVideoFlip(card) { const v = document.getElementById('reelVideo'); card.classList.toggle('flipped'); if(card.classList.contains('flipped')) { v.play(); } else { v.pause(); } }
+        function moveButton() {
+            const btn = document.getElementById('noBtn'); const section = document.getElementById('loveSection');
+            btn.style.position = 'absolute';
+            btn.style.left = Math.floor(Math.random() * (section.clientWidth - btn.offsetWidth - 20)) + 'px';
+            btn.style.top = Math.floor(Math.random() * (section.clientHeight - btn.offsetHeight - 20)) + 'px';
+        }
+        function sendWhatsApp() { window.open(`https://wa.me/256761417053?text=${encodeURIComponent("THANK YOU FOR THE SUPRISE MY ENGINEER❤️")}`, '_blank'); }
+
+        const affirmations = [ "You are my greatest adventure.", "Senior Engineer😅🫶.", "Proud of you always.", "You look like an animal😅" ];
+        const praises = [ "Breathtakingly beautiful.", "Stunning taste!", "You chose the best man. 😉" ];
+        function handleAffirmationClick(card) { if (!card.classList.contains('flipped')) document.getElementById('affirmationText').innerText = affirmations[Math.floor(Math.random() * affirmations.length)]; card.classList.toggle('flipped'); }
+        function handlePraiseClick(card) { if (!card.classList.contains('flipped')) document.getElementById('praiseText').innerText = praises[Math.floor(Math.random() * praises.length)]; card.classList.toggle('flipped'); }
+
+        let caratAttempts = 0;
+        function playCarat() {
+            const feedback = document.getElementById('gameFeedback'); caratAttempts++;
+            if(caratAttempts < 4) feedback.innerText = "Come on Gloriana😅, dont you deserve better! 😉"; 
+            else { feedback.innerHTML = "BINGO! That's what i thought, i dont mind a Billion though❤️"; caratAttempts = 0; }
         }
     </script>
 </body>
