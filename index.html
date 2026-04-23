@@ -416,7 +416,7 @@
         const dbUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTzIibIW3TlaS58ONQmTAeamurQKGWFhEQT4nUlr9nTFjk0XqWf0jiv4V7fPsjUH-OzVPehxDLKUtM1/pub?gid=0&single=true&output=csv";
 
         function loadGloriaOS() {
-            Papa.parse(dbUrl, {
+            Papa.parse(dbUrl + "&timestamp=" + new Date().getTime(), {
                 download: true,
                 header: true,
                 complete: function(results) {
