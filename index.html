@@ -168,11 +168,29 @@
                 </div>
             </div>
 
-            <div class="container py-3 text-center" id="careModule" style="display: none; position: relative; z-index: 20;">
-                <div id="careCard" style="background: var(--card-bg); border: 2px solid var(--accent-color); border-radius: 20px; padding: 30px; max-width: 500px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 1s ease;">
-                    <h5 id="phaseTitle" style="font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Wellness Check</h5>
-                    <p id="phaseMessage" style="font-size: 1.1rem; margin-top: 15px; font-style: italic;"></p>
-                    <button id="emergencyBtn" class="btn btn-danger mt-3 fw-bold rounded-pill" style="display: none; animation: pulse-green 2s infinite;" onclick="deployChocolate()">🍫 Deploy Emergency Chocolate</button>
+            <div class="container py-2" id="careModule" style="display: none; position: relative; z-index: 20;">
+                <h4 class="text-center fw-bold mb-4" style="color: var(--text-color);">Your Cycle Forecast ✨</h4>
+                
+                <div class="row g-3 justify-content-center">
+                    <div class="col-12 col-md-5">
+                        <div id="careCard" style="background: var(--card-bg); border: 3px solid var(--accent-color); border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; transition: all 0.5s ease;">
+                            <div style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7; margin-bottom: 10px;">Today</div>
+                            <h5 id="phaseTitle" style="font-weight: 900; text-transform: uppercase; transition: color 0.5s ease;">Wellness Check</h5>
+                            <p id="phaseMessage" style="font-size: 1.1rem; margin-top: 15px; font-style: italic;"></p>
+                            <button id="emergencyBtn" class="btn btn-danger mt-3 fw-bold rounded-pill" style="display: none; animation: pulse-green 2s infinite;" onclick="deployChocolate()">🍫 Action Required</button>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4 d-flex flex-column gap-3">
+                        <div id="tomorrowCard" style="background: var(--card-bg); border: 1px solid var(--text-color); border-radius: 15px; padding: 15px; opacity: 0.8; transition: all 0.5s ease;">
+                            <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; opacity: 0.6;">Tomorrow 🔒</div>
+                            <div id="tomorrowTitle" style="font-weight: 700; margin-top: 5px;">Loading...</div>
+                        </div>
+                        <div id="dayAfterCard" style="background: var(--card-bg); border: 1px solid var(--text-color); border-radius: 15px; padding: 15px; opacity: 0.6; transition: all 0.5s ease;">
+                            <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; opacity: 0.6;">Day After 🔒</div>
+                            <div id="dayAfterTitle" style="font-weight: 700; margin-top: 5px;">Loading...</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -394,7 +412,7 @@
             }
         });
 
-        /* --- GLORIA OS: DATABASE & CARE ENGINE --- */
+        /* --- GLORIA OS: DATABASE & AUTOMATIC CYCLE ANTICIPATION ENGINE --- */
         const dbUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTzIibIW3TlaS58ONQmTAeamurQKGWFhEQT4nUlr9nTFjk0XqWf0jiv4V7fPsjUH-OzVPehxDLKUtM1/pub?gid=0&single=true&output=csv";
 
         function loadGloriaOS() {
@@ -421,7 +439,7 @@
                         document.getElementById('dailyDbMessage').innerText = `"${validNotes[rowIndex].Message}"`;
                     }
 
-                    // Cycle Tracker Logic
+                    // Cycle Tracker & Anticipation Dashboard Logic
                     if (cycleStartDateStr) {
                         calculateCyclePhase(cycleStartDateStr);
                     }
@@ -436,49 +454,55 @@
         function calculateCyclePhase(startDateStr) {
             const startDate = new Date(startDateStr);
             const today = new Date();
+            
+            // 1. Automatic Math for Today
             const diffTime = Math.abs(today - startDate);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
             const cycleDay = (diffDays % 28) || 28; 
 
-            const careModule = document.getElementById('careModule');
-            const careCard = document.getElementById('careCard');
-            const phaseTitle = document.getElementById('phaseTitle');
-            const phaseMessage = document.getElementById('phaseMessage');
-            const emergencyBtn = document.getElementById('emergencyBtn');
+            // 2. Data for Tomorrow and Day After
+            const tomorrowDay = (cycleDay % 28) + 1;
+            const dayAfterDay = ((cycleDay + 1) % 28) + 1;
 
-            careModule.style.display = 'block'; 
-
-            if (cycleDay >= 1 && cycleDay <= 5) {
-                phaseTitle.innerText = "🌸 Rest & Recover Phase";
-                phaseTitle.style.color = "#ff4d6d";
-                careCard.style.borderColor = "#ff4d6d";
-                phaseMessage.innerText = "Take it easy today, Princess. Drink warm water and don't push yourself. I am sending you massive hugs.";
-                emergencyBtn.style.display = 'inline-block';
-                emergencyBtn.innerText = "🍫 Deploy Emergency Chocolate";
-            } 
-            else if (cycleDay >= 6 && cycleDay <= 13) {
-                phaseTitle.innerText = "✨ Inner Glow Phase";
-                phaseTitle.style.color = "#4facfe";
-                careCard.style.borderColor = "#4facfe";
-                phaseMessage.innerText = "Your energy is rising! You are looking radiant today. Go crush those academic goals!";
-                emergencyBtn.style.display = 'none';
-            } 
-            else if (cycleDay >= 14 && cycleDay <= 16) {
-                phaseTitle.innerText = "🔥 Peak Queen Phase";
-                phaseTitle.style.color = "#ffdb00";
-                careCard.style.borderColor = "#ffdb00";
-                phaseMessage.innerText = "You are absolutely glowing right now. Confident, beautiful, and unstoppable.";
-                emergencyBtn.style.display = 'none';
-            } 
-            else {
-                phaseTitle.innerText = "☕ Cozy & Calm Phase";
-                phaseTitle.style.color = "#c084fc"; 
-                careCard.style.borderColor = "#c084fc";
-                phaseMessage.innerText = "You might be feeling a bit tired or overwhelmed as your body winds down. Be gentle with yourself. I'm right here if you need to vent.";
-                emergencyBtn.style.display = 'inline-block';
-                emergencyBtn.innerText = "🧸 I need a hug (Send Alert)";
+            // Helper function to get phase details based on a day number
+            function getPhaseInfo(day) {
+                if (day >= 1 && day <= 5) return { title: "🌸 Rest & Recover", color: "#ff4d6d", msg: "Take it easy today, Princess. Drink warm water and don't push yourself. I am sending you massive hugs." };
+                if (day >= 6 && day <= 13) return { title: "✨ Inner Glow", color: "#4facfe", msg: "Your energy is rising! You are looking radiant today. Go crush those academic goals!" };
+                if (day >= 14 && day <= 16) return { title: "🔥 Peak Queen", color: "#ffdb00", msg: "You are absolutely glowing right now. Confident, beautiful, and unstoppable." };
+                return { title: "☕ Cozy & Calm", color: "#c084fc", msg: "You might be feeling a bit tired or overwhelmed as your body winds down. Be gentle with yourself. I'm right here if you need to vent." };
             }
+
+            const todayInfo = getPhaseInfo(cycleDay);
+            const tomorrowInfo = getPhaseInfo(tomorrowDay);
+            const dayAfterInfo = getPhaseInfo(dayAfterDay);
+
+            // 3. Update the UI Automatically
+            document.getElementById('careModule').style.display = 'block';
+
+            // Update TODAY
+            document.getElementById('phaseTitle').innerText = todayInfo.title;
+            document.getElementById('phaseTitle').style.color = todayInfo.color;
+            document.getElementById('careCard').style.borderColor = todayInfo.color;
+            document.getElementById('phaseMessage').innerText = todayInfo.msg;
+
+            // Show/Hide Emergency Button based on phase
+            const eBtn = document.getElementById('emergencyBtn');
+            if (cycleDay <= 5 || cycleDay >= 17) {
+                eBtn.style.display = 'inline-block';
+                eBtn.innerText = cycleDay <= 5 ? "🍫 Deploy Emergency Chocolate" : "🧸 I need a hug (Send Alert)";
+            } else {
+                eBtn.style.display = 'none';
+            }
+
+            // Update TOMORROW
+            document.getElementById('tomorrowTitle').innerText = tomorrowInfo.title;
+            document.getElementById('tomorrowTitle').style.color = tomorrowInfo.color;
+            document.getElementById('tomorrowCard').style.borderColor = tomorrowInfo.color;
+
+            // Update DAY AFTER
+            document.getElementById('dayAfterTitle').innerText = dayAfterInfo.title;
+            document.getElementById('dayAfterTitle').style.color = dayAfterInfo.color;
+            document.getElementById('dayAfterCard').style.borderColor = dayAfterInfo.color;
         }
 
         function deployChocolate() {
