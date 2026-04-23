@@ -5,9 +5,8 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
     <title>For Gloria</title>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
-        /* Global CSS Variables */
+        /* CSS Variables for theme and brand colors */
         :root {
             --bg-color: #0f0f0f;
             --text-color: #e0e0e0;
@@ -16,6 +15,7 @@
             --transition: all 0.3s ease;
             --minion-yellow: #ffdb00;
             --minion-blue: #2b59c3;
+            --gold: #ffd700;
         }
         [data-theme='light'] {
             --bg-color: #f8f9fa;
@@ -63,33 +63,20 @@
         @keyframes drift { from { transform: rotate(0deg) translateX(10px) rotate(0deg); } to { transform: rotate(360deg) translateX(10px) rotate(-360deg); } }
         .content-overlay { position: relative; z-index: 10; }
 
-        /* --- GALLERY SIDEBAR FIX --- */
-        #memorySidebar {
-            height: 100%;
-            width: 0; 
-            position: fixed;
-            z-index: 4500;
-            top: 0;
-            left: 0;
-            background: var(--card-bg);
-            overflow-x: hidden;
-            transition: 0.5s ease-in-out;
-            border-right: 1px solid var(--accent-color);
-            box-shadow: 10px 0 30px rgba(0,0,0,0.5);
-        }
+        /* --- FIREBASE ECONOMY STYLES --- */
+        .economy-card { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(255, 215, 0, 0.15); margin-bottom: 40px; }
+        .coin-balance { font-size: 3.5rem; font-weight: 900; color: var(--gold); text-shadow: 0 0 15px rgba(255, 215, 0, 0.4); line-height: 1; margin: 10px 0; }
+        .task-btn { border-radius: 10px; font-weight: bold; transition: transform 0.2s; display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 10px; padding: 12px 15px; }
+        .task-btn:hover { transform: scale(1.02); }
+        .earn-btn { background-color: rgba(40, 167, 69, 0.1); border: 1px solid #28a745; color: #28a745; }
+        .spend-btn { background-color: rgba(220, 53, 69, 0.1); border: 1px solid #dc3545; color: #dc3545; }
+        .coin-badge { background: var(--gold); color: #000; padding: 3px 8px; border-radius: 12px; font-size: 0.85rem; font-weight: 900; }
 
-        .gallery-container-inner {
-            padding: 40px 20px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-            min-width: 320px; 
-        }
-        #gallery-media-container { flex-grow: 1; display: flex; align-items: center; justify-content: center; margin: 20px 0; }
-        #gallery-media-container img, #gallery-media-container video { max-width: 100%; max-height: 60vh; border-radius: 10px; }
+        /* --- TIME CAPSULE STYLES --- */
+        .capsule-card { background: linear-gradient(145deg, var(--card-bg), #1a1a1a); border: 2px dashed var(--accent-color); border-radius: 20px; padding: 30px; text-align: center; position: relative; overflow: hidden; }
+        .locked-icon { font-size: 4rem; opacity: 0.5; margin-bottom: 15px; }
 
-        /* --- JOURNEY & CONTENT --- */
+        /* --- TIMELINE & FLIP CARDS --- */
         .journey-container { position: relative; max-width: 900px; margin: 30px auto; padding: 20px 10px; }
         .journey-container::after { content: ''; position: absolute; width: 2px; background: var(--accent-color); top: 0; bottom: 0; left: 50%; opacity: 0.3; }
         .journey-item { padding: 10px 20px; position: relative; width: 50%; }
@@ -105,22 +92,18 @@
         .flip-card-front { background: var(--card-bg); border: 1px solid var(--accent-color); }
         .flip-card-back { background: var(--accent-color); color: #000; transform: rotateY(180deg); }
 
+        /* --- MISC UI --- */
         .game-card { background: var(--card-bg); border: 2px solid var(--accent-color); border-radius: 15px; padding: 30px; margin: 40px auto; max-width: 500px; }
         .game-input { background: transparent; border: none; border-bottom: 2px solid var(--accent-color); color: var(--text-color); text-align: center; font-size: 1.5rem; width: 100px; margin: 20px 0; outline: none; }
         .love-section { padding: 100px 20px; text-align: center; position: relative; min-height: 450px; }
         #noBtn { transition: all 0.15s ease-out; z-index: 50; }
         .btn-yes { animation: pulse-green 2s infinite; }
+        @keyframes pulse-green { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); } }
 
-        @keyframes pulse-green {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
-        }
-
-        /* --- UI CONTROLS --- */
-        .theme-toggle { position: fixed; top: 15px; right: 15px; z-index: 5000; padding: 15px; border-radius: 50%; background: var(--accent-color); border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.4); transition: opacity 0.3s; }
+        .theme-toggle { position: fixed; top: 15px; right: 15px; z-index: 5000; padding: 15px; border-radius: 50%; background: var(--accent-color); border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
         .theme-toggle.hidden { opacity: 0; pointer-events: none; }
         .side-tab-trigger { position: fixed; bottom: 25px; right: 25px; z-index: 2500; background: var(--accent-color); color: #000; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5); font-size: 1.5rem; }
+        #memorySidebar { height: 100%; width: 0; position: fixed; z-index: 4500; top: 0; left: 0; background: var(--card-bg); overflow-x: hidden; transition: 0.5s; border-right: 2px solid var(--accent-color); }
 
         @media (max-width: 768px) {
             .gloria-text { font-size: 3.2rem; }
@@ -137,10 +120,10 @@
     <button class='side-tab-trigger' onclick='openNav()'>✨</button>
 
     <div id='memorySidebar'>
-        <div class='gallery-container-inner'>
+        <div class='gallery-container-inner' style="padding: 20px; text-align: center;">
             <h3 class='mb-4'>Our Memories</h3>
             <div id='gallery-media-container'></div>
-            <div class='mt-auto d-flex flex-wrap justify-content-center gap-2'>
+            <div class='mt-4 d-flex justify-content-center gap-2'>
                 <button class='btn btn-outline-info' onclick='prevMedia()'>⬅ Prev</button>
                 <button class='btn btn-outline-info' onclick='nextMedia()'>Next ➡</button>
                 <button class='btn btn-primary' id='slideBtn' onclick='toggleSlideshow()'>▶ Play</button>
@@ -160,35 +143,78 @@
     <div class="sky-wrapper">
         <div class="star-field" id="starField"></div>
         <div class="content-overlay">
-            
-            <div class="container py-5 text-center" style="position: relative; z-index: 20;">
-                <div style="background: var(--card-bg); border: 2px dashed var(--accent-color); border-radius: 15px; padding: 25px; max-width: 600px; margin: 0 auto; box-shadow: 0 8px 25px rgba(0,0,0,0.4); transition: var(--transition);">
-                    <h6 style="color: var(--accent-color); text-transform: uppercase; font-weight: 800; letter-spacing: 2px; margin-bottom: 15px;">💌 Note of the Day</h6>
-                    <p id="dailyDbMessage" style="font-size: 1.3rem; font-style: italic; margin: 0; font-weight: 600;">Connecting to the vault...</p>
+
+            <div class="container py-5">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-10">
+                        <div class="economy-card text-center">
+                            <h4 style="text-transform: uppercase; font-weight: 800; letter-spacing: 2px; opacity: 0.8;">👑 The Royal Treasury</h4>
+                            <div class="coin-balance" id="coinDisplay">...</div>
+                            <p class="fst-italic mb-4">Gloria Coins Earned</p>
+
+                            <div class="row g-4 text-start mt-2">
+                                <div class="col-12 col-md-6">
+                                    <h5 class="fw-bold mb-3">✨ Daily Tasks (Earn)</h5>
+                                    <button class="btn task-btn earn-btn" onclick="earnCoins(10, 'Drank Water')">
+                                        <span>💧 Drank my water</span><span class="coin-badge">+10</span>
+                                    </button>
+                                    <button class="btn task-btn earn-btn" onclick="earnCoins(15, 'Read Daily Verse')">
+                                        <span>📖 Read my daily verse</span><span class="coin-badge">+15</span>
+                                    </button>
+                                    <button class="btn task-btn earn-btn" onclick="earnCoins(20, 'Academic Update')">
+                                        <span>📚 Academic update sent</span><span class="coin-badge">+20</span>
+                                    </button>
+                                    <button class="btn task-btn earn-btn" onclick="earnCoins(25, 'Emotional Check-in')">
+                                        <span>❤️ Told him how I feel</span><span class="coin-badge">+25</span>
+                                    </button>
+                                    <button class="btn task-btn earn-btn" onclick="earnCoins(5, 'Spotify Session')">
+                                        <span>🎵 Listened to our song</span><span class="coin-badge">+5</span>
+                                    </button>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <h5 class="fw-bold mb-3">🛍️ The Princess Shop (Spend)</h5>
+                                    <button class="btn task-btn spend-btn" onclick="spendCoins(100, 'Custom Voice Note')">
+                                        <span>🎙️ Demand a Voice Note</span><span class="coin-badge">-100</span>
+                                    </button>
+                                    <button class="btn task-btn spend-btn" onclick="spendCoins(300, 'Pick the Movie')">
+                                        <span>🍿 I pick the movie tonight</span><span class="coin-badge">-300</span>
+                                    </button>
+                                    <button class="btn task-btn spend-btn" onclick="spendCoins(500, 'Free Request')">
+                                        <span>🧞‍♀️ One Custom Favor</span><span class="coin-badge">-500</span>
+                                    </button>
+                                    <button class="btn task-btn spend-btn" onclick="spendCoins(1000, 'UberEats Delivery')">
+                                        <span>🍕 Order me food right now</span><span class="coin-badge">-1000</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="container py-2" id="careModule" style="display: none; position: relative; z-index: 20;">
-                <h4 class="text-center fw-bold mb-4" style="color: var(--text-color);">Your Cycle Forecast ✨</h4>
-                
-                <div class="row g-3 justify-content-center">
-                    <div class="col-12 col-md-5">
-                        <div id="careCard" style="background: var(--card-bg); border: 3px solid var(--accent-color); border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; transition: all 0.5s ease;">
-                            <div style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7; margin-bottom: 10px;">Today</div>
-                            <h5 id="phaseTitle" style="font-weight: 900; text-transform: uppercase; transition: color 0.5s ease;">Wellness Check</h5>
-                            <p id="phaseMessage" style="font-size: 1.1rem; margin-top: 15px; font-style: italic;"></p>
-                            <button id="emergencyBtn" class="btn btn-danger mt-3 fw-bold rounded-pill" style="display: none; animation: pulse-green 2s infinite;" onclick="deployChocolate()">🍫 Action Required</button>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-md-4 d-flex flex-column gap-3">
-                        <div id="tomorrowCard" style="background: var(--card-bg); border: 1px solid var(--text-color); border-radius: 15px; padding: 15px; opacity: 0.8; transition: all 0.5s ease;">
-                            <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; opacity: 0.6;">Tomorrow 🔒</div>
-                            <div id="tomorrowTitle" style="font-weight: 700; margin-top: 5px;">Loading...</div>
-                        </div>
-                        <div id="dayAfterCard" style="background: var(--card-bg); border: 1px solid var(--text-color); border-radius: 15px; padding: 15px; opacity: 0.6; transition: all 0.5s ease;">
-                            <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; opacity: 0.6;">Day After 🔒</div>
-                            <div id="dayAfterTitle" style="font-weight: 700; margin-top: 5px;">Loading...</div>
+            <div class="container pb-5 text-center">
+                <h2 class='mb-4'>Time Capsules ⏳</h2>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-6">
+                        <div class="capsule-card" id="capsuleUI">
+                            <div id="capsuleLocked">
+                                <div class="locked-icon">🔒</div>
+                                <h4>Secret Capsule #1</h4>
+                                <p class="text-muted">Location: <b>Cafe Shire on Malaba Road</b></p>
+                                <p class="small fst-italic">You must be physically at the cafe to unlock this memory.</p>
+                                <button class="btn btn-warning fw-bold rounded-pill mt-3 px-4" onclick="checkLocation()">
+                                    📍 I am here! (Scan Location)
+                                </button>
+                            </div>
+                            
+                            <div id="capsuleUnlocked" style="display: none;">
+                                <div class="locked-icon">🔓</div>
+                                <h4 style="color: var(--gold);">Capsule Unlocked!</h4>
+                                <p>You made it to Cafe Shire! Here is your surprise memory.</p>
+                                <img src="Together_1.jpeg" style="width: 100%; border-radius: 15px; margin: 15px 0;">
+                                <p class="fw-bold text-success">+500 Gloria Coins Awarded!</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -272,37 +298,127 @@
         </div>
     </div>
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+        // YOUR EXACT FIREBASE KEYS
+        const firebaseConfig = {
+            apiKey: "AIzaSyADYulYcS190uj8kwOFkIlUAR3vfdjMJJk",
+            authDomain: "the-os-b8241.firebaseapp.com",
+            projectId: "the-os-b8241",
+            storageBucket: "the-os-b8241.firebasestorage.app",
+            messagingSenderId: "185781518483",
+            appId: "1:185781518483:web:a5a60fb1b844c448c24d66"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // --- THE "US" ECONOMY LOGIC ---
+        const coinsRef = ref(db, 'gloria_coins');
+
+        // This listens to the database live. If you or she updates it, the screen changes instantly.
+        onValue(coinsRef, (snapshot) => {
+            const data = snapshot.val();
+            document.getElementById('coinDisplay').innerText = data || 0;
+        });
+
+        // Earning Coins
+        window.earnCoins = function(amount, task) {
+            runTransaction(coinsRef, (currentCoins) => {
+                return (currentCoins || 0) + amount;
+            });
+            alert(`Earned ${amount} coins for: ${task}! Christopher's database has been updated. 😉`);
+        };
+
+        // Spending Coins
+        window.spendCoins = function(amount, reward) {
+            runTransaction(coinsRef, (currentCoins) => {
+                let current = currentCoins || 0;
+                if (current >= amount) {
+                    alert(`Request Locked In: ${reward}! Christopher owes you. ❤️`);
+                    return current - amount;
+                } else {
+                    alert(`Not enough coins, Princess! You need ${amount - current} more to demand this. Keep grinding. 😅`);
+                    return current; // Don't subtract if she's broke!
+                }
+            });
+        };
+    </script>
+
     <script>
-        /* --- STAR AND PLANET SETUP --- */
+        // --- STAR AND PLANET GENERATION ---
         function initSky() {
             const field = document.getElementById('starField');
             for (let i = 0; i < 250; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                const size = Math.random() * 2 + 0.5;
-                star.style.width = star.style.height = `${size}px`;
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
+                const star = document.createElement('div'); star.className = 'star';
+                const size = Math.random() * 2 + 0.5; star.style.width = star.style.height = `${size}px`;
+                star.style.left = `${Math.random() * 100}%`; star.style.top = `${Math.random() * 100}%`;
                 star.style.setProperty('--duration', `${Math.random() * 4 + 2}s`);
-                star.style.animationDelay = `${Math.random() * 5}s`;
-                field.appendChild(star);
+                star.style.animationDelay = `${Math.random() * 5}s`; field.appendChild(star);
             }
-            const colors = ['#ff5f6d', '#4facfe', '#ffdb00', '#ff8fa3'];
+            const planetColors = ['#ff5f6d', '#4facfe', '#ffdb00', '#ff8fa3'];
             for (let i = 0; i < 6; i++) {
-                const p = document.createElement('div');
-                p.className = 'planet';
-                const s = Math.random() * 100 + 40;
-                p.style.width = p.style.height = `${s}px`;
-                p.style.background = `radial-gradient(circle, ${colors[i%4]}, transparent)`;
-                p.style.left = `${Math.random() * 90}%`;
-                p.style.top = `${Math.random() * 90}%`;
-                p.style.animationDuration = `${Math.random() * 40 + 40}s`;
-                field.appendChild(p);
+                const planet = document.createElement('div'); planet.className = 'planet';
+                const size = Math.random() * 100 + 40; planet.style.width = planet.style.height = `${size}px`;
+                planet.style.background = `radial-gradient(circle, ${planetColors[i%4]}, transparent)`;
+                planet.style.left = `${Math.random() * 90}%`; planet.style.top = `${Math.random() * 90}%`;
+                planet.style.animationDuration = `${Math.random() * 40 + 40}s`; field.appendChild(planet);
             }
         }
         initSky();
 
-        /* --- GALLERY PANEL CONTROLS --- */
+        // --- LOCATION-LOCKED TIME CAPSULE LOGIC ---
+        
+        // ENGINEER NOTE: Replace these with the EXACT GPS coordinates of Cafe Shire!
+        // You can get these by dropping a pin on Google Maps. Right now, it's a rough estimate for Malaba Road.
+        const cafeLat = 0.6330; 
+        const cafeLng = 34.2740;
+
+        function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
+            var R = 6371; // Radius of the earth in km
+            var dLat = deg2rad(lat2-lat1); 
+            var dLon = deg2rad(lon2-lon1);
+            var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                    Math.sin(dLon/2) * Math.sin(dLon/2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            var d = R * c; 
+            return Math.round(d * 1000); // Return distance in meters
+        }
+        function deg2rad(deg) { return deg * (Math.PI/180); }
+
+        window.checkLocation = function() {
+            if (navigator.geolocation) {
+                // We ask her phone for the GPS coordinates
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const userLat = position.coords.latitude;
+                    const userLng = position.coords.longitude;
+                    
+                    const distance = getDistanceFromLatLonInMeters(userLat, userLng, cafeLat, cafeLng);
+                    
+                    // If she is within 150 meters of the cafe...
+                    if (distance <= 150) {
+                        document.getElementById('capsuleLocked').style.display = 'none';
+                        document.getElementById('capsuleUnlocked').style.display = 'block';
+                        document.getElementById('capsuleUI').style.borderColor = '#28a745';
+                        
+                        // Give her the massive reward for finding it!
+                        if(window.earnCoins) window.earnCoins(500, 'Found the Secret Cafe Shire Capsule!');
+                    } else {
+                        alert(`Nice try! You are still ${distance} meters away from Cafe Shire. Get closer to unlock it! 🚶‍♀️`);
+                    }
+                }, (error) => {
+                    alert("I can't check if you are at the cafe unless you allow Location Access on your browser! 📍");
+                }, { enableHighAccuracy: true });
+            } else {
+                alert("Your browser doesn't support location tracking.");
+            }
+        };
+
+        // --- GALLERY AND ORIGINAL INTERACTIVITY ---
         const galleryData = [
             {"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"},
             {"src": "Gloria_1.jpeg", "type": "image"},
@@ -310,206 +426,48 @@
             {"src": "Together_1.jpeg", "type": "image"},
             {"src": "Gloria_3.jpeg", "type": "image"}
         ];
+        let currentIndex = 0; let slideInterval = null;
 
-        let currentIndex = 0;
-        let slideInterval = null;
-
-        function openNav() {
-            const panelWidth = window.innerWidth > 768 ? "400px" : "100%";
-            document.getElementById('memorySidebar').style.width = panelWidth;
-            document.getElementById('themeToggler').classList.add('hidden');
-            updateGallery();
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
         }
-
-        function closeNav() {
-            stopSlideshow();
-            document.getElementById('memorySidebar').style.width = "0";
-            document.getElementById('themeToggler').classList.remove('hidden');
-        }
-
+        function openNav() { document.getElementById('memorySidebar').style.width = "100%"; document.getElementById('themeToggler').classList.add('hidden'); updateGallery(); }
+        function closeNav() { stopSlideshow(); document.getElementById('memorySidebar').style.width = "0"; document.getElementById('themeToggler').classList.remove('hidden'); }
         function updateGallery() {
-            const container = document.getElementById('gallery-media-container');
-            container.innerHTML = '';
+            const container = document.getElementById('gallery-media-container'); container.innerHTML = '';
             const item = galleryData[currentIndex];
-            if(item.type === 'video') {
-                let v = document.createElement('video'); v.src = item.src; v.controls = true; v.autoplay = true; container.appendChild(v);
-            } else {
-                let i = document.createElement('img'); i.src = item.src; container.appendChild(i);
-            }
+            if(item.type === 'video') { let vid = document.createElement('video'); vid.src = item.src; vid.controls = true; vid.style.width = '100%'; container.appendChild(vid); } 
+            else { let img = document.createElement('img'); img.src = item.src; img.style.width = '100%'; img.classList.add('rounded', 'shadow'); container.appendChild(img); }
         }
-
         function nextMedia() { stopSlideshow(); currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }
         function prevMedia() { stopSlideshow(); currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length; updateGallery(); }
-
         function toggleSlideshow() {
-            const b = document.getElementById('slideBtn');
-            if (slideInterval) { stopSlideshow(); } 
-            else { b.innerText = "⏸ Pause"; slideInterval = setInterval(() => { currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }, 3000); }
+            const btn = document.getElementById('slideBtn');
+            if (slideInterval) stopSlideshow(); 
+            else { btn.innerText = "⏸ Pause"; slideInterval = setInterval(() => { currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }, 3000); }
         }
-
         function stopSlideshow() { if (slideInterval) { clearInterval(slideInterval); slideInterval = null; document.getElementById('slideBtn').innerText = "▶ Play"; } }
-
-        /* --- INTERACTIVE PAGE LOGIC --- */
-        function toggleTheme() {
-            const c = document.documentElement.getAttribute('data-theme');
-            document.documentElement.setAttribute('data-theme', c === 'dark' ? 'light' : 'dark');
-        }
-
-        function toggleVideoFlip(card) {
-            const v = document.getElementById('reelVideo'); card.classList.toggle('flipped');
-            if(card.classList.contains('flipped')) v.play(); else v.pause();
-        }
-
+        function toggleVideoFlip(card) { const v = document.getElementById('reelVideo'); card.classList.toggle('flipped'); if(card.classList.contains('flipped')) { v.play(); } else { v.pause(); } }
         function moveButton() {
-            const b = document.getElementById('noBtn'); const s = document.getElementById('loveSection');
-            b.style.position = 'absolute';
-            const x = Math.floor(Math.random() * (s.clientWidth - b.offsetWidth - 20));
-            const y = Math.floor(Math.random() * (s.clientHeight - b.offsetHeight - 20));
-            b.style.left = x + 'px'; b.style.top = y + 'px';
+            const btn = document.getElementById('noBtn'); const section = document.getElementById('loveSection');
+            btn.style.position = 'absolute';
+            btn.style.left = Math.floor(Math.random() * (section.clientWidth - btn.offsetWidth - 20)) + 'px';
+            btn.style.top = Math.floor(Math.random() * (section.clientHeight - btn.offsetHeight - 20)) + 'px';
         }
-
-        function sendWhatsApp() {
-            window.open(`https://wa.me/256761417053?text=${encodeURIComponent("THANK YOU FOR THE SUPRISE MY ENGINEER❤️")}`, '_blank');
-        }
+        function sendWhatsApp() { window.open(`https://wa.me/256761417053?text=${encodeURIComponent("THANK YOU FOR THE SUPRISE MY ENGINEER❤️")}`, '_blank'); }
 
         const affirmations = [ "You are my greatest adventure.", "Senior Engineer😅🫶.", "Proud of you always.", "You look like an animal😅" ];
         const praises = [ "Breathtakingly beautiful.", "Stunning taste!", "You chose the best man. 😉" ];
-
-        function handleAffirmationClick(c) {
-            if (!c.classList.contains('flipped')) document.getElementById('affirmationText').innerText = affirmations[Math.floor(Math.random() * affirmations.length)];
-            c.classList.toggle('flipped');
-        }
-
-        function handlePraiseClick(c) {
-            if (!c.classList.contains('flipped')) document.getElementById('praiseText').innerText = praises[Math.floor(Math.random() * praises.length)];
-            c.classList.toggle('flipped');
-        }
+        function handleAffirmationClick(card) { if (!card.classList.contains('flipped')) document.getElementById('affirmationText').innerText = affirmations[Math.floor(Math.random() * affirmations.length)]; card.classList.toggle('flipped'); }
+        function handlePraiseClick(card) { if (!card.classList.contains('flipped')) document.getElementById('praiseText').innerText = praises[Math.floor(Math.random() * praises.length)]; card.classList.toggle('flipped'); }
 
         let caratAttempts = 0;
         function playCarat() {
-            const f = document.getElementById('gameFeedback'); caratAttempts++;
-            if(caratAttempts < 4) f.innerText = "Come on Gloriana😅, dont you deserve better! 😉";
-            else { f.innerHTML = "BINGO! That's what i thought, i dont mind a Billion though❤️"; caratAttempts = 0; }
+            const feedback = document.getElementById('gameFeedback'); caratAttempts++;
+            if(caratAttempts < 4) feedback.innerText = "Come on Gloriana😅, dont you deserve better! 😉"; 
+            else { feedback.innerHTML = "BINGO! That's what i thought, i dont mind a Billion though❤️"; caratAttempts = 0; }
         }
-
-        /* --- GLORIA OS: THE MEMORY ENGINE (LOCAL STORAGE) --- */
-        document.addEventListener('DOMContentLoaded', () => {
-            let visitCount = localStorage.getItem('gloriaVisits');
-            const spiceText = document.querySelector('.spice-statement');
-
-            if (!visitCount) {
-                localStorage.setItem('gloriaVisits', 1);
-                if(spiceText) spiceText.innerText = "Welcome to your space Gorgeous💐.";
-            } else {
-                visitCount = parseInt(visitCount) + 1;
-                localStorage.setItem('gloriaVisits', visitCount);
-                if(spiceText) {
-                    if (visitCount === 2) spiceText.innerText = "You came back! I knew you'd miss me 😉❤️";
-                    else if (visitCount === 5) spiceText.innerText = "Five visits already? Someone is addicted... 😘";
-                    else if (visitCount > 10) spiceText.innerText = `Welcome back for the ${visitCount}th time, my Princess 👑`;
-                    else spiceText.innerText = "Always happy to see you here, Gorgeous 💐.";
-                }
-            }
-        });
-
-        /* --- GLORIA OS: DATABASE & AUTOMATIC CYCLE ANTICIPATION ENGINE --- */
-        const dbUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTzIibIW3TlaS58ONQmTAeamurQKGWFhEQT4nUlr9nTFjk0XqWf0jiv4V7fPsjUH-OzVPehxDLKUtM1/pub?gid=0&single=true&output=csv";
-
-        function loadGloriaOS() {
-            Papa.parse(dbUrl + "&timestamp=" + new Date().getTime(), {
-                download: true,
-                header: true,
-                complete: function(results) {
-                    let cycleStartDateStr = null;
-                    const validNotes = [];
-
-                    // Sort data: Separate the Cycle Date from the Daily Notes
-                    results.data.forEach(row => {
-                        if (row.Day === 'Cycle_Start') {
-                            cycleStartDateStr = row.Message;
-                        } else if (row.Message && row.Message.trim() !== "") {
-                            validNotes.push(row);
-                        }
-                    });
-
-                    // Daily Note Logic
-                    if (validNotes.length > 0) {
-                        const today = new Date().getDate();
-                        const rowIndex = (today - 1) % validNotes.length;
-                        document.getElementById('dailyDbMessage').innerText = `"${validNotes[rowIndex].Message}"`;
-                    }
-
-                    // Cycle Tracker & Anticipation Dashboard Logic
-                    if (cycleStartDateStr) {
-                        calculateCyclePhase(cycleStartDateStr);
-                    }
-                },
-                error: function(err) {
-                    console.error("Database connection failed:", err);
-                    document.getElementById('dailyDbMessage').innerText = "Thinking of you always... ❤️ (Offline Mode)";
-                }
-            });
-        }
-
-        function calculateCyclePhase(startDateStr) {
-            const startDate = new Date(startDateStr);
-            const today = new Date();
-            
-            // 1. Automatic Math for Today
-            const diffTime = Math.abs(today - startDate);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            const cycleDay = (diffDays % 28) || 28; 
-
-            // 2. Data for Tomorrow and Day After
-            const tomorrowDay = (cycleDay % 28) + 1;
-            const dayAfterDay = ((cycleDay + 1) % 28) + 1;
-
-            // Helper function to get phase details based on a day number
-            function getPhaseInfo(day) {
-                if (day >= 1 && day <= 5) return { title: "🌸 Rest & Recover", color: "#ff4d6d", msg: "Take it easy today, Princess. Drink warm water and don't push yourself. I am sending you massive hugs." };
-                if (day >= 6 && day <= 13) return { title: "✨ Inner Glow", color: "#4facfe", msg: "Your energy is rising! You are looking radiant today. Go crush those academic goals!" };
-                if (day >= 14 && day <= 16) return { title: "🔥 Peak Queen", color: "#ffdb00", msg: "You are absolutely glowing right now. Confident, beautiful, and unstoppable." };
-                return { title: "☕ Cozy & Calm", color: "#c084fc", msg: "You might be feeling a bit tired or overwhelmed as your body winds down. Be gentle with yourself. I'm right here if you need to vent." };
-            }
-
-            const todayInfo = getPhaseInfo(cycleDay);
-            const tomorrowInfo = getPhaseInfo(tomorrowDay);
-            const dayAfterInfo = getPhaseInfo(dayAfterDay);
-
-            // 3. Update the UI Automatically
-            document.getElementById('careModule').style.display = 'block';
-
-            // Update TODAY
-            document.getElementById('phaseTitle').innerText = todayInfo.title;
-            document.getElementById('phaseTitle').style.color = todayInfo.color;
-            document.getElementById('careCard').style.borderColor = todayInfo.color;
-            document.getElementById('phaseMessage').innerText = todayInfo.msg;
-
-            // Show/Hide Emergency Button based on phase
-            const eBtn = document.getElementById('emergencyBtn');
-            if (cycleDay <= 5 || cycleDay >= 17) {
-                eBtn.style.display = 'inline-block';
-                eBtn.innerText = cycleDay <= 5 ? "🍫 Deploy Emergency Chocolate" : "🧸 I need a hug (Send Alert)";
-            } else {
-                eBtn.style.display = 'none';
-            }
-
-            // Update TOMORROW
-            document.getElementById('tomorrowTitle').innerText = tomorrowInfo.title;
-            document.getElementById('tomorrowTitle').style.color = tomorrowInfo.color;
-            document.getElementById('tomorrowCard').style.borderColor = tomorrowInfo.color;
-
-            // Update DAY AFTER
-            document.getElementById('dayAfterTitle').innerText = dayAfterInfo.title;
-            document.getElementById('dayAfterTitle').style.color = dayAfterInfo.color;
-            document.getElementById('dayAfterCard').style.borderColor = dayAfterInfo.color;
-        }
-
-        function deployChocolate() {
-            window.open(`https://wa.me/256761417053?text=${encodeURIComponent("🚨 CODE RED: Emergency Chocolate / Hugs required immediately for your Princess! 🚨")}`, '_blank');
-        }
-
-        setTimeout(loadGloriaOS, 1000);
     </script>
 </body>
 </html>
