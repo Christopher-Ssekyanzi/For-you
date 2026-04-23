@@ -168,6 +168,14 @@
                 </div>
             </div>
 
+            <div class="container py-3 text-center" id="careModule" style="display: none; position: relative; z-index: 20;">
+                <div id="careCard" style="background: var(--card-bg); border: 2px solid var(--accent-color); border-radius: 20px; padding: 30px; max-width: 500px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 1s ease;">
+                    <h5 id="phaseTitle" style="font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Wellness Check</h5>
+                    <p id="phaseMessage" style="font-size: 1.1rem; margin-top: 15px; font-style: italic;"></p>
+                    <button id="emergencyBtn" class="btn btn-danger mt-3 fw-bold rounded-pill" style="display: none; animation: pulse-green 2s infinite;" onclick="deployChocolate()">🍫 Deploy Emergency Chocolate</button>
+                </div>
+            </div>
+
             <div class='container py-5 text-center'>
                 <h2 class='mb-4'>Our Tune🎼</h2>
                 <div class='row justify-content-center'>
@@ -366,22 +374,56 @@
             else { f.innerHTML = "BINGO! That's what i thought, i dont mind a Billion though❤️"; caratAttempts = 0; }
         }
 
-        /* --- GLORIA OS: DATABASE CONNECTION --- */
+        /* --- GLORIA OS: THE MEMORY ENGINE (LOCAL STORAGE) --- */
+        document.addEventListener('DOMContentLoaded', () => {
+            let visitCount = localStorage.getItem('gloriaVisits');
+            const spiceText = document.querySelector('.spice-statement');
+
+            if (!visitCount) {
+                localStorage.setItem('gloriaVisits', 1);
+                if(spiceText) spiceText.innerText = "Welcome to your space Gorgeous💐.";
+            } else {
+                visitCount = parseInt(visitCount) + 1;
+                localStorage.setItem('gloriaVisits', visitCount);
+                if(spiceText) {
+                    if (visitCount === 2) spiceText.innerText = "You came back! I knew you'd miss me 😉❤️";
+                    else if (visitCount === 5) spiceText.innerText = "Five visits already? Someone is addicted... 😘";
+                    else if (visitCount > 10) spiceText.innerText = `Welcome back for the ${visitCount}th time, my Princess 👑`;
+                    else spiceText.innerText = "Always happy to see you here, Gorgeous 💐.";
+                }
+            }
+        });
+
+        /* --- GLORIA OS: DATABASE & CARE ENGINE --- */
         const dbUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTzIibIW3TlaS58ONQmTAeamurQKGWFhEQT4nUlr9nTFjk0XqWf0jiv4V7fPsjUH-OzVPehxDLKUtM1/pub?gid=0&single=true&output=csv";
 
-        function loadDailyNote() {
+        function loadGloriaOS() {
             Papa.parse(dbUrl, {
                 download: true,
                 header: true,
                 complete: function(results) {
-                    const rows = results.data.filter(row => row.Message && row.Message.trim() !== "");
-                    if (rows.length > 0) {
+                    let cycleStartDateStr = null;
+                    const validNotes = [];
+
+                    // Sort data: Separate the Cycle Date from the Daily Notes
+                    results.data.forEach(row => {
+                        if (row.Day === 'Cycle_Start') {
+                            cycleStartDateStr = row.Message;
+                        } else if (row.Message && row.Message.trim() !== "") {
+                            validNotes.push(row);
+                        }
+                    });
+
+                    // Daily Note Logic
+                    if (validNotes.length > 0) {
                         const today = new Date().getDate();
-                        const rowIndex = (today - 1) % rows.length;
-                        const todaysMessage = rows[rowIndex].Message;
-                        document.getElementById('dailyDbMessage').innerText = `"${todaysMessage}"`;
-                    } else {
-                        document.getElementById('dailyDbMessage').innerText = "Thinking of you always... ❤️";
+                        const rowIndex = (today - 1) % validNotes.length;
+                        document.getElementById('dailyDbMessage').innerText = `"${validNotes[rowIndex].Message}"`;
+                    }
+
+                    // Cycle Tracker Logic
+                    if (cycleStartDateStr) {
+                        calculateCyclePhase(cycleStartDateStr);
                     }
                 },
                 error: function(err) {
@@ -390,8 +432,60 @@
                 }
             });
         }
-        setTimeout(loadDailyNote, 1000);
 
+        function calculateCyclePhase(startDateStr) {
+            const startDate = new Date(startDateStr);
+            const today = new Date();
+            const diffTime = Math.abs(today - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            const cycleDay = (diffDays % 28) || 28; 
+
+            const careModule = document.getElementById('careModule');
+            const careCard = document.getElementById('careCard');
+            const phaseTitle = document.getElementById('phaseTitle');
+            const phaseMessage = document.getElementById('phaseMessage');
+            const emergencyBtn = document.getElementById('emergencyBtn');
+
+            careModule.style.display = 'block'; 
+
+            if (cycleDay >= 1 && cycleDay <= 5) {
+                phaseTitle.innerText = "🌸 Rest & Recover Phase";
+                phaseTitle.style.color = "#ff4d6d";
+                careCard.style.borderColor = "#ff4d6d";
+                phaseMessage.innerText = "Take it easy today, Princess. Drink warm water and don't push yourself. I am sending you massive hugs.";
+                emergencyBtn.style.display = 'inline-block';
+                emergencyBtn.innerText = "🍫 Deploy Emergency Chocolate";
+            } 
+            else if (cycleDay >= 6 && cycleDay <= 13) {
+                phaseTitle.innerText = "✨ Inner Glow Phase";
+                phaseTitle.style.color = "#4facfe";
+                careCard.style.borderColor = "#4facfe";
+                phaseMessage.innerText = "Your energy is rising! You are looking radiant today. Go crush those academic goals!";
+                emergencyBtn.style.display = 'none';
+            } 
+            else if (cycleDay >= 14 && cycleDay <= 16) {
+                phaseTitle.innerText = "🔥 Peak Queen Phase";
+                phaseTitle.style.color = "#ffdb00";
+                careCard.style.borderColor = "#ffdb00";
+                phaseMessage.innerText = "You are absolutely glowing right now. Confident, beautiful, and unstoppable.";
+                emergencyBtn.style.display = 'none';
+            } 
+            else {
+                phaseTitle.innerText = "☕ Cozy & Calm Phase";
+                phaseTitle.style.color = "#c084fc"; 
+                careCard.style.borderColor = "#c084fc";
+                phaseMessage.innerText = "You might be feeling a bit tired or overwhelmed as your body winds down. Be gentle with yourself. I'm right here if you need to vent.";
+                emergencyBtn.style.display = 'inline-block';
+                emergencyBtn.innerText = "🧸 I need a hug (Send Alert)";
+            }
+        }
+
+        function deployChocolate() {
+            window.open(`https://wa.me/256761417053?text=${encodeURIComponent("🚨 CODE RED: Emergency Chocolate / Hugs required immediately for your Princess! 🚨")}`, '_blank');
+        }
+
+        setTimeout(loadGloriaOS, 1000);
     </script>
 </body>
 </html>
