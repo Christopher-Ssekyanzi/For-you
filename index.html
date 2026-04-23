@@ -6,137 +6,63 @@
     <title>For Gloria</title>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>
     <style>
-        /* CSS Variables for theme and brand colors */
         :root {
-            --bg-color: #0f0f0f;
-            --text-color: #e0e0e0;
-            --accent-color: #ff8fa3;
-            --card-bg: #161616;
-            --transition: all 0.3s ease;
-            --minion-yellow: #ffdb00;
-            --minion-blue: #2b59c3;
-            --gold: #ffd700;
+            --bg-color: #0f0f0f; --text-color: #e0e0e0; --accent-color: #ff8fa3;
+            --card-bg: #161616; --transition: all 0.3s ease; --minion-yellow: #ffdb00;
+            --minion-blue: #2b59c3; --gold: #ffd700; --discount-color: #c084fc;
         }
         [data-theme='light'] {
-            --bg-color: #f8f9fa;
-            --text-color: #212529;
-            --accent-color: #d63384;
-            --card-bg: #ffffff;
+            --bg-color: #f8f9fa; --text-color: #212529; --accent-color: #d63384; --card-bg: #ffffff;
         }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Segoe UI', sans-serif;
-            transition: var(--transition);
-            overflow-x: hidden;
-            padding-bottom: 80px;
-        }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', sans-serif; transition: var(--transition); overflow-x: hidden; padding-bottom: 80px; }
 
-        /* --- HERO SECTION --- */
-        .hero {
-            min-height: 100vh;
-            background: url('Gloria_1.jpeg') center/cover no-repeat;
-            display: flex; align-items: center; justify-content: center; position: relative;
-        }
+        .hero { min-height: 100vh; background: url('Gloria_1.jpeg') center/cover no-repeat; display: flex; align-items: center; justify-content: center; position: relative; }
         .hero::before { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.4); }
         .hero-content { position: relative; z-index: 10; text-align: center; padding: 0 20px; }
-        .gloria-text {
-            font-size: 5rem; font-weight: 900;
-            background: linear-gradient(to right, #ff8fa3, #ffdb00, #ff8fa3);
-            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: shine 3s linear infinite; text-shadow: 0 0 20px rgba(255, 143, 163, 0.3);
-        }
+        .gloria-text { font-size: 5rem; font-weight: 900; background: linear-gradient(to right, #ff8fa3, #ffdb00, #ff8fa3); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 3s linear infinite; }
         @keyframes shine { to { background-position: 200% center; } }
         .spice-statement { font-size: 1.5rem; font-style: italic; margin-bottom: 20px; color: #fff; opacity: 0.9; }
-        .minion-badge {
-            display: inline-block; background-color: var(--minion-yellow); color: #333; padding: 10px 25px;
-            border-radius: 50px; font-weight: 800; border: 4px solid var(--minion-blue);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-transform: uppercase; transform: rotate(-2deg);
-        }
+        .minion-badge { display: inline-block; background-color: var(--minion-yellow); color: #333; padding: 10px 25px; border-radius: 50px; font-weight: 800; border: 4px solid var(--minion-blue); cursor: pointer; user-select: none; }
 
-        /* --- TWINKLING SKY WRAPPER --- */
         .sky-wrapper { position: relative; background-color: #050505; overflow: hidden; }
         .star-field { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         .star { position: absolute; background: white; border-radius: 50%; opacity: 0; animation: twinkle var(--duration) infinite ease-in-out; }
         @keyframes twinkle { 0%, 100% { opacity: 0.1; transform: scale(0.8); } 50% { opacity: 0.8; transform: scale(1.2); } }
-        .planet { position: absolute; border-radius: 50%; opacity: 0.15; filter: blur(2px); z-index: 2; animation: drift 60s infinite linear; }
-        @keyframes drift { from { transform: rotate(0deg) translateX(10px) rotate(0deg); } to { transform: rotate(360deg) translateX(10px) rotate(-360deg); } }
         .content-overlay { position: relative; z-index: 10; }
 
-        /* --- FIREBASE ECONOMY STYLES --- */
-        .economy-card { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(255, 215, 0, 0.15); margin-bottom: 40px; }
-        .coin-balance { font-size: 3.5rem; font-weight: 900; color: var(--gold); text-shadow: 0 0 15px rgba(255, 215, 0, 0.4); line-height: 1; margin: 10px 0; }
+        /* --- ECONOMY & EMPATHY STYLES --- */
+        .mood-container { background: var(--card-bg); border: 2px dashed var(--accent-color); border-radius: 15px; padding: 20px; text-align: center; max-width: 500px; margin: 0 auto 30px auto; }
+        .mood-btn { border-radius: 20px; padding: 10px 20px; font-weight: bold; margin: 5px; border: none; transition: transform 0.2s; }
+        .mood-btn:hover { transform: scale(1.05); }
+        
+        .economy-card { background: var(--card-bg); border: 2px solid var(--gold); border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(255, 215, 0, 0.15); margin-bottom: 40px; transition: border-color 0.5s; }
+        .coin-balance { font-size: 3.5rem; font-weight: 900; color: var(--gold); line-height: 1; margin: 10px 0; transition: color 0.5s; }
         .task-btn { border-radius: 10px; font-weight: bold; transition: transform 0.2s; display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 10px; padding: 12px 15px; }
-        .task-btn:hover { transform: scale(1.02); }
         .earn-btn { background-color: rgba(40, 167, 69, 0.1); border: 1px solid #28a745; color: #28a745; }
-        .spend-btn { background-color: rgba(220, 53, 69, 0.1); border: 1px solid #dc3545; color: #dc3545; }
-        .coin-badge { background: var(--gold); color: #000; padding: 3px 8px; border-radius: 12px; font-size: 0.85rem; font-weight: 900; }
+        .spend-btn { background-color: rgba(220, 53, 69, 0.1); border: 1px solid #dc3545; color: #dc3545; transition: all 0.3s; }
+        .coin-badge { background: var(--gold); color: #000; padding: 3px 8px; border-radius: 12px; font-size: 0.85rem; font-weight: 900; transition: all 0.3s; }
+        .discount-active .spend-btn { border-color: var(--discount-color); color: var(--discount-color); background-color: rgba(192, 132, 252, 0.1); }
+        .discount-active .spend-btn .coin-badge { background: var(--discount-color); color: white; }
 
-        /* --- TIME CAPSULE STYLES --- */
-        .capsule-card { background: linear-gradient(145deg, var(--card-bg), #1a1a1a); border: 2px dashed var(--accent-color); border-radius: 20px; padding: 30px; text-align: center; position: relative; overflow: hidden; }
-        .locked-icon { font-size: 4rem; opacity: 0.5; margin-bottom: 15px; }
+        /* --- OVERLAY MODALS --- */
+        .gloria-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .gloria-modal-content { background: var(--card-bg); border: 2px solid var(--accent-color); border-radius: 20px; padding: 30px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .verse-text { font-size: 1.2rem; font-style: italic; margin-bottom: 20px; line-height: 1.6; }
+        textarea { width: 100%; background: transparent; border: 1px solid var(--accent-color); border-radius: 10px; color: var(--text-color); padding: 15px; margin-bottom: 15px; min-height: 100px; }
+        
+        /* --- ADMIN DASHBOARD --- */
+        #adminPanel { display: none; background: #000; color: #0f0; border: 2px solid #0f0; padding: 20px; border-radius: 10px; margin: 30px auto; max-width: 800px; font-family: monospace; text-align: left; }
+        .admin-msg { border-bottom: 1px dashed #0f0; padding-bottom: 10px; margin-bottom: 10px; }
 
-        /* --- TIMELINE & FLIP CARDS --- */
-        .journey-container { position: relative; max-width: 900px; margin: 30px auto; padding: 20px 10px; }
-        .journey-container::after { content: ''; position: absolute; width: 2px; background: var(--accent-color); top: 0; bottom: 0; left: 50%; opacity: 0.3; }
-        .journey-item { padding: 10px 20px; position: relative; width: 50%; }
-        .left { left: 0; text-align: right; }
-        .right { left: 50%; text-align: left; }
-        .journey-frame { border: 2px solid var(--accent-color); border-radius: 15px; overflow: hidden; background: var(--card-bg); }
-        .journey-frame img { width: 100%; height: auto; max-height: 400px; object-fit: contain; background: #000; }
-
-        .flip-card { height: 350px; perspective: 1000px; margin-bottom: 20px; }
-        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; }
-        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
-        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
-        .flip-card-front { background: var(--card-bg); border: 1px solid var(--accent-color); }
-        .flip-card-back { background: var(--accent-color); color: #000; transform: rotateY(180deg); }
-
-        /* --- MISC UI --- */
-        .game-card { background: var(--card-bg); border: 2px solid var(--accent-color); border-radius: 15px; padding: 30px; margin: 40px auto; max-width: 500px; }
-        .game-input { background: transparent; border: none; border-bottom: 2px solid var(--accent-color); color: var(--text-color); text-align: center; font-size: 1.5rem; width: 100px; margin: 20px 0; outline: none; }
-        .love-section { padding: 100px 20px; text-align: center; position: relative; min-height: 450px; }
-        #noBtn { transition: all 0.15s ease-out; z-index: 50; }
-        .btn-yes { animation: pulse-green 2s infinite; }
-        @keyframes pulse-green { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); } }
-
-        .theme-toggle { position: fixed; top: 15px; right: 15px; z-index: 5000; padding: 15px; border-radius: 50%; background: var(--accent-color); border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
-        .theme-toggle.hidden { opacity: 0; pointer-events: none; }
-        .side-tab-trigger { position: fixed; bottom: 25px; right: 25px; z-index: 2500; background: var(--accent-color); color: #000; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5); font-size: 1.5rem; }
-        #memorySidebar { height: 100%; width: 0; position: fixed; z-index: 4500; top: 0; left: 0; background: var(--card-bg); overflow-x: hidden; transition: 0.5s; border-right: 2px solid var(--accent-color); }
-
-        @media (max-width: 768px) {
-            .gloria-text { font-size: 3.2rem; }
-            .journey-container::after { left: 31px; }
-            .journey-item { width: 100%; padding-left: 70px; text-align: left !important; }
-            .right { left: 0; }
-            .hero { min-height: 80vh; }
-            .flip-card { height: 280px; }
-        }
     </style>
 </head>
 <body>
-    <button class='theme-toggle' id='themeToggler' onclick='toggleTheme()'>🌓</button>
-    <button class='side-tab-trigger' onclick='openNav()'>✨</button>
-
-    <div id='memorySidebar'>
-        <div class='gallery-container-inner' style="padding: 20px; text-align: center;">
-            <h3 class='mb-4'>Our Memories</h3>
-            <div id='gallery-media-container'></div>
-            <div class='mt-4 d-flex justify-content-center gap-2'>
-                <button class='btn btn-outline-info' onclick='prevMedia()'>⬅ Prev</button>
-                <button class='btn btn-outline-info' onclick='nextMedia()'>Next ➡</button>
-                <button class='btn btn-primary' id='slideBtn' onclick='toggleSlideshow()'>▶ Play</button>
-                <button class='btn btn-danger' onclick='closeNav()'>✖ Back</button>
-            </div>
-        </div>
-    </div>
 
     <div class='hero'>
         <div class='hero-content'>
             <h1 class='gloria-text'>Hello Gloria ✨</h1>
             <p class='spice-statement'>Welcome to your space Gorgeous💐.</p>
-            <div class='minion-badge'>Made with thought 🙂‍↔️</div>
+            <div class='minion-badge' id='secretAdminTrigger'>Made with thought 🙂‍↔️</div>
         </div>
     </div>
 
@@ -144,47 +70,64 @@
         <div class="star-field" id="starField"></div>
         <div class="content-overlay">
 
-            <div class="container py-5">
+            <div class="container py-4">
+                
+                <div id="adminPanel">
+                    <div class="d-flex justify-content-between">
+                        <h4>👨‍💻 Engineer's Dashboard</h4>
+                        <button class="btn btn-sm btn-outline-danger" onclick="document.getElementById('adminPanel').style.display='none'">Close</button>
+                    </div>
+                    <p>Live Database Feed:</p>
+                    <div id="adminMessages" style="max-height: 300px; overflow-y: auto;">Waiting for data...</div>
+                </div>
+
+                <div class="mood-container">
+                    <h5 class="fw-bold mb-3">How is my Princess feeling today?</h5>
+                    <button class="mood-btn" style="background: #ffdb00; color: #000;" onclick="setMood('high')">🌟 High Energy</button>
+                    <button class="mood-btn" style="background: #c084fc; color: #fff;" onclick="setMood('low')">🥺 I need to rest</button>
+                    <p id="moodFeedback" class="mt-3 fst-italic small mb-0"></p>
+                </div>
+
                 <div class="row justify-content-center">
                     <div class="col-12 col-lg-10">
-                        <div class="economy-card text-center">
-                            <h4 style="text-transform: uppercase; font-weight: 800; letter-spacing: 2px; opacity: 0.8;">👑 The Royal Treasury</h4>
+                        <div class="economy-card text-center" id="economyCard">
+                            <h4 style="text-transform: uppercase; font-weight: 800; opacity: 0.8;">👑 The Royal Treasury</h4>
                             <div class="coin-balance" id="coinDisplay">...</div>
-                            <p class="fst-italic mb-4">Gloria Coins Earned</p>
+                            <p class="fst-italic mb-4">Gloria Coins</p>
 
                             <div class="row g-4 text-start mt-2">
-                                <div class="col-12 col-md-6">
-                                    <h5 class="fw-bold mb-3">✨ Daily Tasks (Earn)</h5>
-                                    <button class="btn task-btn earn-btn" onclick="earnCoins(10, 'Drank Water')">
+                                <div class="col-12 col-md-6" id="tasksList">
+                                    <h5 class="fw-bold mb-3">✨ Daily Tasks</h5>
+                                    
+                                    <button class="btn task-btn earn-btn" id="btnWater" onclick="claimWater()">
                                         <span>💧 Drank my water</span><span class="coin-badge">+10</span>
                                     </button>
-                                    <button class="btn task-btn earn-btn" onclick="earnCoins(15, 'Read Daily Verse')">
+                                    
+                                    <button class="btn task-btn earn-btn" onclick="openVerseModal()">
                                         <span>📖 Read my daily verse</span><span class="coin-badge">+15</span>
                                     </button>
-                                    <button class="btn task-btn earn-btn" onclick="earnCoins(20, 'Academic Update')">
-                                        <span>📚 Academic update sent</span><span class="coin-badge">+20</span>
-                                    </button>
-                                    <button class="btn task-btn earn-btn" onclick="earnCoins(25, 'Emotional Check-in')">
-                                        <span>❤️ Told him how I feel</span><span class="coin-badge">+25</span>
-                                    </button>
-                                    <button class="btn task-btn earn-btn" onclick="earnCoins(5, 'Spotify Session')">
-                                        <span>🎵 Listened to our song</span><span class="coin-badge">+5</span>
+                                    
+                                    <div id="dynamicTasks">
+                                        <button class="btn task-btn earn-btn" onclick="openInputModal('Academic Update', 20)">
+                                            <span>📚 Academic update</span><span class="coin-badge">+20</span>
+                                        </button>
+                                    </div>
+                                    
+                                    <button class="btn task-btn earn-btn" onclick="openInputModal('Emotional Check-in', 25)">
+                                        <span>❤️ Tell him how I feel</span><span class="coin-badge">+25</span>
                                     </button>
                                 </div>
 
-                                <div class="col-12 col-md-6">
-                                    <h5 class="fw-bold mb-3">🛍️ The Princess Shop (Spend)</h5>
+                                <div class="col-12 col-md-6" id="shopList">
+                                    <h5 class="fw-bold mb-3">🛍️ The Princess Shop</h5>
                                     <button class="btn task-btn spend-btn" onclick="spendCoins(100, 'Custom Voice Note')">
-                                        <span>🎙️ Demand a Voice Note</span><span class="coin-badge">-100</span>
+                                        <span>🎙️ Demand a Voice Note</span><span class="coin-badge shop-price" data-base="100">-100</span>
                                     </button>
                                     <button class="btn task-btn spend-btn" onclick="spendCoins(300, 'Pick the Movie')">
-                                        <span>🍿 I pick the movie tonight</span><span class="coin-badge">-300</span>
+                                        <span>🍿 I pick the movie tonight</span><span class="coin-badge shop-price" data-base="300">-300</span>
                                     </button>
                                     <button class="btn task-btn spend-btn" onclick="spendCoins(500, 'Free Request')">
-                                        <span>🧞‍♀️ One Custom Favor</span><span class="coin-badge">-500</span>
-                                    </button>
-                                    <button class="btn task-btn spend-btn" onclick="spendCoins(1000, 'UberEats Delivery')">
-                                        <span>🍕 Order me food right now</span><span class="coin-badge">-1000</span>
+                                        <span>🧞‍♀️ One Custom Favor</span><span class="coin-badge shop-price" data-base="500">-500</span>
                                     </button>
                                 </div>
                             </div>
@@ -193,116 +136,35 @@
                 </div>
             </div>
 
-            <div class="container pb-5 text-center">
-                <h2 class='mb-4'>Time Capsules ⏳</h2>
-                <div class="row justify-content-center">
-                    <div class="col-12 col-md-6">
-                        <div class="capsule-card" id="capsuleUI">
-                            <div id="capsuleLocked">
-                                <div class="locked-icon">🔒</div>
-                                <h4>Secret Capsule #1</h4>
-                                <p class="text-muted">Location: <b>Cafe Shire on Malaba Road</b></p>
-                                <p class="small fst-italic">You must be physically at the cafe to unlock this memory.</p>
-                                <button class="btn btn-warning fw-bold rounded-pill mt-3 px-4" onclick="checkLocation()">
-                                    📍 I am here! (Scan Location)
-                                </button>
-                            </div>
-                            
-                            <div id="capsuleUnlocked" style="display: none;">
-                                <div class="locked-icon">🔓</div>
-                                <h4 style="color: var(--gold);">Capsule Unlocked!</h4>
-                                <p>You made it to Cafe Shire! Here is your surprise memory.</p>
-                                <img src="Together_1.jpeg" style="width: 100%; border-radius: 15px; margin: 15px 0;">
-                                <p class="fw-bold text-success">+500 Gloria Coins Awarded!</p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="gloria-modal" id="verseModal">
+                <div class="gloria-modal-content">
+                    <h5 class="fw-bold mb-3" style="color: var(--accent-color);">Your Daily Verse 📖</h5>
+                    <p class="verse-text" id="verseText">Loading today's scripture...</p>
+                    <p class="small text-muted mb-4">Take a deep breath and dwell on this for a moment.</p>
+                    <button class="btn btn-secondary w-100 fw-bold rounded-pill" id="claimVerseBtn" disabled onclick="claimVerse()">
+                        Meditating... (Wait 15s)
+                    </button>
+                    <button class="btn btn-link text-muted mt-2" onclick="closeModal('verseModal')">Close</button>
                 </div>
             </div>
 
-            <div class='container py-5 text-center'>
-                <h2 class='mb-4'>Our Tune🎼</h2>
-                <div class='row justify-content-center'>
-                    <div class='col-12 col-md-8'>
-                        <div class='ratio ratio-16x9 rounded overflow-hidden shadow' style='border: 2px solid var(--accent-color);'>
-                            <iframe src='https://www.youtube.com/embed/q7mlB-adMBc' allowfullscreen></iframe>
-                        </div>
-                        <a href='#' class='btn btn-success rounded-pill mt-4 px-4 fw-bold'>🎵 Open on Spotify</a>
-                    </div>
+            <div class="gloria-modal" id="inputModal">
+                <div class="gloria-modal-content">
+                    <h5 class="fw-bold mb-3" id="inputTitle" style="color: var(--accent-color);">Send Update</h5>
+                    <textarea id="taskInput" placeholder="Type here... (Write at least 15 words to earn your coins!)"></textarea>
+                    <p id="wordCountErr" class="text-danger small fw-bold" style="display:none;">Keep going! You need a few more words. ❤️</p>
+                    <button class="btn btn-success w-100 fw-bold rounded-pill" onclick="submitTextTask()">Send to Christopher</button>
+                    <button class="btn btn-link text-muted mt-2" onclick="closeModal('inputModal')">Cancel</button>
                 </div>
             </div>
 
-            <div class='container py-5'>
-                <h2 class='text-center mb-4'>Our Journey</h2>
-                <div class='journey-container'>
-                    <div class='journey-item left'>
-                        <div class='journey-frame'><img src='Together_1.jpeg'><div class='p-3'><h5>The first Smile</h5><p class='small m-0'>Every journey starts with a moment that takes your breath away.</p></div></div>
-                    </div>
-                    <div class='journey-item right'>
-                        <div class='journey-frame'><img src='Together_2.jpeg'><div class='p-3'><h5>Unforgettable memory</h5><p class='small m-0'>Still think we should hang it in the Louvre😮‍💨</p></div></div>
-                    </div>
-                    <div class='journey-item left'>
-                        <div class='journey-frame'><img src='Gloria_3.jpeg'><div class='p-3'><h5>A special day🍰</h5><p class='small m-0'>In every look, there's a story of elegance and strength.</p></div></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class='container pb-5'>
-                <h2 class='text-center mb-4'>Gloria Veronica, Hold on to this!</h2>
-                <div class='row g-3'>
-                    <div class='col-12 col-md-4'>
-                        <div class='flip-card' onclick='handleAffirmationClick(this)'>
-                            <div class='flip-card-inner'>
-                                <div class='flip-card-front'><h3>Secret Message</h3><p class='small'>Tap to reveal</p></div>
-                                <div class='flip-card-back'><p id='affirmationText' class='fw-bold'></p></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='col-12 col-md-4'>
-                        <div class='flip-card' onclick='toggleVideoFlip(this)'>
-                            <div class='flip-card-inner'>
-                                <div class='flip-card-front'><img src='Gloria_1.jpeg' style='width:100%; height:100%; object-fit:cover; border-radius:15px;'></div>
-                                <div class='flip-card-back'><video id='reelVideo' src='The_reel.mp4' loop muted playsinline style='width:100%; height:100%; object-fit:cover; border-radius:15px;'></video></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='col-12 col-md-4'>
-                        <div class='flip-card' onclick='handlePraiseClick(this)'>
-                            <div class='flip-card-inner'>
-                                <div class='flip-card-front'><h3>Praises for You</h3><p class='small'>Don't blush, just tap</p></div>
-                                <div class='flip-card-back'><p id='praiseText' class='fw-bold text-center'></p></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class='container text-center mb-5'>
-                <div class='game-card'>
-                    <h3>💎 The Carat Challenge</h3>
-                    <p>Gloria, how many carats?</p>
-                    <input type='number' id='caratInput' class='game-input' placeholder=''>
-                    <br>
-                    <button class='btn btn-outline-danger' onclick='playCarat()'>Check!</button>
-                    <p id='gameFeedback' class='mt-3 fw-bold'></p>
-                </div>
-            </div>
-
-            <div class='love-section' id="loveSection">
-                <h2 class='love-question'>DO YOU LOVE THIS ?</h2>
-                <div class='d-flex justify-content-center gap-4 align-items-center' style="min-height: 120px;">
-                    <button class='btn btn-success btn-yes px-5 py-3 fw-bold' onclick="sendWhatsApp()">YES</button>
-                    <button id='noBtn' class='btn btn-danger px-5 py-3 fw-bold' onmouseover="moveButton()">NO</button>
-                </div>
-            </div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+        import { getDatabase, ref, onValue, runTransaction, push, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
-        // YOUR EXACT FIREBASE KEYS
         const firebaseConfig = {
             apiKey: "AIzaSyADYulYcS190uj8kwOFkIlUAR3vfdjMJJk",
             authDomain: "the-os-b8241.firebaseapp.com",
@@ -312,161 +174,222 @@
             appId: "1:185781518483:web:a5a60fb1b844c448c24d66"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-
-        // --- THE "US" ECONOMY LOGIC ---
         const coinsRef = ref(db, 'gloria_coins');
+        const messagesRef = ref(db, 'gloria_messages');
 
-        // This listens to the database live. If you or she updates it, the screen changes instantly.
+        // Sync Coins
         onValue(coinsRef, (snapshot) => {
-            const data = snapshot.val();
-            document.getElementById('coinDisplay').innerText = data || 0;
+            document.getElementById('coinDisplay').innerText = snapshot.val() || 0;
         });
 
-        // Earning Coins
-        window.earnCoins = function(amount, task) {
+        // Global functions for HTML to access Firebase
+        window.dbRunTransaction = function(amount) {
             runTransaction(coinsRef, (currentCoins) => {
                 return (currentCoins || 0) + amount;
             });
-            alert(`Earned ${amount} coins for: ${task}! Christopher's database has been updated. 😉`);
         };
 
-        // Spending Coins
-        window.spendCoins = function(amount, reward) {
-            runTransaction(coinsRef, (currentCoins) => {
-                let current = currentCoins || 0;
-                if (current >= amount) {
-                    alert(`Request Locked In: ${reward}! Christopher owes you. ❤️`);
-                    return current - amount;
+        window.dbSaveMessage = function(type, content) {
+            const newMsgRef = push(messagesRef);
+            set(newMsgRef, {
+                type: type,
+                text: content,
+                timestamp: new Date().toLocaleString()
+            });
+        };
+
+        // ADMIN PANEL LOGIC (Reads the messages)
+        window.loadAdminData = function() {
+            onValue(messagesRef, (snapshot) => {
+                const box = document.getElementById('adminMessages');
+                box.innerHTML = '';
+                const data = snapshot.val();
+                if(data) {
+                    // Loop backwards to show newest first
+                    Object.values(data).reverse().forEach(msg => {
+                        box.innerHTML += `<div class="admin-msg">
+                            <strong style="color: #fff;">[${msg.timestamp}] ${msg.type}:</strong><br>
+                            ${msg.text}
+                        </div>`;
+                    });
                 } else {
-                    alert(`Not enough coins, Princess! You need ${amount - current} more to demand this. Keep grinding. 😅`);
-                    return current; // Don't subtract if she's broke!
+                    box.innerHTML = "No messages yet.";
                 }
             });
         };
     </script>
 
     <script>
-        // --- STAR AND PLANET GENERATION ---
         function initSky() {
             const field = document.getElementById('starField');
-            for (let i = 0; i < 250; i++) {
+            for (let i = 0; i < 150; i++) {
                 const star = document.createElement('div'); star.className = 'star';
-                const size = Math.random() * 2 + 0.5; star.style.width = star.style.height = `${size}px`;
+                star.style.width = star.style.height = `${Math.random() * 2 + 0.5}px`;
                 star.style.left = `${Math.random() * 100}%`; star.style.top = `${Math.random() * 100}%`;
                 star.style.setProperty('--duration', `${Math.random() * 4 + 2}s`);
                 star.style.animationDelay = `${Math.random() * 5}s`; field.appendChild(star);
             }
-            const planetColors = ['#ff5f6d', '#4facfe', '#ffdb00', '#ff8fa3'];
-            for (let i = 0; i < 6; i++) {
-                const planet = document.createElement('div'); planet.className = 'planet';
-                const size = Math.random() * 100 + 40; planet.style.width = planet.style.height = `${size}px`;
-                planet.style.background = `radial-gradient(circle, ${planetColors[i%4]}, transparent)`;
-                planet.style.left = `${Math.random() * 90}%`; planet.style.top = `${Math.random() * 90}%`;
-                planet.style.animationDuration = `${Math.random() * 40 + 40}s`; field.appendChild(planet);
-            }
         }
         initSky();
 
-        // --- LOCATION-LOCKED TIME CAPSULE LOGIC ---
-        
-        // ENGINEER NOTE: Replace these with the EXACT GPS coordinates of Cafe Shire!
-        // You can get these by dropping a pin on Google Maps. Right now, it's a rough estimate for Malaba Road.
-        const cafeLat = 0.6330; 
-        const cafeLng = 34.2740;
-
-        function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
-            var R = 6371; // Radius of the earth in km
-            var dLat = deg2rad(lat2-lat1); 
-            var dLon = deg2rad(lon2-lon1);
-            var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-                    Math.sin(dLon/2) * Math.sin(dLon/2);
-            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            var d = R * c; 
-            return Math.round(d * 1000); // Return distance in meters
-        }
-        function deg2rad(deg) { return deg * (Math.PI/180); }
-
-        window.checkLocation = function() {
-            if (navigator.geolocation) {
-                // We ask her phone for the GPS coordinates
-                navigator.geolocation.getCurrentPosition((position) => {
-                    const userLat = position.coords.latitude;
-                    const userLng = position.coords.longitude;
-                    
-                    const distance = getDistanceFromLatLonInMeters(userLat, userLng, cafeLat, cafeLng);
-                    
-                    // If she is within 150 meters of the cafe...
-                    if (distance <= 150) {
-                        document.getElementById('capsuleLocked').style.display = 'none';
-                        document.getElementById('capsuleUnlocked').style.display = 'block';
-                        document.getElementById('capsuleUI').style.borderColor = '#28a745';
-                        
-                        // Give her the massive reward for finding it!
-                        if(window.earnCoins) window.earnCoins(500, 'Found the Secret Cafe Shire Capsule!');
-                    } else {
-                        alert(`Nice try! You are still ${distance} meters away from Cafe Shire. Get closer to unlock it! 🚶‍♀️`);
-                    }
-                }, (error) => {
-                    alert("I can't check if you are at the cafe unless you allow Location Access on your browser! 📍");
-                }, { enableHighAccuracy: true });
-            } else {
-                alert("Your browser doesn't support location tracking.");
+        // --- SECRET ADMIN LOGIN ---
+        let clicks = 0;
+        document.getElementById('secretAdminTrigger').addEventListener('click', () => {
+            clicks++;
+            if(clicks === 5) {
+                document.getElementById('adminPanel').style.display = 'block';
+                if(window.loadAdminData) window.loadAdminData();
+                clicks = 0; // reset
             }
-        };
+            setTimeout(() => clicks = 0, 3000); // Reset if not clicked fast enough
+        });
 
-        // --- GALLERY AND ORIGINAL INTERACTIVITY ---
-        const galleryData = [
-            {"src": "WhatsApp Image 2026-04-20 at 16.17.12.jpeg", "type": "image"},
-            {"src": "Gloria_1.jpeg", "type": "image"},
-            {"src": "WhatsApp Video 2026-04-20 at 16.17.18.mp4", "type": "video"},
-            {"src": "Together_1.jpeg", "type": "image"},
-            {"src": "Gloria_3.jpeg", "type": "image"}
+        // --- MOOD ENGINE (The Princess Discount) ---
+        let currentMood = 'high';
+        let isDiscounted = false;
+
+        function setMood(mood) {
+            const feedback = document.getElementById('moodFeedback');
+            const shopList = document.getElementById('shopList');
+            const dynamicTasks = document.getElementById('dynamicTasks');
+            
+            if (mood === 'low') {
+                isDiscounted = true;
+                feedback.innerHTML = "I'm sorry you're not feeling 100%, Princess. Take it easy today.<br><b style='color: var(--discount-color);'>The Princess Discount is active. All shop items are 50% off! 💜</b>";
+                shopList.classList.add('discount-active');
+                
+                // Change Tasks
+                dynamicTasks.innerHTML = `
+                    <button class="btn task-btn earn-btn" onclick="claimRest()">
+                        <span>☕ I drank hot tea / rested</span><span class="coin-badge">+20</span>
+                    </button>
+                `;
+
+                // Cut prices in half visually
+                document.querySelectorAll('.shop-price').forEach(el => {
+                    let base = parseInt(el.getAttribute('data-base'));
+                    el.innerText = `-${base / 2}`;
+                });
+            } else {
+                isDiscounted = false;
+                feedback.innerHTML = "Glad you are feeling great! Go crush it today! 🌟";
+                shopList.classList.remove('discount-active');
+                
+                // Normal Tasks
+                dynamicTasks.innerHTML = `
+                    <button class="btn task-btn earn-btn" onclick="openInputModal('Academic Update', 20)">
+                        <span>📚 Academic update</span><span class="coin-badge">+20</span>
+                    </button>
+                `;
+
+                // Restore normal prices
+                document.querySelectorAll('.shop-price').forEach(el => {
+                    let base = parseInt(el.getAttribute('data-base'));
+                    el.innerText = `-${base}`;
+                });
+            }
+        }
+
+        // --- SPEND COINS ---
+        function spendCoins(baseAmount, reward) {
+            let currentCoins = parseInt(document.getElementById('coinDisplay').innerText) || 0;
+            let actualCost = isDiscounted ? (baseAmount / 2) : baseAmount;
+
+            if (currentCoins >= actualCost) {
+                window.dbRunTransaction(-actualCost);
+                window.dbSaveMessage("Shop Purchase", `Gloria purchased: ${reward}`);
+                alert(`Request Locked In: ${reward}! Christopher has been notified. ❤️`);
+            } else {
+                alert(`You need ${actualCost - currentCoins} more coins for this!`);
+            }
+        }
+
+        // --- DYNAMIC TASKS (Water Cooldown) ---
+        function claimWater() {
+            window.dbRunTransaction(10);
+            const btn = document.getElementById('btnWater');
+            btn.innerHTML = `<span class="fst-italic text-muted">Hydrating... (Cooldown 2 hrs)</span>`;
+            btn.disabled = true;
+            btn.style.opacity = 0.6;
+        }
+
+        function claimRest() {
+            window.dbRunTransaction(20);
+            alert("Good job taking care of yourself. +20 Coins! 💜");
+        }
+
+        // --- BIBLE VERSE (Dwell Time) ---
+        // A curated list of beautiful verses so it never breaks
+        const verses = [
+            `"I have loved you with an everlasting love; I have drawn you with unfailing kindness." - Jeremiah 31:3`,
+            `"Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go." - Joshua 1:9`,
+            `"Let all that you do be done in love." - 1 Corinthians 16:14`,
+            `"The Lord bless you and keep you; the Lord make his face shine on you and be gracious to you." - Numbers 6:24-25`
         ];
-        let currentIndex = 0; let slideInterval = null;
 
-        function toggleTheme() {
-            const current = document.documentElement.getAttribute('data-theme');
-            document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+        let verseTimer;
+        function openVerseModal() {
+            document.getElementById('verseModal').style.display = 'flex';
+            // Pick a verse based on the day of the week so it rotates
+            document.getElementById('verseText').innerText = verses[new Date().getDay() % verses.length];
+            
+            const claimBtn = document.getElementById('claimVerseBtn');
+            claimBtn.disabled = true;
+            claimBtn.className = "btn btn-secondary w-100 fw-bold rounded-pill";
+            let timeLeft = 15;
+            
+            clearInterval(verseTimer);
+            verseTimer = setInterval(() => {
+                timeLeft--;
+                claimBtn.innerText = `Meditating... (Wait ${timeLeft}s)`;
+                if(timeLeft <= 0) {
+                    clearInterval(verseTimer);
+                    claimBtn.disabled = false;
+                    claimBtn.className = "btn btn-success w-100 fw-bold rounded-pill";
+                    claimBtn.innerText = "Amen (+15 Coins)";
+                }
+            }, 1000);
         }
-        function openNav() { document.getElementById('memorySidebar').style.width = "100%"; document.getElementById('themeToggler').classList.add('hidden'); updateGallery(); }
-        function closeNav() { stopSlideshow(); document.getElementById('memorySidebar').style.width = "0"; document.getElementById('themeToggler').classList.remove('hidden'); }
-        function updateGallery() {
-            const container = document.getElementById('gallery-media-container'); container.innerHTML = '';
-            const item = galleryData[currentIndex];
-            if(item.type === 'video') { let vid = document.createElement('video'); vid.src = item.src; vid.controls = true; vid.style.width = '100%'; container.appendChild(vid); } 
-            else { let img = document.createElement('img'); img.src = item.src; img.style.width = '100%'; img.classList.add('rounded', 'shadow'); container.appendChild(img); }
-        }
-        function nextMedia() { stopSlideshow(); currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }
-        function prevMedia() { stopSlideshow(); currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length; updateGallery(); }
-        function toggleSlideshow() {
-            const btn = document.getElementById('slideBtn');
-            if (slideInterval) stopSlideshow(); 
-            else { btn.innerText = "⏸ Pause"; slideInterval = setInterval(() => { currentIndex = (currentIndex + 1) % galleryData.length; updateGallery(); }, 3000); }
-        }
-        function stopSlideshow() { if (slideInterval) { clearInterval(slideInterval); slideInterval = null; document.getElementById('slideBtn').innerText = "▶ Play"; } }
-        function toggleVideoFlip(card) { const v = document.getElementById('reelVideo'); card.classList.toggle('flipped'); if(card.classList.contains('flipped')) { v.play(); } else { v.pause(); } }
-        function moveButton() {
-            const btn = document.getElementById('noBtn'); const section = document.getElementById('loveSection');
-            btn.style.position = 'absolute';
-            btn.style.left = Math.floor(Math.random() * (section.clientWidth - btn.offsetWidth - 20)) + 'px';
-            btn.style.top = Math.floor(Math.random() * (section.clientHeight - btn.offsetHeight - 20)) + 'px';
-        }
-        function sendWhatsApp() { window.open(`https://wa.me/256761417053?text=${encodeURIComponent("THANK YOU FOR THE SUPRISE MY ENGINEER❤️")}`, '_blank'); }
 
-        const affirmations = [ "You are my greatest adventure.", "Senior Engineer😅🫶.", "Proud of you always.", "You look like an animal😅" ];
-        const praises = [ "Breathtakingly beautiful.", "Stunning taste!", "You chose the best man. 😉" ];
-        function handleAffirmationClick(card) { if (!card.classList.contains('flipped')) document.getElementById('affirmationText').innerText = affirmations[Math.floor(Math.random() * affirmations.length)]; card.classList.toggle('flipped'); }
-        function handlePraiseClick(card) { if (!card.classList.contains('flipped')) document.getElementById('praiseText').innerText = praises[Math.floor(Math.random() * praises.length)]; card.classList.toggle('flipped'); }
+        function claimVerse() {
+            window.dbRunTransaction(15);
+            closeModal('verseModal');
+        }
 
-        let caratAttempts = 0;
-        function playCarat() {
-            const feedback = document.getElementById('gameFeedback'); caratAttempts++;
-            if(caratAttempts < 4) feedback.innerText = "Come on Gloriana😅, dont you deserve better! 😉"; 
-            else { feedback.innerHTML = "BINGO! That's what i thought, i dont mind a Billion though❤️"; caratAttempts = 0; }
+        // --- TEXT INPUT TASKS (Proof of Work) ---
+        let currentTaskReward = 0;
+        let currentTaskType = "";
+
+        function openInputModal(title, rewardAmount) {
+            currentTaskType = title;
+            currentTaskReward = rewardAmount;
+            document.getElementById('inputTitle').innerText = title;
+            document.getElementById('taskInput').value = "";
+            document.getElementById('wordCountErr').style.display = 'none';
+            document.getElementById('inputModal').style.display = 'flex';
+        }
+
+        function submitTextTask() {
+            const text = document.getElementById('taskInput').value;
+            // Check word count (split by spaces)
+            const wordCount = text.trim().split(/\s+/).filter(word => word.length > 0).length;
+            
+            if (wordCount < 15) {
+                document.getElementById('wordCountErr').style.display = 'block';
+                return;
+            }
+
+            // Success! Save to database and give coins
+            window.dbSaveMessage(currentTaskType, text);
+            window.dbRunTransaction(currentTaskReward);
+            closeModal('inputModal');
+            alert(`Sent to Christopher! +${currentTaskReward} Coins added to the treasury. ✨`);
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
         }
     </script>
 </body>
