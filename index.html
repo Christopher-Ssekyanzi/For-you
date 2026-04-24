@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang='en' data-theme='dark'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <title>For Gloria</title>
+    <!-- Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='style.css' rel='stylesheet'>
+    
+    <!-- Confetti Library for Economy Features -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <button class='theme-toggle' id='themeToggler' onclick='toggleTheme()'>🌓</button>
+    <button class='side-tab-trigger' onclick='openNav()'>✨</button>
+
+    <div id='memorySidebar'>
+        <div class='gallery-container-inner' style="padding: 20px; text-align: center; height: 100%; display: flex; flex-direction: column;">
+            <h3 class='mb-3'>Our Memories</h3>
+            
+            <div class="btn-group w-100 mb-3" role="group">
+                <button type="button" id="tabImages" class="btn btn-outline-info active fw-bold" onclick="switchGalleryTab('image')">📷 Pictures</button>
+                <button type="button" id="tabVideos" class="btn btn-outline-info fw-bold" onclick="switchGalleryTab('video')">🎥 Videos</button>
+            </div>
+
+            <audio id="slideshowAudio" src="https://christopher-ssekyanzi.github.io/My_trial/Until_i_found_you.mp3" crossorigin="anonymous" preload="auto" loop></audio>
+            <div id='gallery-media-container' style="flex-grow: 1; display: flex; align-items: center; justify-content: center; margin: 10px 0;"></div>
+            
+            <div class='mt-3 d-flex justify-content-center gap-2 flex-wrap'>
+                <button class='btn btn-outline-info' onclick='prevMedia()'>⬅ Prev</button>
+                <button class='btn btn-outline-info' onclick='nextMedia()'>Next ➡</button>
+                <button class='btn btn-primary fw-bold' id='slideBtn' onclick='toggleSlideshow()'>▶ Play Slideshow</button>
+                <button class='btn btn-danger fw-bold' onclick='closeNav()'>✖ Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div class='hero'>
+        <div class='hero-content'>
+            <h1 class='gloria-text'>Hello Gloria ✨</h1>
+            <p class='spice-statement'>Welcome to your space Gorgeous💐.</p>
+            <div class='minion-badge' id='secretAdminTrigger'>Made with thought 🙂↔️</div>
+        </div>
+    </div>
+
+    <div class="sky-wrapper">
+        <div class="star-field" id="starField"></div>
+        <div class="content-overlay">
+
+            <div class="container py-4">
+                
+                <div id="adminPanel">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="m-0">👨💻 Engineer's Dashboard</h4>
+                        <button class="btn btn-sm btn-outline-danger" onclick="document.getElementById('adminPanel').style.display='none'">Close</button>
+                    </div>
+                    <p class="text-muted">Live Database Feed:</p>
+                    <div id="adminMessages" style="max-height: 300px; overflow-y: auto; background: rgba(0,255,0,0.1); padding: 15px; border-radius: 5px;">Waiting for data...</div>
+                </div>
+
+                <div class="mood-container glass-panel" id="moodModule">
+                    <h5 class="fw-bold mb-3" id="moodTitle">How is my Princess feeling today?</h5>
+                    <div id="moodButtons">
+                        <button class="mood-btn" style="background: #ffdb00; color: #000;" onclick="setMood('high')">🌟 High Energy</button>
+                        <button class="mood-btn" style="background: #c084fc; color: #fff;" onclick="setMood('low')">🥺 I need to rest</button>
+                    </div>
+                    <p id="moodFeedback" class="mt-3 mb-0"></p>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-10">
+                        <div class="spiritual-card glass-panel">
+                            <h5 class="fw-bold mb-2" style="color: var(--accent-color);">🕊️ Daily Spiritual Connection</h5>
+                            <p class="small text-muted mb-3" id="spiritualSubtext">Take a moment to center yourself and hear what the Word says today.</p>
+                            <button id="openVerseBtn" class="btn btn-outline-light rounded-pill px-5 py-2 fw-bold" onclick="openVerseModal()" style="border-color: var(--accent-color);">
+                                Open Today's Word
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-10">
+                        <div class="economy-card text-center glass-panel" id="economyCard">
+                            <h4 style="text-transform: uppercase; font-weight: 800; opacity: 0.8; letter-spacing: 1px;">👑 The Royal Treasury</h4>
+                            <div class="coin-balance" id="coinDisplay">...</div>
+                            <p class="fst-italic mb-4">Gloria Coins</p>
+
+                            <div class="row g-4 text-start mt-2">
+                                <div class="col-12 col-md-6" id="tasksList">
+                                    <h5 class="fw-bold mb-3">✨ Daily Tasks</h5>
+                                    <button class="btn task-btn earn-btn" id="btnWater" onclick="claimWater()">
+                                        <span>💧 Drank my water</span><span class="coin-badge">+10</span>
+                                    </button>
+                                    <div id="dynamicTasks">
+                                        <button class="btn task-btn earn-btn" onclick="openInputModal('Academic Update', 20)">
+                                            <span>📚 Academic update</span><span class="coin-badge">+20</span>
+                                        </button>
+                                    </div>
+                                    <button class="btn task-btn earn-btn" onclick="openInputModal('Emotional Check-in', 25)">
+                                        <span>❤️ Tell him how I feel</span><span class="coin-badge">+25</span>
+                                    </button>
+                                </div>
+
+                                <div class="col-12 col-md-6" id="shopList">
+                                    <h5 class="fw-bold mb-3">🛍️ The Princess Shop</h5>
+                                    <button class="btn task-btn spend-btn" onclick="spendCoins(100, 'Custom Voice Note')">
+                                        <span>🎙️ Demand a Voice Note</span><span class="coin-badge shop-price" data-base="100">-100</span>
+                                    </button>
+                                    <button class="btn task-btn spend-btn" onclick="spendCoins(300, 'Pick the Movie')">
+                                        <span>🍿 I pick the movie tonight</span><span class="coin-badge shop-price" data-base="300">-300</span>
+                                    </button>
+                                    <button class="btn task-btn spend-btn" onclick="spendCoins(500, 'Free Request')">
+                                        <span>🧞♀️ One Custom Favor</span><span class="coin-badge shop-price" data-base="500">-500</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gloria-modal" id="verseModal">
+                <div class="gloria-modal-content">
+                    <h5 class="fw-bold mb-3" style="color: var(--accent-color);">Your Daily Verse 📖</h5>
+                    <p class="verse-text" id="verseText">Opening the Word...</p>
+                    <p class="small text-muted mb-4">Take a deep breath and dwell on this for a moment.</p>
+                    <button class="btn btn-secondary w-100 fw-bold rounded-pill" id="claimVerseBtn" disabled onclick="claimVerse()">
+                        Meditating... (Wait 15s)
+                    </button>
+                    <button class="btn btn-link text-muted mt-2" onclick="closeModal('verseModal')">Close</button>
+                </div>
+            </div>
+
+            <div class="gloria-modal" id="inputModal">
+                <div class="gloria-modal-content">
+                    <h5 class="fw-bold mb-3" id="inputTitle" style="color: var(--accent-color);">Send Update</h5>
+                    <textarea id="taskInput" placeholder="Type here... (Write at least 2 words to earn your coins!)"></textarea>
+                    <p id="wordCountErr" class="text-danger small fw-bold" style="display:none;">Just a little more! Give me at least 2 words. ❤️</p>
+                    <button class="btn btn-success w-100 fw-bold rounded-pill" onclick="submitTextTask()">Send to Christopher</button>
+                    <button class="btn btn-link text-muted mt-2" onclick="closeModal('inputModal')">Cancel</button>
+                </div>
+            </div>
+
+            <div class='container py-5 text-center'>
+                <h2 class='mb-4'>Our Tune🎼</h2>
+                <div class='row justify-content-center'>
+                    <div class='col-12 col-md-8'>
+                        <div class='ratio ratio-16x9 rounded overflow-hidden shadow' style='border: 2px solid var(--accent-color);'>
+                            <iframe src='https://www.youtube.com/embed/q7mlB-adMBc' allowfullscreen></iframe>
+                        </div>
+                        <a href='#' class='btn btn-success rounded-pill mt-4 px-4 fw-bold'>🎵 Open on Spotify</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class='container py-5'>
+                <h2 class='text-center mb-4'>Our Journey</h2>
+                <div class='journey-container'>
+                    <div class='journey-item left'>
+                        <div class='journey-frame glass-panel'><img src='Together_1.jpeg'><div class='p-3'><h5>The first Smile</h5><p class='small m-0'>Every journey starts with a moment that takes your breath away.</p></div></div>
+                    </div>
+                    <div class='journey-item right'>
+                        <div class='journey-frame glass-panel'><img src='Together_2.jpeg'><div class='p-3'><h5>Unforgettable memory</h5><p class='small m-0'>Still think we should hang it in the Louvre😮💨</p></div></div>
+                    </div>
+                    <div class='journey-item left'>
+                        <div class='journey-frame glass-panel'><img src='Gloria_3.jpeg'><div class='p-3'><h5>A special day🍰</h5><p class='small m-0'>In every look, there's a story of elegance and strength.</p></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class='container pb-5'>
+                <h2 class='text-center mb-4'>Gloria Veronica, Hold on to this!</h2>
+                <div class='row g-3'>
+                    <div class='col-12 col-md-4'>
+                        <div class='flip-card' onclick='handleAffirmationClick(this)'>
+                            <div class='flip-card-inner'>
+                                <div class='flip-card-front glass-panel'><h3>Secret Message</h3><p class='small'>Tap to reveal</p></div>
+                                <div class='flip-card-back'><p id='affirmationText' class='fw-bold'></p></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-12 col-md-4'>
+                        <div class='flip-card' onclick='toggleVideoFlip(this)'>
+                            <div class='flip-card-inner'>
+                                <div class='flip-card-front glass-panel'><img src='Gloria_1.jpeg' style='width:100%; height:100%; object-fit:cover; border-radius:15px;'></div>
+                                <div class='flip-card-back'><video id='reelVideo' src='The_reel.mp4' loop playsinline style='width:100%; height:100%; object-fit:cover; border-radius:15px;'></video></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-12 col-md-4'>
+                        <div class='flip-card' onclick='handlePraiseClick(this)'>
+                            <div class='flip-card-inner'>
+                                <div class='flip-card-front glass-panel'><h3>Praises for You</h3><p class='small'>Don't blush, just tap</p></div>
+                                <div class='flip-card-back'><p id='praiseText' class='fw-bold text-center'></p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class='container text-center mb-5'>
+                <div class='game-card glass-panel'>
+                    <h3>💎 The Carat Challenge</h3>
+                    <p>Gloria, how many carats?</p>
+                    <input type='number' id='caratInput' class='game-input' placeholder=''>
+                    <br>
+                    <button class='btn btn-outline-danger' onclick='playCarat()'>Check!</button>
+                    <p id='gameFeedback' class='mt-3 fw-bold'></p>
+                </div>
+            </div>
+
+            <div class='love-section' id="loveSection">
+                <h2 class='love-question'>DO YOU LOVE THIS ?</h2>
+                <div class='d-flex justify-content-center gap-4 align-items-center' style="min-height: 120px;">
+                    <button class='btn btn-success btn-yes px-5 py-3 fw-bold' onclick="sendWhatsApp()">YES</button>
+                    <button id='noBtn' class='btn btn-danger px-5 py-3 fw-bold' onmouseover="moveButton()">NO</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="firebase-config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
