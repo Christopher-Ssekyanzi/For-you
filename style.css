@@ -129,55 +129,52 @@ textarea:focus { background: rgba(0,0,0,0.4); box-shadow: 0 0 15px rgba(255, 143
 #memorySidebar { height: 100%; width: 0; position: fixed; z-index: 4500; top: 0; left: 0; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); overflow-x: hidden; transition: 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); border-right: 1px solid rgba(255, 143, 163, 0.2); box-shadow: 15px 0 50px rgba(0,0,0,0.7); }
 .gallery-container-inner h3 { font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-color); }
 
-/* Gallery Custom Buttons */
+/* Romantic Custom Buttons */
 .gallery-btn {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--accent-color);
-    color: var(--text-color);
-    padding: 10px 20px;
+    background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+    border: none;
+    color: #fff;
+    padding: 12px 28px;
     border-radius: 50px;
-    font-weight: 600;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    font-weight: 700;
     transition: var(--transition);
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
 }
 .gallery-btn:hover {
-    background: var(--accent-color);
-    color: #000;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(255, 143, 163, 0.4);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(255, 117, 140, 0.6);
+    color: #fff;
 }
 .gallery-btn.active {
-    background: linear-gradient(135deg, var(--accent-color), #ffb3c6);
-    color: #000;
-    border-color: transparent;
-    box-shadow: 0 8px 20px rgba(255, 143, 163, 0.4);
+    background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%);
+    box-shadow: 0 8px 25px rgba(255, 8, 68, 0.5);
+    color: #fff;
 }
 .gallery-btn-primary {
-    background: linear-gradient(135deg, #c084fc, #ff8fa3);
+    background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
     color: #fff;
-    border: none;
 }
 .gallery-btn-primary:hover {
-    background: linear-gradient(135deg, #ff8fa3, #c084fc);
-    color: #fff;
-    box-shadow: 0 8px 20px rgba(192, 132, 252, 0.5);
+    box-shadow: 0 8px 25px rgba(161, 140, 209, 0.6);
 }
 .gallery-btn-danger {
-    background: rgba(220, 53, 69, 0.2);
-    border: 1px solid #dc3545;
-    color: #ffb3b3;
+    background: transparent;
+    border: 2px solid #ff758c;
+    color: #ff758c;
+    box-shadow: none;
 }
 .gallery-btn-danger:hover {
-    background: #dc3545;
+    background: #ff758c;
     color: #fff;
-    box-shadow: 0 8px 20px rgba(220, 53, 69, 0.4);
+    box-shadow: 0 8px 25px rgba(255, 117, 140, 0.4);
 }
 
 @media (max-width: 768px) {
