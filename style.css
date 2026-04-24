@@ -38,7 +38,7 @@ body {
 }
 
 /* --- HERO SECTION --- */
-.hero { min-height: 100vh; background: url('Gloria_1.jpeg') center/cover no-repeat; display: flex; align-items: center; justify-content: center; position: relative; }
+.hero { min-height: 100vh; background: url('media/Gloria_1.jpeg') center/cover no-repeat; display: flex; align-items: center; justify-content: center; position: relative; }
 .hero::before { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(15,15,15,1)); }
 .hero-content { position: relative; z-index: 10; text-align: center; padding: 0 20px; }
 .gloria-text { font-size: 6rem; font-weight: 900; background: linear-gradient(to right, #ff8fa3, #ffdb00, #ff8fa3, #c084fc); background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 4s linear infinite; text-shadow: 0 0 30px rgba(255, 143, 163, 0.4); letter-spacing: -2px;}

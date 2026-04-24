@@ -218,7 +218,7 @@ function closeModal(id) {
 
 const githubUsername = "Christopher-Ssekyanzi"; 
 const githubRepo = "My_trial";     
-const folderName = "";                         
+const folderName = "media";                         
 
 let galleryData = []; 
 let currentTab = 'image';
