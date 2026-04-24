@@ -88,7 +88,9 @@
         .theme-toggle { position: fixed; top: 15px; right: 15px; z-index: 5000; padding: 15px; border-radius: 50%; background: var(--accent-color); border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
         .theme-toggle.hidden { opacity: 0; pointer-events: none; }
         .side-tab-trigger { position: fixed; bottom: 25px; right: 25px; z-index: 2500; background: var(--accent-color); color: #000; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5); font-size: 1.5rem; }
-        #memorySidebar { height: 100%; width: 0; position: fixed; z-index: 4500; top: 0; left: 0; background: var(--card-bg); overflow-x: hidden; transition: 0.5s; border-right: 2px solid var(--accent-color); }
+        
+        /* SIDEBAR STYLING - FIXED WIDTH */
+        #memorySidebar { height: 100%; width: 0; position: fixed; z-index: 4500; top: 0; left: 0; background: var(--card-bg); overflow-x: hidden; transition: 0.5s; border-right: 2px solid var(--accent-color); box-shadow: 10px 0 30px rgba(0,0,0,0.5); }
 
         @media (max-width: 768px) {
             .gloria-text { font-size: 3.2rem; }
@@ -181,17 +183,14 @@
                             <div class="row g-4 text-start mt-2">
                                 <div class="col-12 col-md-6" id="tasksList">
                                     <h5 class="fw-bold mb-3">✨ Daily Tasks</h5>
-                                    
                                     <button class="btn task-btn earn-btn" id="btnWater" onclick="claimWater()">
                                         <span>💧 Drank my water</span><span class="coin-badge">+10</span>
                                     </button>
-                                    
                                     <div id="dynamicTasks">
                                         <button class="btn task-btn earn-btn" onclick="openInputModal('Academic Update', 20)">
                                             <span>📚 Academic update</span><span class="coin-badge">+20</span>
                                         </button>
                                     </div>
-                                    
                                     <button class="btn task-btn earn-btn" onclick="openInputModal('Emotional Check-in', 25)">
                                         <span>❤️ Tell him how I feel</span><span class="coin-badge">+25</span>
                                     </button>
@@ -334,12 +333,10 @@
         const coinsRef = ref(db, 'gloria_coins');
         const messagesRef = ref(db, 'gloria_messages');
 
-        // Sync Coins
         onValue(coinsRef, (snapshot) => {
             document.getElementById('coinDisplay').innerText = snapshot.val() || 0;
         });
 
-        // Global functions for HTML to access Firebase
         window.dbRunTransaction = function(amount) {
             runTransaction(coinsRef, (currentCoins) => {
                 return (currentCoins || 0) + amount;
@@ -355,7 +352,6 @@
             });
         };
 
-        // ADMIN PANEL LOGIC
         window.loadAdminData = function() {
             onValue(messagesRef, (snapshot) => {
                 const box = document.getElementById('adminMessages');
@@ -396,21 +392,18 @@
         }
         initSky();
 
-        // --- SECRET ADMIN LOGIN ---
         let clicks = 0;
         document.getElementById('secretAdminTrigger').addEventListener('click', () => {
             clicks++;
             if(clicks === 5) {
                 document.getElementById('adminPanel').style.display = 'block';
                 if(window.loadAdminData) window.loadAdminData();
-                clicks = 0; // reset
+                clicks = 0; 
             }
             setTimeout(() => clicks = 0, 3000); 
         });
 
-        // --- MOOD ENGINE (LOCKS AFTER ONE SELECTION) ---
         let isDiscounted = false;
-
         function setMood(mood) {
             const feedback = document.getElementById('moodFeedback');
             const shopList = document.getElementById('shopList');
@@ -452,7 +445,6 @@
             }
         }
 
-        // --- SPEND COINS ---
         function spendCoins(baseAmount, reward) {
             let currentCoins = parseInt(document.getElementById('coinDisplay').innerText) || 0;
             let actualCost = isDiscounted ? (baseAmount / 2) : baseAmount;
@@ -466,7 +458,6 @@
             }
         }
 
-        // --- DYNAMIC TASKS (Water Cooldown) ---
         function claimWater() {
             window.dbRunTransaction(10);
             const btn = document.getElementById('btnWater');
@@ -480,9 +471,7 @@
             alert("Good job taking care of yourself. +20 Coins! 💜");
         }
 
-        // --- BIBLE VERSE (Live API, Dwell Time, & One-Time Claim) ---
         let verseTimer;
-        
         async function openVerseModal() {
             document.getElementById('verseModal').style.display = 'flex';
             document.getElementById('verseText').innerText = "Opening the Word... 📖";
@@ -531,7 +520,6 @@
             document.getElementById('spiritualSubtext').innerText = "You have completed your daily reflection.";
         }
 
-        // --- TEXT INPUT TASKS (2-Word Proof of Work) ---
         let currentTaskReward = 0;
         let currentTaskType = "";
 
@@ -565,14 +553,10 @@
 
         // --- UPGRADED GALLERY: GITHUB DYNAMIC LOADER ---
         
-        // 🚨 ENGINEER CHECK: YOUR EXACT GITHUB INFO 🚨
         const githubUsername = "Christopher-Ssekyanzi"; 
         
-        // Replace this with the exact name of your repository! 
-        // (e.g., if your link is christopher-ssekyanzi.github.io, put that. If it's something like "gloria-os", put that).
+        // ENGINEER FIX: Changed from full URL to just the repo name!
         const githubRepo = "My_trial";     
-        
-        // We leave this completely empty because your files are in the root!
         const folderName = "";                         
 
         let galleryData = []; 
@@ -581,7 +565,6 @@
         let currentIndex = 0; 
         let slideInterval = null;
 
-        // This function automatically reads your GitHub repo!
         async function fetchGitHubMedia() {
             try {
                 const apiUrl = folderName !== "" ? 
@@ -591,26 +574,23 @@
                 const response = await fetch(apiUrl);
                 const files = await response.json();
                 
-                // Filter out HTML/CSS/MD files, keep only pictures and videos
                 galleryData = files
                     .filter(file => file.name.match(/\.(jpeg|jpg|png|gif|mp4|webm)$/i))
                     .map(file => {
                         return {
-                            src: file.download_url, // Gets the raw file link directly from GitHub
+                            src: file.download_url, 
                             type: file.name.match(/\.(mp4|webm)$/i) ? 'video' : 'image'
                         };
                     });
                 
                 console.log("GitHub Sync Complete. Loaded " + galleryData.length + " files.");
                 
-                // Refresh the gallery UI if it's currently open
-                if (document.getElementById('memorySidebar').style.width === "100%") {
+                if (document.getElementById('memorySidebar').style.width !== "0px" && document.getElementById('memorySidebar').style.width !== "") {
                     switchGalleryTab(currentTab);
                 }
                 
             } catch (error) {
                 console.error("Failed to load GitHub files:", error);
-                // Fallback
                 galleryData = [{"src": "Gloria_1.jpeg", "type": "image"}];
             }
         }
@@ -623,13 +603,21 @@
         }
 
         function openNav() { 
-            document.getElementById('memorySidebar').style.width = "100%"; 
+            // ENGINEER FIX: Sets to 450px on desktop, 100% on phones
+            const panelWidth = window.innerWidth > 768 ? "450px" : "100%";
+            document.getElementById('memorySidebar').style.width = panelWidth; 
             document.getElementById('themeToggler').classList.add('hidden'); 
-            switchGalleryTab('image'); // Always default to images
+            switchGalleryTab('image'); 
         }
         
         function closeNav() { 
             stopSlideshow(); 
+            
+            // ENGINEER FIX: Forces any currently playing video to pause before closing the panel
+            const container = document.getElementById('gallery-media-container');
+            const existingVideo = container.querySelector('video');
+            if(existingVideo) existingVideo.pause();
+
             document.getElementById('memorySidebar').style.width = "0"; 
             document.getElementById('themeToggler').classList.remove('hidden'); 
         }
@@ -642,12 +630,25 @@
             document.getElementById('tabImages').classList.toggle('active', type === 'image');
             document.getElementById('tabVideos').classList.toggle('active', type === 'video');
             
-            if(type === 'video') stopSlideshow(); // Don't clash music with videos
+            const slideBtn = document.getElementById('slideBtn');
+            
+            if(type === 'video') {
+                stopSlideshow(); 
+                slideBtn.style.display = 'none'; // ENGINEER FIX: Hides the slideshow button completely
+            } else {
+                slideBtn.style.display = 'inline-block'; // Brings it back for pictures
+            }
+            
             updateGallery();
         }
 
         function updateGallery() {
             const container = document.getElementById('gallery-media-container'); 
+            
+            // Explicitly pause the old video before wiping it from the screen
+            const existingVideo = container.querySelector('video');
+            if(existingVideo) existingVideo.pause();
+
             container.innerHTML = '';
             
             if (filteredGallery.length === 0) {
@@ -658,8 +659,17 @@
             const item = filteredGallery[currentIndex];
             if(item.type === 'video') { 
                 let vid = document.createElement('video'); 
-                vid.src = item.src; vid.controls = true; vid.style.width = '100%'; vid.style.maxHeight = '60vh'; vid.style.borderRadius = '10px';
+                vid.src = item.src; 
+                vid.controls = true; 
+                vid.autoplay = true; // ENGINEER FIX: Autoplay is ON
+                vid.style.width = '100%'; 
+                vid.style.maxHeight = '60vh'; 
+                vid.style.borderRadius = '10px';
                 container.appendChild(vid); 
+                
+                // Force play command
+                vid.play().catch(e => console.log("Browser blocked autoplay:", e));
+                
             } else { 
                 let img = document.createElement('img'); 
                 img.src = item.src; img.style.width = '100%'; img.style.maxHeight = '60vh'; img.style.objectFit = 'contain'; img.classList.add('rounded', 'shadow'); 
@@ -673,17 +683,22 @@
         function toggleSlideshow() {
             const btn = document.getElementById('slideBtn');
             const bgMusic = document.getElementById('slideshowAudio');
-            
-            if (currentTab === 'video') {
-                alert("Slideshows are for pictures only! We don't want the music clashing with your videos. 🎥"); return;
-            }
 
             if (slideInterval) { 
                 stopSlideshow(); 
             } else { 
                 btn.innerHTML = "⏸ Pause Slideshow"; 
                 btn.className = 'btn btn-warning fw-bold';
-                bgMusic.play().catch(e => console.log("Audio blocked by browser until interacted."));
+                
+                // ENGINEER FIX: Direct play command with an error catcher for debugging
+                let playPromise = bgMusic.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log("Audio failed to start:", error);
+                        alert("I couldn't play 'Until_i_found_you.mp3'. Please check that the file is in your GitHub with that EXACT spelling!");
+                    });
+                }
+
                 slideInterval = setInterval(() => { currentIndex = (currentIndex + 1) % filteredGallery.length; updateGallery(); }, 3500);
             }
         }
