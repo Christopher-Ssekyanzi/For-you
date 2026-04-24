@@ -24,19 +24,19 @@
         <div class='gallery-container-inner' style="padding: 20px; text-align: center; height: 100%; display: flex; flex-direction: column;">
             <h3 class='mb-3'>Our Memories</h3>
             
-            <div class="btn-group w-100 mb-3" role="group">
-                <button type="button" id="tabImages" class="btn btn-outline-info active fw-bold" onclick="switchGalleryTab('image')">📷 Pictures</button>
-                <button type="button" id="tabVideos" class="btn btn-outline-info fw-bold" onclick="switchGalleryTab('video')">🎥 Videos</button>
+            <div class="d-flex w-100 gap-2 mb-4 justify-content-center">
+                <button type="button" id="tabImages" class="gallery-btn active" onclick="switchGalleryTab('image')">📷 Pictures</button>
+                <button type="button" id="tabVideos" class="gallery-btn" onclick="switchGalleryTab('video')">🎥 Videos</button>
             </div>
 
             <audio id="slideshowAudio" src="media/Until_i_found_you.mp3" crossorigin="anonymous" preload="auto" loop></audio>
             <div id='gallery-media-container' style="flex-grow: 1; display: flex; align-items: center; justify-content: center; margin: 10px 0;"></div>
             
-            <div class='mt-3 d-flex justify-content-center gap-2 flex-wrap'>
-                <button class='btn btn-outline-info' onclick='prevMedia()'>⬅ Prev</button>
-                <button class='btn btn-outline-info' onclick='nextMedia()'>Next ➡</button>
-                <button class='btn btn-primary fw-bold' id='slideBtn' onclick='toggleSlideshow()'>▶ Play Slideshow</button>
-                <button class='btn btn-danger fw-bold' onclick='closeNav()'>✖ Close</button>
+            <div class='mt-4 d-flex justify-content-center gap-2 flex-wrap'>
+                <button class='gallery-btn' onclick='prevMedia()'>⬅ Prev</button>
+                <button class='gallery-btn' onclick='nextMedia()'>Next ➡</button>
+                <button class='gallery-btn gallery-btn-primary' id='slideBtn' onclick='toggleSlideshow()'>▶ Play Slideshow</button>
+                <button class='gallery-btn gallery-btn-danger' onclick='closeNav()'>✖ Close</button>
             </div>
         </div>
     </div>

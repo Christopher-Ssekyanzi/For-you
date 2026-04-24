@@ -345,7 +345,7 @@ function toggleSlideshow() {
         stopSlideshow(); 
     } else { 
         btn.innerHTML = "⏸ Pause Slideshow"; 
-        btn.className = 'btn btn-warning fw-bold';
+        btn.className = 'gallery-btn active';
         
         bgMusic.volume = 1.0; 
         let playPromise = bgMusic.play();
@@ -364,7 +364,7 @@ function stopSlideshow() {
     if (slideInterval) { 
         clearInterval(slideInterval); slideInterval = null; 
         const btn = document.getElementById('slideBtn');
-        btn.innerHTML = "▶ Play Slideshow"; btn.className = 'btn btn-primary fw-bold';
+        btn.innerHTML = "▶ Play Slideshow"; btn.className = 'gallery-btn gallery-btn-primary';
         bgMusic.pause();
     } 
 }
