@@ -116,7 +116,7 @@
                 <button type="button" id="tabVideos" class="btn btn-outline-info fw-bold" onclick="switchGalleryTab('video')">🎥 Videos</button>
             </div>
 
-            <audio id="slideshowAudio" src="Until_i_found_you.mp3" loop></audio>
+            <audio id="slideshowAudio" src="Until_i_found_you.mp3" preload="auto" loop></audio>
 
             <div id='gallery-media-container' style="flex-grow: 1; display: flex; align-items: center; justify-content: center; margin: 10px 0;"></div>
             
@@ -372,6 +372,25 @@
     </script>
 
     <script>
+        // --- iOS AUDIO UNLOCKER ---
+        // Forces Apple Safari to grant audio permissions on her very first tap of the screen
+        document.body.addEventListener('touchstart', function unlockAudio() {
+            const bgMusic = document.getElementById('slideshowAudio');
+            if (bgMusic) {
+                // Secretly play and immediately pause to unlock the audio engine
+                let unlockPromise = bgMusic.play();
+                if (unlockPromise !== undefined) {
+                    unlockPromise.then(() => {
+                        bgMusic.pause();
+                        bgMusic.currentTime = 0;
+                    }).catch(error => {
+                        console.log("iOS unlock standing by...");
+                    });
+                }
+            }
+            // Remove this listener so it only runs exactly once
+            document.body.removeEventListener('touchstart', unlockAudio);
+        });
         function initSky() {
             const field = document.getElementById('starField');
             for (let i = 0; i < 250; i++) {
@@ -554,8 +573,6 @@
         // --- UPGRADED GALLERY: GITHUB DYNAMIC LOADER ---
         
         const githubUsername = "Christopher-Ssekyanzi"; 
-        
-        // ENGINEER FIX: Changed from full URL to just the repo name!
         const githubRepo = "My_trial";     
         const folderName = "";                         
 
@@ -603,7 +620,6 @@
         }
 
         function openNav() { 
-            // ENGINEER FIX: Sets to 450px on desktop, 100% on phones
             const panelWidth = window.innerWidth > 768 ? "450px" : "100%";
             document.getElementById('memorySidebar').style.width = panelWidth; 
             document.getElementById('themeToggler').classList.add('hidden'); 
@@ -613,7 +629,6 @@
         function closeNav() { 
             stopSlideshow(); 
             
-            // ENGINEER FIX: Forces any currently playing video to pause before closing the panel
             const container = document.getElementById('gallery-media-container');
             const existingVideo = container.querySelector('video');
             if(existingVideo) existingVideo.pause();
@@ -634,9 +649,9 @@
             
             if(type === 'video') {
                 stopSlideshow(); 
-                slideBtn.style.display = 'none'; // ENGINEER FIX: Hides the slideshow button completely
+                slideBtn.style.display = 'none'; 
             } else {
-                slideBtn.style.display = 'inline-block'; // Brings it back for pictures
+                slideBtn.style.display = 'inline-block'; 
             }
             
             updateGallery();
@@ -645,7 +660,6 @@
         function updateGallery() {
             const container = document.getElementById('gallery-media-container'); 
             
-            // Explicitly pause the old video before wiping it from the screen
             const existingVideo = container.querySelector('video');
             if(existingVideo) existingVideo.pause();
 
@@ -661,13 +675,12 @@
                 let vid = document.createElement('video'); 
                 vid.src = item.src; 
                 vid.controls = true; 
-                vid.autoplay = true; // ENGINEER FIX: Autoplay is ON
+                vid.autoplay = true; 
                 vid.style.width = '100%'; 
                 vid.style.maxHeight = '60vh'; 
                 vid.style.borderRadius = '10px';
                 container.appendChild(vid); 
                 
-                // Force play command
                 vid.play().catch(e => console.log("Browser blocked autoplay:", e));
                 
             } else { 
@@ -690,12 +703,11 @@
                 btn.innerHTML = "⏸ Pause Slideshow"; 
                 btn.className = 'btn btn-warning fw-bold';
                 
-                // ENGINEER FIX: Direct play command with an error catcher for debugging
+                bgMusic.volume = 1.0; 
                 let playPromise = bgMusic.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(error => {
                         console.log("Audio failed to start:", error);
-                        alert("I couldn't play 'Until_i_found_you.mp3'. Please check that the file is in your GitHub with that EXACT spelling!");
                     });
                 }
 
